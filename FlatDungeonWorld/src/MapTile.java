@@ -12,7 +12,7 @@ public class MapTile {
 	}
 	
 	public void draw(Graphics g, Image img, int x, int y){
-		
+		g.drawImage(img, x, y, null);
 	}
 	
 	public String getName(){
