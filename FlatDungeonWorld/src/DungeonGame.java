@@ -76,14 +76,17 @@ public class DungeonGame extends Application implements Game {
 	public void processFrame() {
 		switch (GS) {
 		case TITLE: // startup screen
-			if (engine.upArrowPressed) {
+			if (engine.upArrow == 1) {
+				engine.upArrow = 2;
 				titleScreen.cursorUp();
 			}
-			if (engine.downArrowPressed) {
+			if (engine.downArrow == 1) {
+				engine.upArrow = 2;
 				titleScreen.cursorDown();
 			}
-			if (engine.enterPressed) {
+			if (engine.keyRing[13] == 1) {
 				try {
+					engine.keyRing[13] = 2;
 					titleScreen.chooseOption();
 				} catch (Exception e) {
 					e.printStackTrace();
