@@ -15,8 +15,19 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 	GamePanel gamePanel;  // The panel that the game graphics are drawn on.
 	int width, height, setTimer;
 	Timer timer;
-	boolean upArrowPressed, leftArrowPressed, rightArrowPressed, downArrowPressed, spaceBarPressed, aButtonPressed, bButtonPressed, cButtonPressed, dButtonPressed, eButtonPressed, oneButtonPressed, twoButtonPressed, threeButtonPressed, fourButtonPressed, fiveButtonPressed, sixButtonPressed, sevenButtonPressed, eightButtonPressed, nineButtonPressed, zeroButtonPressed; // Which keys are currently depressed 
-	boolean fButtonPressed, gButtonPressed, hButtonPressed, iButtonPressed, jButtonPressed, kButtonPressed, lButtonPressed, mButtonPressed, nButtonPressed, oButtonPressed, pButtonPressed, qButtonPressed, rButtonPressed, sButtonPressed, tButtonPressed, uButtonPressed, vButtonPressed, wButtonPressed, xButtonPressed, yButtonPressed, zButtonPressed;
+	//Which keys are currently depressed
+	boolean upArrowPressed, leftArrowPressed, rightArrowPressed,
+			downArrowPressed, spaceBarPressed, aButtonPressed, bButtonPressed,
+			cButtonPressed, dButtonPressed, eButtonPressed, oneButtonPressed,
+			twoButtonPressed, threeButtonPressed, fourButtonPressed,
+			fiveButtonPressed, sixButtonPressed, sevenButtonPressed,
+			eightButtonPressed, nineButtonPressed, zeroButtonPressed;
+	boolean fButtonPressed, gButtonPressed, hButtonPressed, iButtonPressed,
+			jButtonPressed, kButtonPressed, lButtonPressed, mButtonPressed,
+			nButtonPressed, oButtonPressed, pButtonPressed, qButtonPressed,
+			rButtonPressed, sButtonPressed, tButtonPressed, uButtonPressed,
+			vButtonPressed, wButtonPressed, xButtonPressed, yButtonPressed,
+			zButtonPressed;
 	boolean shiftButtonPressed, backspaceButtonPressed, enterPressed;
 	int mouseX, mouseY, clickX, clickY, dragX, dragY;
 	boolean mouseClick, selectLocFlag, clickFlag, rightClickFlag, dragEnabled;

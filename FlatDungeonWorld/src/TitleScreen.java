@@ -8,7 +8,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import javax.imageio.ImageIO;
 
-
 public class TitleScreen {
 
 	boolean opened = false;
@@ -17,7 +16,8 @@ public class TitleScreen {
 	Image splash, menuScreen;
 	DungeonGame game;
 	GameEngineV2 engine;
-	String text[] = {"Created By: Willis Hand & Caleb Cook-Kollars", "Begin your quest!", "What am I playing anyway?", "Who are you?"};
+	String text[] = { "Created By: Willis Hand & Caleb Cook-Kollars",
+			"Begin your quest!", "What am I playing anyway?", "Who are you?" };
 
 	public TitleScreen(DungeonGame game, GameEngineV2 engine) {
 		this.game = game;
@@ -31,37 +31,37 @@ public class TitleScreen {
 		time = System.currentTimeMillis();
 	}
 
-	private void resetWait(){
+	private void resetWait() {
 		waitTime = 20;
 	}
-	
-	private void visitWeb(){
+
+	private void visitWeb() {
 		webWait = 30;
 		game.engine.setKeysFalse();
 	}
 
-	public void cursorUp(){	
-		if(waitTime <= 0){
+	public void cursorUp() {
+		if (waitTime <= 0) {
 			cursorLoc--;
-			if(cursorLoc < 1){
+			if (cursorLoc < 1) {
 				cursorLoc = text.length - 1;
 			}
 			resetWait();
 		}
 	}
 
-	public void cursorDown(){
-		if(waitTime <= 0){
+	public void cursorDown() {
+		if (waitTime <= 0) {
 			cursorLoc++;
-			if(cursorLoc > text.length - 1){
+			if (cursorLoc > text.length - 1) {
 				cursorLoc = 1;
 			}
 			resetWait();
 		}
 	}
 
-	public void chooseOption(){
-		switch(cursorLoc){
+	public void chooseOption() {
+		switch (cursorLoc) {
 		case 1:
 			game.goToLevel("Test");
 			break;
@@ -69,10 +69,11 @@ public class TitleScreen {
 
 			break;
 		case 3:
-			if(webWait <= 30){
+			if (webWait <= 30) {
 				visitWeb();
 				try {
-					java.awt.Desktop.getDesktop().browse(new URI("http://www.signalytical.com/"));
+					java.awt.Desktop.getDesktop().browse(
+							new URI("http://www.signalytical.com/"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				} catch (URISyntaxException e) {
@@ -83,17 +84,17 @@ public class TitleScreen {
 		}
 	}
 
-	public void draw(Graphics g){
+	public void draw(Graphics g) {
 
-		if(System.currentTimeMillis() < time + 3500){
+		if (System.currentTimeMillis() < time + 3500) {
 			g.drawImage(splash, 0, 0, null);
 			return;
 		}
 
-		if(waitTime > 0){
+		if (waitTime > 0) {
 			waitTime--;
 		}
-		if(webWait > 0){
+		if (webWait > 0) {
 			webWait--;
 		}
 
@@ -104,26 +105,28 @@ public class TitleScreen {
 		Font mediumFont = new Font("SansSerif", Font.BOLD, 16);
 		Font smallFont = new Font("SansSerif", Font.BOLD, 10);
 
-		for(count = 0; count < text.length; count++){
+		for (count = 0; count < text.length; count++) {
 
 			g.setFont(mediumFont);
 			g.setColor(Color.white);
 
-			if(count == 0){
+			if (count == 0) {
 				g.setFont(smallFont);
 				g.drawString(text[count], 10, engine.height - 10);
-			}else{
-				if(cursorLoc == count){
+			} else {
+				if (cursorLoc == count) {
 					g.setColor(Color.yellow);
 				}
 				stringWidth = g.getFontMetrics().stringWidth(text[count]);
-				g.drawString(text[count], (engine.width - stringWidth)/2, 300 + count*60);
+				g.drawString(text[count], (engine.width - stringWidth) / 2,
+						300 + count * 60);
 			}
 		}
 
 		g.setColor(Color.red);
 		stringWidth = g.getFontMetrics().stringWidth(text[cursorLoc]);
-		g.drawRect((engine.width - (stringWidth+5))/2, 284 + cursorLoc * 60 , stringWidth + 5, 20);		
+		g.drawRect((engine.width - (stringWidth + 5)) / 2,
+				284 + cursorLoc * 60, stringWidth + 5, 20);
 
 	}
 }
