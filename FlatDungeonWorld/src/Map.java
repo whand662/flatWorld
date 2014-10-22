@@ -1,13 +1,18 @@
 import java.awt.Graphics;
+import java.awt.Image;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
+
+import javax.imageio.ImageIO;
 
 public class Map {
 
 	MapTile[][] World;
 	String mapName;
+	Image[] tilePics;
 
 	public Map(String mapFile) {
 		mapName = mapFile;
@@ -27,7 +32,19 @@ public class Map {
 	}
 
 	public void Draw(Graphics g, Game game){
-
+		
+	}
+	
+	private int tileToInt(String identity){
+		switch(identity){
+		case "lava": 
+			return 1;
+		case "water": 
+			return 2;
+		case "dirt": 
+			return 3;
+		}
+		return 0;
 	}
 
 	private void initializeMap(String mapFile){
@@ -35,6 +52,14 @@ public class Map {
 		int x, y;
 		StringTokenizer st;
 		String delimiters = ";";
+		
+		
+		try {
+			img = ImageIO.read(new File("Tiles/" + tileName + ".png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		try{
 			BufferedReader in = new BufferedReader(new FileReader("Maps/" + mapFile + ".txt"));
 			line = in.readLine();
@@ -46,6 +71,7 @@ public class Map {
 			for(int counter1 = (y-1); counter1 > -1; counter1--){
 				line = in.readLine();
 				for(int counter2 = 0; counter2 < x; counter2++){
+					System.out.println(counter1 + "and" + counter2);
 					World[counter2][counter1] = identifyTile(line.charAt(counter1));
 				}
 			}

@@ -6,22 +6,20 @@ import javax.imageio.ImageIO;
 
 public class MapTile {
 	
-	Image img;
 	boolean walkable;
 	String tileName;
 	
 	public MapTile(String tile, boolean walkOn){
 		tileName = tile;
 		walkable = walkOn;
-		try {
-			img = ImageIO.read(new File("Tiles/" + tileName + ".png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
-	public void draw(Graphics g, int x, int y){
-		g.drawImage(img, x, y, null);
+	public void draw(Graphics g, Image img, int x, int y){
+		
+	}
+	
+	public String getName(){
+		return tileName;
 	}
 	
 	public boolean walkable(){
