@@ -7,7 +7,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-public class GameEngineV2 implements Runnable, ActionListener, KeyListener, MouseListener, MouseMotionListener
+public class GameEngineV2 implements Runnable, ActionListener, KeyListener, MouseListener, MouseMotionListener, FocusListener
 {
 	Game game;
 	String title;
@@ -20,6 +20,7 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 	boolean shiftButtonPressed, backspaceButtonPressed, enterPressed;
 	int mouseX, mouseY, clickX, clickY, dragX, dragY;
 	boolean mouseClick, selectLocFlag, clickFlag, rightClickFlag, dragEnabled;
+	boolean focus = true;
 
 	public GameEngineV2(Game g)
 	{
@@ -50,7 +51,7 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 	// The run method is called to start the game
 	public void run()
 	{
-		gameWindow = new JFrame(title);  // Firse we create the window frame object
+		gameWindow = new JFrame(title);  // First we create the window frame object
 		gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  // Stop the program when the user presses the big red X on the window frame
 		gameWindow.setResizable(false); //Keeps the user from re-sizing the window
 		gamePanel = new GamePanel(width, height, game);  // Now we create the panel on which the game graphics are drawn
@@ -58,11 +59,21 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 		gameWindow.addKeyListener(this);
 		gameWindow.addMouseListener(this);
 		gameWindow.addMouseMotionListener(this);
+		gameWindow.addFocusListener(this);
 		gameWindow.pack(); // Lay out the window and the panel inside of it.
 		gameWindow.setVisible(true); // Make the game window visible
 		timer = new Timer(setTimer, this);
 		timer.start();
 	}
+
+	public void focusGained(FocusEvent fe) {
+		focus = true;
+	}
+
+	public void focusLost(FocusEvent fe){
+		setKeysFalse();
+		focus = false;
+	}   
 
 	public void setKeysFalse(){
 		enterPressed = false;
@@ -487,11 +498,15 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 
 	public void actionPerformed(ActionEvent e)
 	{
-		//handles resized window
+		//handles resizing of window
 		width = gamePanel.getWidth();
 		height = gamePanel.getHeight();
-		game.processFrame();
-		gamePanel.repaint();
+
+		//standard timer calls
+		if(focus){
+			game.processFrame();
+			gamePanel.repaint();
+		}
 	}
 
 	public void mouseClicked(MouseEvent arg0) {
