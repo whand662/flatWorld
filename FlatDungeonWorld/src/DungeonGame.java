@@ -16,7 +16,7 @@ public class DungeonGame extends Application implements Game{
 	TitleScreen titleScreen;
 	Map currentWorld;
 	int loadCount = 0;
-	int x = 20, y = 50; //dummy values for testing
+	int x = 200, y = 500; //dummy values for testing
 	
 	public static void main(String args[])
 	{

@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
-
 import javax.imageio.ImageIO;
 
 public class Map {
@@ -13,6 +12,7 @@ public class Map {
 	MapTile[][] World;
 	String mapName;
 	Image[] tilePics;
+	int maxX, maxY;
 
 	public Map(String mapFile) {
 		mapName = mapFile;
@@ -24,18 +24,21 @@ public class Map {
 	}
 
 	public boolean locWalkable(int x, int y){
-		try{
-			return (World[x][y].walkable());
-		}catch(Exception e){
-			return false;
-		}
+		x = x / 40;
+		y = y / 40;
+		return (World[x][y].walkable());
 	}
 
 	public void draw(Graphics g, DungeonGame game){
+		int x, y, tileNum;
+
 		for(int counter1 = 0; counter1 < 20; counter1++){
 			for(int counter2 = 0; counter2 < 20; counter2++){
 				try{
-					World[counter2][counter1].draw(g, tilePics[tileToInt(World[counter2][counter1].getName())], (counter2 * 40), (counter1 * 40));
+					x = (counter2 * 40) + (game.engine.width/2) - game.x;
+					y = (counter1 * 40) + (game.engine.height/2) - game.y;
+					tileNum = tileToInt(World[counter2][counter1].getName());
+					World[counter2][counter1].draw(g, tilePics[tileNum], x, y);
 				}catch(Exception e){
 					System.out.println(e);
 				}
@@ -56,7 +59,7 @@ public class Map {
 		}
 		return "undefined";
 	}
-	
+
 	private int tileToInt(String tile){
 		switch(tile){
 		case "undefined":
@@ -73,7 +76,7 @@ public class Map {
 
 	private void initializeMap(String mapFile){
 		String line;
-		int x, y;
+		int x = 0, y = 0;
 		StringTokenizer st;
 		String delimiters = ";";
 
@@ -105,6 +108,9 @@ public class Map {
 		}catch (IOException e){
 			e.printStackTrace();
 		}
+
+		maxX = x * 40;
+		maxY = y * 40;
 	}
 
 	private MapTile identifyTile(char tileCode){
