@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 
 public class TitleScreen {
 
+	boolean opened = false;
 	int cursorLoc = 1, waitTime = 0, webWait = 0;
 	long time;
 	Image splash, menuScreen;
@@ -36,6 +37,7 @@ public class TitleScreen {
 	
 	private void visitWeb(){
 		webWait = 30;
+		game.engine.setKeysFalse();
 	}
 
 	public void cursorUp(){	
@@ -67,7 +69,7 @@ public class TitleScreen {
 
 			break;
 		case 3:
-			if(webWait<=0){
+			if(webWait <= 30){
 				visitWeb();
 				try {
 					java.awt.Desktop.getDesktop().browse(new URI("http://www.signalytical.com/"));

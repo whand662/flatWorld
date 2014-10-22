@@ -42,7 +42,7 @@ public class DungeonGame extends Application implements Game{
 	}
 	
 	private void drawLevelScreen(Graphics g){
-		g.setFont(new Font("SansSerif", Font.BOLD, 30));
+		g.setFont(new Font("SansSerif", Font.BOLD, 50));
 		g.setColor(Color.white);
 		g.drawString(currentWorld.getMapName(), (engine.width - g.getFontMetrics().stringWidth(currentWorld.getMapName()))/2, engine.height/2);
 	}
