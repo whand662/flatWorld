@@ -1,6 +1,12 @@
 import java.awt.Graphics;
+import java.io.File;
 
-public class DungeonGame implements Game{
+import javafx.application.Application;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
+
+public class DungeonGame extends Application implements Game{
 	
 	public enum Gamestate{TITLE, GAME, MENU, DEAD, WARP};
 	GameEngineV2 engine;
@@ -9,6 +15,7 @@ public class DungeonGame implements Game{
 	
 	public static void main(String args[])
 	{
+		launch(args);
 		new DungeonGame();
 	}
 	
@@ -22,6 +29,7 @@ public class DungeonGame implements Game{
 		titleScreen = new TitleScreen(this, engine);
 		
 		engine.start();
+		playSound("Kalimba.mp3");
 	}
 
 	public void drawFrame(Graphics g) {
@@ -76,6 +84,23 @@ public class DungeonGame implements Game{
 			break;
 		}
 		
+	}
+	
+	public void playSound(String fileName){
+		File audioFile = new File("res/audio/"+fileName);
+		try {
+			Media clip = new Media(audioFile.toURI().toString());
+			MediaPlayer clipPlayer = new MediaPlayer(clip);
+			clipPlayer.play();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void start(Stage arg0) throws Exception {
+		// Application initialization function
 	}
 
 }
