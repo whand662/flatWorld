@@ -9,7 +9,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class DungeonGame extends Application implements Game {
-
+	
 	public enum Gamestate {
 		TITLE, GAME, MENU, DEAD, WARP
 	};
@@ -76,17 +76,17 @@ public class DungeonGame extends Application implements Game {
 	public void processFrame() {
 		switch (GS) {
 		case TITLE: // startup screen
-			if (engine.upArrow == 1) {
-				engine.upArrow = 2;
+			if (engine.getKey(UP) == 1) {
+				engine.unflagKey(UP);
 				titleScreen.cursorUp();
 			}
-			if (engine.downArrow == 1) {
-				engine.upArrow = 2;
+			if (engine.getKey(DOWN) == 1) {
+				engine.unflagKey(DOWN);
 				titleScreen.cursorDown();
 			}
-			if (engine.keyRing[13] == 1) {
+			if (engine.getKey(ENTER) == 1) {
 				try {
-					engine.keyRing[13] = 2;
+					engine.unflagKey(ENTER);
 					titleScreen.chooseOption();
 				} catch (Exception e) {
 					e.printStackTrace();

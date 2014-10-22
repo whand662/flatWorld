@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 public class TitleScreen {
 
 	boolean opened = false;
-	int cursorLoc = 1, waitTime = 0, webWait = 0;
+	int cursorLoc = 1;
 	long time;
 	Image splash, menuScreen;
 	DungeonGame game;
@@ -31,31 +31,17 @@ public class TitleScreen {
 		time = System.currentTimeMillis();
 	}
 
-	private void resetWait() {
-		waitTime = 20;
-	}
-
-	private void visitWeb() {
-		webWait = 30;
-	}
-
 	public void cursorUp() {
-		if (waitTime <= 0) {
-			cursorLoc--;
-			if (cursorLoc < 1) {
-				cursorLoc = text.length - 1;
-			}
-			resetWait();
-		}
+		cursorLoc--;
+		if (cursorLoc < 1) {
+			cursorLoc = text.length - 1;
+		}	
 	}
 
 	public void cursorDown() {
-		if (waitTime <= 0) {
-			cursorLoc++;
-			if (cursorLoc > text.length - 1) {
-				cursorLoc = 1;
-			}
-			resetWait();
+		cursorLoc++;
+		if (cursorLoc > text.length - 1) {
+			cursorLoc = 1;
 		}
 	}
 
@@ -68,16 +54,13 @@ public class TitleScreen {
 
 			break;
 		case 3:
-			if (webWait <= 30) {
-				visitWeb();
-				try {
-					java.awt.Desktop.getDesktop().browse(
-							new URI("http://www.signalytical.com/"));
-				} catch (IOException e) {
-					e.printStackTrace();
-				} catch (URISyntaxException e) {
-					e.printStackTrace();
-				}
+			try {
+				java.awt.Desktop.getDesktop().browse(
+						new URI("http://www.signalytical.com/"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
 			}
 			break;
 		}
@@ -88,13 +71,6 @@ public class TitleScreen {
 		if (System.currentTimeMillis() < time + 3500) {
 			g.drawImage(splash, 0, 0, null);
 			return;
-		}
-
-		if (waitTime > 0) {
-			waitTime--;
-		}
-		if (webWait > 0) {
-			webWait--;
 		}
 
 		g.drawImage(menuScreen, 0, 0, null);

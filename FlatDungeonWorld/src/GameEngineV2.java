@@ -16,8 +16,8 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 	int width, height, setTimer;
 	Timer timer;
 	//Which keys are currently depressed
-	int keyRing[] = new int[256];
-	int upArrow, leftArrow, rightArrow, downArrow;
+	private int keyRing[] = new int[256];
+	private int upArrow, leftArrow, rightArrow, downArrow;
 	int mouseX, mouseY, clickX, clickY, dragX, dragY;
 	boolean mouseClick, selectLocFlag, clickFlag, rightClickFlag, dragEnabled;
 	boolean focus = true;
@@ -77,6 +77,55 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 		focus = false;
 	}   
 
+	public int getKey(int ascii){
+		if(ascii >= 0 && ascii < 256){
+			return keyRing[ascii];
+		}else{
+			switch(ascii){
+			case -2:
+				return downArrow;
+			case -4:
+				return leftArrow;
+			case -8:
+				return upArrow;
+			case -6:
+				return rightArrow;
+			}
+		}
+		return -1;
+	}
+
+	public void unflagKey(int ascii){
+		if(ascii >= 0 && ascii < 256){
+			if(keyRing[ascii] == 1){
+				keyRing[ascii] = 2;
+			}			
+		}else{
+			switch(ascii){
+			case -2:
+				if(downArrow == 1){
+					downArrow = 2;
+				}	
+				break;
+			case -4:
+				if(leftArrow == 1){
+					leftArrow = 2;
+				}	
+				break;
+			case -8:
+				if(upArrow == 1){
+					upArrow = 2;
+				}	
+				break;
+			case -6:
+				if(downArrow == 1){
+					rightArrow = 2;
+				}	
+				break;
+			}
+		}
+	}
+
 	public void setKeysFalse(){
 
 		for(int count = 0; count < 256; count++){
@@ -125,6 +174,7 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 		if(keyRing[(int)e.getKeyChar()] == 0){
 			keyRing[(int)e.getKeyChar()] = 1;
 		}
+		System.out.println((int)e.getKeyChar());
 	}
 
 	public void keyReleased(KeyEvent e)
@@ -143,7 +193,7 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 			rightArrow = 0;
 			return;
 
-		case KeyEvent.VK_SPACE:
+		case KeyEvent.VK_DOWN:
 			downArrow = 0;
 			return;
 
