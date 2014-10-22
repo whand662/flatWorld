@@ -49,7 +49,6 @@ public class DungeonGame implements Game{
 		switch(GS){
 		case TITLE: //startup screen
 			if(engine.upArrowPressed){
-				System.out.println("here");
 				titleScreen.cursorUp();
 			}
 			if(engine.downArrowPressed){

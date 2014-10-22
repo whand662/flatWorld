@@ -1,10 +1,2 @@
-/DungeonGame$Gamestate.class
-/DungeonGame.class
-/Game.class
-/GameEngineV2.class
-/GamePanel.class
-/StartScreen.class
-/TitleScreen.class
-/splash.png
-/startscreen.png
-/GameEngineV2$KeyState.class
+/MapTile.class
+/Map.class
