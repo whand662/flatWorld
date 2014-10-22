@@ -16,19 +16,8 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 	int width, height, setTimer;
 	Timer timer;
 	//Which keys are currently depressed
-	boolean upArrowPressed, leftArrowPressed, rightArrowPressed,
-			downArrowPressed, spaceBarPressed, aButtonPressed, bButtonPressed,
-			cButtonPressed, dButtonPressed, eButtonPressed, oneButtonPressed,
-			twoButtonPressed, threeButtonPressed, fourButtonPressed,
-			fiveButtonPressed, sixButtonPressed, sevenButtonPressed,
-			eightButtonPressed, nineButtonPressed, zeroButtonPressed;
-	boolean fButtonPressed, gButtonPressed, hButtonPressed, iButtonPressed,
-			jButtonPressed, kButtonPressed, lButtonPressed, mButtonPressed,
-			nButtonPressed, oButtonPressed, pButtonPressed, qButtonPressed,
-			rButtonPressed, sButtonPressed, tButtonPressed, uButtonPressed,
-			vButtonPressed, wButtonPressed, xButtonPressed, yButtonPressed,
-			zButtonPressed;
-	boolean shiftButtonPressed, backspaceButtonPressed, enterPressed;
+	int keyRing[] = new int[256];
+	int upArrow, leftArrow, rightArrow, downArrow;
 	int mouseX, mouseY, clickX, clickY, dragX, dragY;
 	boolean mouseClick, selectLocFlag, clickFlag, rightClickFlag, dragEnabled;
 	boolean focus = true;
@@ -42,6 +31,8 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 		mouseClick = false;
 		selectLocFlag = false;
 		dragEnabled = false;
+		setKeysFalse();
+
 	}
 
 	public void setWindow(String t, int x, int y, int tmr)
@@ -87,232 +78,52 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 	}   
 
 	public void setKeysFalse(){
-		enterPressed = false;
-		upArrowPressed = false;
-		leftArrowPressed = false;
-		rightArrowPressed = false;
-		spaceBarPressed = false;
-		downArrowPressed = false;
-		aButtonPressed = false;
-		bButtonPressed = false;
-		cButtonPressed = false;
-		dButtonPressed = false;
-		eButtonPressed = false;
-		fButtonPressed = false;
-		gButtonPressed = false;
-		hButtonPressed = false;
-		iButtonPressed = false;
-		jButtonPressed = false;
-		kButtonPressed = false;
-		lButtonPressed = false;
-		mButtonPressed = false;
-		nButtonPressed = false;
-		oButtonPressed = false;
-		pButtonPressed = false;
-		qButtonPressed = false;
-		rButtonPressed = false;
-		sButtonPressed = false;
-		tButtonPressed = false;
-		uButtonPressed = false;
-		vButtonPressed = false;
-		wButtonPressed = false;
-		xButtonPressed = false;
-		yButtonPressed = false;
-		zButtonPressed = false;
-		oneButtonPressed = false;
-		twoButtonPressed = false;
-		threeButtonPressed = false;
-		fourButtonPressed = false;
-		fiveButtonPressed = false;
-		sixButtonPressed = false;
-		sevenButtonPressed = false;
-		eightButtonPressed = false;
-		nineButtonPressed = false;
-		zeroButtonPressed = false;
-		backspaceButtonPressed = false;
-		shiftButtonPressed = false;
+
+		for(int count = 0; count < 256; count++){
+			keyRing[count] = 0;
+		}
+
+		upArrow = 0;
+		downArrow = 0;
+		leftArrow = 0;
+		rightArrow = 0;
+
 	}
 
 	public void keyPressed(KeyEvent e)
 	{
 		switch(e.getKeyCode())
 		{
-		case KeyEvent.VK_ENTER:
-			enterPressed = true;
-			break;
-
 		case KeyEvent.VK_UP:
-			upArrowPressed = true;
+			if(upArrow == 0){
+				upArrow = 1;
+			}
 			break;
 
 		case KeyEvent.VK_LEFT:
-			leftArrowPressed = true;
+			if(leftArrow == 0){
+				leftArrow = 1;
+			}
 			break;
 
 		case KeyEvent.VK_RIGHT:
-			rightArrowPressed = true;
+			if(rightArrow == 0){
+				rightArrow = 1;
+			}
 			break;
 
 		case KeyEvent.VK_DOWN:
-			downArrowPressed = true;
+			if(downArrow == 0){
+				downArrow = 1;
+			}
 			break;
+		}
+	}
 
-		case KeyEvent.VK_SPACE:
-			spaceBarPressed = true;
-			break;
-
-		case KeyEvent.VK_A:
-			aButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_B:
-			bButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_C:
-			cButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_D:
-			dButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_E:
-			eButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_F:
-			fButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_G:
-			gButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_H:
-			hButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_I:
-			iButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_J:
-			jButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_K:
-			kButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_L:
-			lButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_M:
-			mButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_N:
-			nButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_O:
-			oButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_P:
-			pButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_Q:
-			qButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_R:
-			rButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_S:
-			sButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_T:
-			tButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_U:
-			uButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_V:
-			vButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_W:
-			wButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_X:
-			xButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_Y:
-			yButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_Z:
-			zButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_1:
-			oneButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_2:
-			twoButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_3:
-			threeButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_4:
-			fourButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_5:
-			fiveButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_6:
-			sixButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_7:
-			sevenButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_8:
-			eightButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_9:
-			nineButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_0:
-			zeroButtonPressed = true;
-			break;
-
-		case KeyEvent.VK_BACK_SPACE:
-			backspaceButtonPressed = true;
-
-			break;
-
-		case KeyEvent.VK_SHIFT:
-			shiftButtonPressed = true;
-			break;
+	public void keyTyped(KeyEvent e)
+	{
+		if(keyRing[(int)e.getKeyChar()] == 0){
+			keyRing[(int)e.getKeyChar()] = 1;
 		}
 	}
 
@@ -320,190 +131,30 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 	{
 		switch(e.getKeyCode())
 		{
-		case KeyEvent.VK_ENTER:
-			enterPressed = false;
-			break;
-
 		case KeyEvent.VK_UP:
-			upArrowPressed = false;
-			break;
+			upArrow = 0;
+			return;
 
 		case KeyEvent.VK_LEFT:
-			leftArrowPressed = false;
-			break;
+			leftArrow = 0;
+			return;
 
 		case KeyEvent.VK_RIGHT:
-			rightArrowPressed = false;
-			break;
+			rightArrow = 0;
+			return;
 
 		case KeyEvent.VK_SPACE:
-			spaceBarPressed = false;
-			break;
-
-		case KeyEvent.VK_DOWN:
-			downArrowPressed = false;
-			break;
-
-		case KeyEvent.VK_A:
-			aButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_B:
-			bButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_C:
-			cButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_D:
-			dButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_E:
-			eButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_F:
-			fButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_G:
-			gButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_H:
-			hButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_I:
-			iButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_J:
-			jButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_K:
-			kButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_L:
-			lButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_M:
-			mButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_N:
-			nButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_O:
-			oButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_P:
-			pButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_Q:
-			qButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_R:
-			rButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_S:
-			sButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_T:
-			tButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_U:
-			uButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_V:
-			vButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_W:
-			wButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_X:
-			xButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_Y:
-			yButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_Z:
-			zButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_1:
-			oneButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_2:
-			twoButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_3:
-			threeButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_4:
-			fourButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_5:
-			fiveButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_6:
-			sixButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_7:
-			sevenButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_8:
-			eightButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_9:
-			nineButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_0:
-			zeroButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_BACK_SPACE:
-			backspaceButtonPressed = false;
-			break;
-
-		case KeyEvent.VK_SHIFT:
-			shiftButtonPressed = false;
-			break;
+			downArrow = 0;
+			return;
 
 		case KeyEvent.VK_ESCAPE:
 			System.exit(0);
-			break;
+			return;
 		}
-	}
 
-	public void keyTyped(KeyEvent e)
-	{
+		if((int)e.getKeyChar() >= 0 && (int)e.getKeyChar() < 256){
+			keyRing[(int)e.getKeyChar()] = 0;
+		}
 
 	}
 
