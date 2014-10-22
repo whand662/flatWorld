@@ -1,5 +1,3 @@
-import java.applet.Applet;
-import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -13,7 +11,6 @@ import javax.imageio.ImageIO;
 
 public class TitleScreen {
 
-	AudioClip splashClip, MenuClip;
 	int cursorLoc = 1, waitTime = 0, webWait = 0;
 	long time;
 	Image splash, menuScreen;
@@ -27,12 +24,10 @@ public class TitleScreen {
 		try {
 			splash = ImageIO.read(new File("splash.png"));
 			menuScreen = ImageIO.read(new File("startscreen.png"));
-			//splashClip = Applet.newAudioClip(this.getClass().getResource("splashsound.wav"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		time = System.currentTimeMillis();
-		//splashClip.play();
 	}
 
 	private void resetWait(){
