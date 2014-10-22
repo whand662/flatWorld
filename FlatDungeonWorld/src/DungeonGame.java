@@ -1,11 +1,15 @@
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
 public class DungeonGame implements Game{
 	
 	public enum Gamestate{TITLE, GAME, MENU, DEAD, WARP};
 	GameEngineV2 engine;
-	Gamestate GS;
+	static Gamestate GS;
 	TitleScreen titleScreen;
+	Map currentWorld;
+	int test;
 	
 	public static void main(String args[])
 	{
@@ -23,6 +27,17 @@ public class DungeonGame implements Game{
 		
 		engine.start();
 	}
+	
+	public void goToLevel(String levelName){
+		GS = Gamestate.WARP;
+		currentWorld = new Map(levelName);
+	}
+	
+	private void drawLevelScreen(Graphics g){
+		g.setFont(new Font("SansSerif", Font.BOLD, 30));
+		g.setColor(Color.white);
+		g.drawString(currentWorld.getMapName(), (engine.width - g.getFontMetrics().stringWidth(currentWorld.getMapName()))/2, engine.height/2);
+	}
 
 	public void drawFrame(Graphics g) {
 		switch(GS){
@@ -39,7 +54,7 @@ public class DungeonGame implements Game{
 			
 			break;
 		case WARP: //changing maps
-			
+			drawLevelScreen(g);
 			break;
 		}
 		

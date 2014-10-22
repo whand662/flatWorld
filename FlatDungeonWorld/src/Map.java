@@ -30,7 +30,7 @@ public class Map {
 
 	}
 
-	public void initializeMap(String mapFile){
+	private void initializeMap(String mapFile){
 		String line;
 		int x, y;
 		StringTokenizer st;

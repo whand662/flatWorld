@@ -17,11 +17,11 @@ public class TitleScreen {
 	int cursorLoc = 1, waitTime = 0, webWait = 0;
 	long time;
 	Image splash, menuScreen;
-	Game game;
+	DungeonGame game;
 	GameEngineV2 engine;
 	String text[] = {"Created By: Willis Hand & Caleb Cook-Kollars", "Begin your quest!", "What am I playing anyway?", "Who are you?"};
 
-	public TitleScreen(Game game, GameEngineV2 engine) {
+	public TitleScreen(DungeonGame game, GameEngineV2 engine) {
 		this.game = game;
 		this.engine = engine;
 		try {
@@ -66,7 +66,7 @@ public class TitleScreen {
 	public void chooseOption(){
 		switch(cursorLoc){
 		case 1:
-
+			game.goToLevel("Test");
 			break;
 		case 2:
 
