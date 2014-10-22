@@ -37,7 +37,6 @@ public class TitleScreen {
 
 	private void visitWeb() {
 		webWait = 30;
-		game.engine.setKeysFalse();
 	}
 
 	public void cursorUp() {

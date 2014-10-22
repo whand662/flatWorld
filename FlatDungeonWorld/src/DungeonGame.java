@@ -18,7 +18,8 @@ public class DungeonGame extends Application implements Game {
 	static Gamestate GS;
 	TitleScreen titleScreen;
 	Map currentWorld;
-	int test;
+	int loadCount = 0;
+	int x = 20, y = 50; //dummy values for testing
 
 	public static void main(String args[]) {
 		launch(args);
@@ -40,6 +41,7 @@ public class DungeonGame extends Application implements Game {
 	public void goToLevel(String levelName) {
 		GS = Gamestate.WARP;
 		currentWorld = new Map(levelName);
+		loadCount = 400;
 	}
 
 	private void drawLevelScreen(Graphics g) {
@@ -55,8 +57,8 @@ public class DungeonGame extends Application implements Game {
 		case TITLE: // startup screen
 			titleScreen.draw(g);
 			break;
-		case GAME: // walking maps
-
+		case GAME: //walking maps
+			currentWorld.draw(g, this);
 			break;
 		case MENU: // menu interaction
 
@@ -97,8 +99,11 @@ public class DungeonGame extends Application implements Game {
 		case DEAD: // death screen
 
 			break;
-		case WARP: // changing maps
-
+		case WARP: //changing maps
+			loadCount--;
+			if(loadCount <=0){
+				GS = Gamestate.GAME;
+			}
 			break;
 		}
 
