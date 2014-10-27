@@ -17,10 +17,10 @@ public class DungeonGame extends Application implements Game {
 	GameEngineV2 engine;
 	static Gamestate GS;
 	TitleScreen titleScreen;
+	Player player;
 	Map currentWorld;
 	int loadCount = 0;
-	int x = 200, y = 500; //dummy values for testing
-
+	
 	public static void main(String args[]) {
 		launch(args);
 		new DungeonGame();
@@ -33,6 +33,7 @@ public class DungeonGame extends Application implements Game {
 		// define startup variables
 		GS = Gamestate.TITLE;
 		titleScreen = new TitleScreen(this, engine);
+		player = new Player(160, 200, engine.width/2, engine.height/2);
 
 		engine.start();
 		playSound("Kalimba.mp3");
@@ -59,6 +60,7 @@ public class DungeonGame extends Application implements Game {
 			break;
 		case GAME: //walking maps
 			currentWorld.draw(g, this);
+			player.draw(g);
 			break;
 		case MENU: // menu interaction
 
@@ -94,7 +96,18 @@ public class DungeonGame extends Application implements Game {
 			}
 			break;
 		case GAME: // walking maps
-
+			if(engine.getKey(UP) > 0){
+				player.moveUp(currentWorld);
+			}
+			if(engine.getKey(LEFT) > 0){
+				player.moveLeft(currentWorld);
+			}
+			if(engine.getKey(RIGHT) > 0){
+				player.moveRight(currentWorld);
+			}
+			if(engine.getKey(DOWN) > 0){
+				player.moveDown(currentWorld);
+			}
 			break;
 		case MENU: // menu interaction
 

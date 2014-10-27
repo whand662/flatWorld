@@ -1,5 +1,5 @@
 import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -11,7 +11,7 @@ public class Map {
 
 	MapTile[][] World;
 	String mapName;
-	Image[] tilePics;
+	BufferedImage[] tilePics;
 	int maxX, maxY;
 
 	public Map(String mapFile) {
@@ -24,6 +24,9 @@ public class Map {
 	}
 
 	public boolean locWalkable(int x, int y){
+		if(x < 0 || y < 0 || x > maxX || y > maxY){
+			return false;
+		}
 		x = x / 40;
 		y = y / 40;
 		return (World[x][y].walkable());
@@ -35,8 +38,8 @@ public class Map {
 		for(int counter1 = 0; counter1 < 20; counter1++){
 			for(int counter2 = 0; counter2 < 20; counter2++){
 				try{
-					x = (counter2 * 40) + (game.engine.width/2) - game.x;
-					y = (counter1 * 40) + (game.engine.height/2) - game.y;
+					x = (counter2 * 40) + (game.engine.width/2) - game.player.x;
+					y = (counter1 * 40) + (game.engine.height/2) - game.player.y;
 					tileNum = tileToInt(World[counter2][counter1].getName());
 					World[counter2][counter1].draw(g, tilePics[tileNum], x, y);
 				}catch(Exception e){
@@ -80,7 +83,7 @@ public class Map {
 		StringTokenizer st;
 		String delimiters = ";";
 
-		tilePics = new Image[4];
+		tilePics = new BufferedImage[4];
 		for(int count = 0; count < tilePics.length; count++){
 			try {
 				tilePics[count] = ImageIO.read(new File("Tiles/" + intToTile(count) + ".png"));

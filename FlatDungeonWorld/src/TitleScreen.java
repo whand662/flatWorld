@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -13,7 +13,7 @@ public class TitleScreen {
 	boolean opened = false;
 	int cursorLoc = 1;
 	long time;
-	Image splash, menuScreen;
+	BufferedImage splash, menuScreen;
 	DungeonGame game;
 	GameEngineV2 engine;
 	String text[] = { "Created By: Willis Hand & Caleb Cook-Kollars",
