@@ -6,6 +6,7 @@ public class Player extends Creature {
 	
 	int drawx, drawy;
 	Item inventory[];
+	int gold;
 
 	public Player(int locx, int locy, int engx, int engy) {
 		super(locx, locy);
