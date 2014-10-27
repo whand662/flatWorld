@@ -12,6 +12,10 @@ public class Creature {
 		y = locy;
 	}
 	
+	public void update(){
+		
+	}
+	
 	public void draw(Graphics g){
 		int rad = 10;
 		g.setColor(Color.GREEN);

@@ -10,6 +10,7 @@ public class DungeonLib{
 		
 		//define item materials
 		final Material leather = new Material("leather", 20, 5, 10);
+		
 	}
 }
 

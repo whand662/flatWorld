@@ -10,10 +10,9 @@ import javax.imageio.ImageIO;
 
 public class TitleScreen {
 
-	boolean opened = false;
 	int cursorLoc = 1;
 	long time;
-	BufferedImage splash, menuScreen;
+	BufferedImage splash, startScreen;
 	DungeonGame game;
 	GameEngineV2 engine;
 	String text[] = { "Created By: Willis Hand & Caleb Cook-Kollars",
@@ -24,7 +23,7 @@ public class TitleScreen {
 		this.engine = engine;
 		try {
 			splash = ImageIO.read(new File("splash.png"));
-			menuScreen = ImageIO.read(new File("startscreen.png"));
+			startScreen = ImageIO.read(new File("startscreen.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -73,7 +72,7 @@ public class TitleScreen {
 			return;
 		}
 
-		g.drawImage(menuScreen, 0, 0, null);
+		g.drawImage(startScreen, 0, 0, null);
 
 		int stringWidth, count;
 

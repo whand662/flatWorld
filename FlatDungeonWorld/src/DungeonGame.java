@@ -17,6 +17,7 @@ public class DungeonGame extends Application implements Game {
 	GameEngineV2 engine;
 	static Gamestate GS;
 	TitleScreen titleScreen;
+	MenuScreen menuScreen;
 	Player player;
 	Map currentWorld;
 	int loadCount = 0;
@@ -33,6 +34,7 @@ public class DungeonGame extends Application implements Game {
 		// define startup variables
 		GS = Gamestate.TITLE;
 		titleScreen = new TitleScreen(this, engine);
+		menuScreen = new MenuScreen(this, engine);
 		player = new Player(160, 200, engine.width/2, engine.height/2);
 
 		engine.start();
@@ -63,7 +65,7 @@ public class DungeonGame extends Application implements Game {
 			player.draw(g);
 			break;
 		case MENU: // menu interaction
-
+			menuScreen.draw(g);
 			break;
 		case DEAD: // death screen
 
@@ -96,6 +98,11 @@ public class DungeonGame extends Application implements Game {
 			}
 			break;
 		case GAME: // walking maps
+			if(engine.getKey(105) == 1){
+				engine.unflagKey(105);
+				GS = Gamestate.MENU;
+			}
+			player.update();
 			if(engine.getKey(UP) > 0){
 				player.moveUp(currentWorld);
 			}
@@ -110,7 +117,10 @@ public class DungeonGame extends Application implements Game {
 			}
 			break;
 		case MENU: // menu interaction
-
+			if(engine.getKey(105) == 1){
+				engine.unflagKey(105);
+				GS = Gamestate.GAME;
+			}
 			break;
 		case DEAD: // death screen
 
