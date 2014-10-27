@@ -98,6 +98,10 @@ public class DungeonGame extends Application implements Game {
 			}
 			break;
 		case GAME: // walking maps
+			if(engine.getKey(103) == 1){
+				engine.unflagKey(103);
+				player.give(new Item("Sword of mighty smiting!", 120, 20, true));
+			}
 			if(engine.getKey(105) == 1){
 				engine.unflagKey(105);
 				GS = Gamestate.MENU;

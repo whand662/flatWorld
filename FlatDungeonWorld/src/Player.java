@@ -14,7 +14,7 @@ public class Player extends Creature {
 		speed = 2;
 		size = 10;
 		
-		inventory = new Item[30];
+		inventory = new Item[30]; 
 	}
 	
 	public void draw(Graphics g){
@@ -25,8 +25,13 @@ public class Player extends Creature {
 	}
 	
 	public int give(Item tempItem){
-		
-		return 0;
+		for(int count = 0; count < 20; count++){
+			if(inventory[count] == null){
+				inventory[count] = tempItem;
+				return 0;
+			}
+		}
+		return 1;
 	}
 	
 }
