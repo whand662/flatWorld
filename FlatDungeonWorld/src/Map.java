@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
+
 import javax.imageio.ImageIO;
 
 public class Map {
@@ -13,6 +14,7 @@ public class Map {
 	String mapName;
 	BufferedImage[] tilePics;
 	int maxX, maxY;
+	private final int TILEWIDTH = 40;
 
 	public Map(String mapFile) {
 		mapName = mapFile;
@@ -24,7 +26,7 @@ public class Map {
 	}
 
 	public boolean locWalkable(int x, int y){
-		if(x < 0 || y < 0 || x > maxX || y > maxY){
+		if(x < 0 || y < 0 || x >= maxX || y > maxY){
 			return false;
 		}
 		x = x / 40;
@@ -32,14 +34,20 @@ public class Map {
 		return (World[x][y].walkable());
 	}
 
-	public void draw(Graphics g, DungeonGame game){
+	/**
+	 * Draw all tiles in the proper location
+	 * 
+	 * @param g		the graphics object to draw with
+	 * @param game	the game object to draw on
+	 */
+	public void draw(Graphics g, int xOffset, int yOffset){
 		int x, y, tileNum;
 
 		for(int counter1 = 0; counter1 < 20; counter1++){
 			for(int counter2 = 0; counter2 < 20; counter2++){
 				try{
-					x = (counter2 * 40) + (game.engine.width/2) - game.player.x;
-					y = (counter1 * 40) + (game.engine.height/2) - game.player.y;
+					x = (counter2 * TILEWIDTH) + xOffset;
+					y = (counter1 * TILEWIDTH) + yOffset;
 					tileNum = tileToInt(World[counter2][counter1].getName());
 					World[counter2][counter1].draw(g, tilePics[tileNum], x, y);
 				}catch(Exception e){

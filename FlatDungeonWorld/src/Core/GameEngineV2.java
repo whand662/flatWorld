@@ -1,3 +1,4 @@
+package Core;
 /*
  * Version 2.5
  */
@@ -7,21 +8,47 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import com.sun.media.jfxmedia.events.PlayerEvent;
+
 public class GameEngineV2 implements Runnable, ActionListener, KeyListener, MouseListener, MouseMotionListener, FocusListener
 {
 	Game game;
 	String title;
 	JFrame gameWindow;  // The main window that the game runs inside of.
 	GamePanel gamePanel;  // The panel that the game graphics are drawn on.
-	int width, height, setTimer;
+	public int width, height, setTimer;
 	Timer timer;
 	//Which keys are currently depressed
 	private int keyRing[] = new int[256];
 	private int upArrow, leftArrow, rightArrow, downArrow;
+	private ArrDirect facing = ArrDirect.STILL;
+	
+
 	int mouseX, mouseY, clickX, clickY, dragX, dragY;
 	boolean mouseClick, selectLocFlag, clickFlag, rightClickFlag, dragEnabled;
 	boolean focus = true;
 
+	/**
+	 * @author ayrix
+	 * Save the direction the character is facing
+	 */
+	public enum ArrDirect {
+		STILL (1.5),
+		N (1.5),
+		E (0),
+		S (.5),
+		W (1),
+		NE (1.75),
+		SE (.25),
+		SW (.75),
+		NW (1.25);
+		//Theta is stored as PI coefficient
+		public final double theta;
+		ArrDirect(double _theta){
+			theta = _theta;
+		}
+	};
+	
 	public GameEngineV2(Game g)
 	{
 		game = g;
@@ -82,13 +109,13 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 			return keyRing[ascii];
 		}else{
 			switch(ascii){
-			case -2:
+			case Game.DOWN:
 				return downArrow;
-			case -4:
+			case Game.LEFT:
 				return leftArrow;
-			case -8:
+			case Game.UP:
 				return upArrow;
-			case -6:
+			case Game.RIGHT:
 				return rightArrow;
 			}
 		}
@@ -102,23 +129,23 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 			}			
 		}else{
 			switch(ascii){
-			case -2:
+			case Game.DOWN:
 				if(downArrow == 1){
 					downArrow = 2;
 				}	
 				break;
-			case -4:
+			case Game.LEFT:
 				if(leftArrow == 1){
 					leftArrow = 2;
 				}	
 				break;
-			case -8:
+			case Game.UP:
 				if(upArrow == 1){
 					upArrow = 2;
 				}	
 				break;
-			case -6:
-				if(downArrow == 1){
+			case Game.RIGHT:
+				if(rightArrow == 1){
 					rightArrow = 2;
 				}	
 				break;
@@ -147,11 +174,37 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 			if(upArrow == 0){
 				upArrow = 1;
 			}
+			switch(facing)
+			{
+			case STILL:
+				facing = ArrDirect.N;
+				break;
+			case E:
+				facing = ArrDirect.NE;
+				break;
+			case W:
+				facing = ArrDirect.NW;
+				break;
+			default:
+			}
 			break;
 
 		case KeyEvent.VK_LEFT:
 			if(leftArrow == 0){
 				leftArrow = 1;
+			}
+			switch(facing)
+			{
+			case STILL:
+				facing = ArrDirect.W;
+				break;
+			case N:
+				facing = ArrDirect.NW;
+				break;
+			case S:
+				facing = ArrDirect.SW;
+				break;
+			default:
 			}
 			break;
 
@@ -159,11 +212,37 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 			if(rightArrow == 0){
 				rightArrow = 1;
 			}
+			switch(facing)
+			{
+			case STILL:
+				facing = ArrDirect.E;
+				break;
+			case N:
+				facing = ArrDirect.NE;
+				break;
+			case S:
+				facing = ArrDirect.SE;
+				break;
+			default:
+			}
 			break;
 
 		case KeyEvent.VK_DOWN:
 			if(downArrow == 0){
 				downArrow = 1;
+			}
+			switch(facing)
+			{
+			case STILL:
+				facing = ArrDirect.S;
+				break;
+			case E:
+				facing = ArrDirect.SE;
+				break;
+			case W:
+				facing = ArrDirect.SW;
+				break;
+			default:
 			}
 			break;
 		}
@@ -183,18 +262,70 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 		{
 		case KeyEvent.VK_UP:
 			upArrow = 0;
+			switch(facing)
+			{
+			case N:
+				facing = ArrDirect.STILL;
+				break;
+			case NE:
+				facing = ArrDirect.E;
+				break;
+			case NW:
+				facing = ArrDirect.W;
+				break;
+			default:
+			}
 			return;
 
 		case KeyEvent.VK_LEFT:
 			leftArrow = 0;
+			switch(facing)
+			{
+			case W:
+				facing = ArrDirect.STILL;
+				break;
+			case NW:
+				facing = ArrDirect.N;
+				break;
+			case SW:
+				facing = ArrDirect.S;
+				break;
+			default:
+			}
 			return;
 
 		case KeyEvent.VK_RIGHT:
 			rightArrow = 0;
+			switch(facing)
+			{
+			case E:
+				facing = ArrDirect.STILL;
+				break;
+			case NE:
+				facing = ArrDirect.N;
+				break;
+			case SE:
+				facing = ArrDirect.S;
+				break;
+			default:
+			}
 			return;
 
 		case KeyEvent.VK_DOWN:
 			downArrow = 0;
+			switch(facing)
+			{
+			case S:
+				facing = ArrDirect.STILL;
+				break;
+			case SE:
+				facing = ArrDirect.E;
+				break;
+			case SW:
+				facing = ArrDirect.W;
+				break;
+			default:
+			}
 			return;
 
 		case KeyEvent.VK_ESCAPE:
@@ -280,6 +411,9 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 		mouseY = arg0.getY() - 25;
 	}
 
+	public ArrDirect getFacing() {
+		return facing;
+	}
 }
 
 //This GamePanel class extends the standard JPanel and modifies it to draw our game
