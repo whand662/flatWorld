@@ -14,12 +14,19 @@ public class Player extends Creature {
 	
 	Item inventory[];
 	boolean wieldingSword = false;
+	double swordTheta = 1.5;
+	int swordx = 0;
+	int swordy = 0;
+	BufferedImage swordImg;
+	AffineTransform st;
+	
 	public Player(int locx, int locy) {
 		super(locx, locy);
 		speed = 2;
 		size = 10;
 		try {
 			sprite  = ImageIO.read(new File("res/chars/char1.gif"));
+			swordImg = ImageIO.read(new File("res/chars/sword1.gif"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -31,7 +38,12 @@ public class Player extends Creature {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.translate(xOffset, yOffset);
 		g2d.drawImage(sprite, at, null);
+		g2d.drawImage(swordImg, st, null);
 	}
+	protected void Sword(Graphics2D g){
+		
+	}
+	
 	protected void updateSprite(){
 		// create the transform, note that the transformations happen
 		// in reversed order (so check them backwards)
@@ -46,6 +58,12 @@ public class Player extends Creature {
 		// 1. translate the object so that you rotate it around the 
 		//    center (easier :))
 		at.translate(-sprite.getWidth()/2, -sprite.getHeight()/2);
+		
+		 st = new AffineTransform();
+		
+		st.scale(.5, .5);		
+		st.rotate(facing.theta*Math.PI);
+		st.translate(swordImg.getWidth()/4, -swordImg.getHeight()/4);
 	}
 
 	

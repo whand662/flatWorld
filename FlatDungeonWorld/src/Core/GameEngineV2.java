@@ -33,7 +33,7 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 	 * Save the direction the character is facing
 	 */
 	public enum ArrDirect {
-		STILL (1.5),
+		STILL (0),
 		N (1.5),
 		E (0),
 		S (.5),
