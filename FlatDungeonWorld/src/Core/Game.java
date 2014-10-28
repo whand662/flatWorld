@@ -1,3 +1,4 @@
+package Core;
 import java.awt.Graphics;
 
 public interface Game

@@ -3,16 +3,27 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.io.File;
 
+import Core.Game;
+import Core.GameEngineV2;
 import javafx.application.Application;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+/**
+ * @author ayrix
+ * ##+++==== HEY WILLIS TRY alt+shift+j while clicking on a function declaration
+ */
 public class DungeonGame extends Application implements Game {
 	
+	/**
+	 * @author ayrix
+	 * Overall gamestate enumerator
+	 */
 	public enum Gamestate {
 		TITLE, GAME, MENU, DEAD, WARP
 	};
+
 
 	GameEngineV2 engine;
 	static Gamestate GS;
@@ -20,6 +31,9 @@ public class DungeonGame extends Application implements Game {
 	MenuScreen menuScreen;
 	Player player;
 	Map currentWorld;
+	int xOffset, yOffset;
+	private final int WIDTH = 1280;
+	private final int HEIGHT = 720;
 	int loadCount = 0;
 	
 	public static void main(String args[]) {
@@ -29,22 +43,22 @@ public class DungeonGame extends Application implements Game {
 
 	public DungeonGame() {
 		engine = new GameEngineV2(this);
-		engine.setWindow("Dungeon Game", 1280, 720, 10);
+		engine.setWindow("Dungeon Game", WIDTH, HEIGHT, 10);
 
 		// define startup variables
 		GS = Gamestate.TITLE;
 		titleScreen = new TitleScreen(this, engine);
 		menuScreen = new MenuScreen(this, engine);
-		player = new Player(160, 200, engine.width/2, engine.height/2);
+		player = new Player(160, 200);
 
 		engine.start();
-		playSound("Kalimba.mp3");
+		playSound("odd1.wav");
 	}
 
 	public void goToLevel(String levelName) {
 		GS = Gamestate.WARP;
 		currentWorld = new Map(levelName);
-		loadCount = 400;
+		loadCount = 50;
 	}
 
 	private void drawLevelScreen(Graphics g) {
@@ -61,8 +75,10 @@ public class DungeonGame extends Application implements Game {
 			titleScreen.draw(g);
 			break;
 		case GAME: //walking maps
-			currentWorld.draw(g, this);
-			player.draw(g);
+			xOffset = player.getX();
+			yOffset = player.getY();
+			currentWorld.draw(g, engine.width/2-xOffset, engine.height/2-yOffset);
+			player.draw(g, engine.width/2, engine.height/2);
 			break;
 		case MENU: // menu interaction
 			menuScreen.draw(g);
@@ -79,6 +95,7 @@ public class DungeonGame extends Application implements Game {
 
 	public void processFrame() {
 		switch (GS) {
+		
 		case TITLE: // startup screen
 			if (engine.getKey(UP) == 1) {
 				engine.unflagKey(UP);
@@ -97,6 +114,7 @@ public class DungeonGame extends Application implements Game {
 				}
 			}
 			break;
+			
 		case GAME: // walking maps
 			if(engine.getKey(103) == 1){
 				engine.unflagKey(103);
@@ -107,6 +125,7 @@ public class DungeonGame extends Application implements Game {
 				GS = Gamestate.MENU;
 			}
 			player.update();
+			player.setFacing(engine.getFacing());
 			if(engine.getKey(UP) > 0){
 				player.moveUp(currentWorld);
 			}
@@ -120,6 +139,7 @@ public class DungeonGame extends Application implements Game {
 				player.moveDown(currentWorld);
 			}
 			break;
+			
 		case MENU: // menu interaction
 			if(engine.getKey(105) == 1){
 				engine.unflagKey(105);

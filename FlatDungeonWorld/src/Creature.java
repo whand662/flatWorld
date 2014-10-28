@@ -1,12 +1,21 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+
+import Core.GameEngineV2.ArrDirect;
+
 
 public class Creature {
 
 	int x, y, size = 5;
 	int stats[];
 	int speed = 5;
+	protected ArrDirect facing = ArrDirect.N;
 
+	AffineTransform at;
+	BufferedImage sprite;
+	
 	public Creature(int locx, int locy) {
 		x = locx;
 		y = locy;
@@ -15,8 +24,32 @@ public class Creature {
 	public void update(){
 		
 	}
-	
-	public void draw(Graphics g){
+
+	/**
+	 * See			http://stackoverflow.com/questions/4918482/rotating-bufferedimage-instances
+	 * @return at	a prepared AffineTransform for drawing
+	 */
+	protected void updateSprite(){
+		// create the transform, note that the transformations happen
+		// in reversed order (so check them backwards)
+		at = new AffineTransform();
+
+
+		// 4. resize component
+		at.scale(1, 1);
+
+		// 3. translate it to the center of the component
+		at.translate(x, y);
+		
+		// 2. do the actual rotation
+		at.rotate(Math.PI*facing.theta);
+
+		// 1. translate the object so that you rotate it around the 
+		//    center (easier :))
+		at.translate(-sprite.getWidth()/2, -sprite.getHeight()/2);
+	}
+
+	public void draw(Graphics g, int xOffset, int yOffset){
 		int rad = 10;
 		g.setColor(Color.GREEN);
 		g.fillOval(x - rad, y - rad, rad * 2, rad * 2);
@@ -60,6 +93,48 @@ public class Creature {
 				x++;
 			}	
 		}
+	}
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public ArrDirect getFacing() {
+		return facing;
+	}
+
+	public void setFacing(ArrDirect _facing) {
+		this.facing = _facing;
+		if (facing != ArrDirect.STILL){
+			updateSprite();
+		}
+	}
+
+	public BufferedImage getSprite() {
+		return sprite;
+	}
+
+	public void setSprite(BufferedImage sprite) {
+		this.sprite = sprite;
 	}
 
 }
