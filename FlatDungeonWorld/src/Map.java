@@ -26,7 +26,7 @@ public class Map {
 	}
 
 	public boolean locWalkable(int x, int y){
-		if(x < 0 || y < 0 || x >= maxX || y > maxY){
+		if(x < 0 || y < 0 || x >= maxX || y >= maxY){
 			return false;
 		}
 		x = x / 40;
