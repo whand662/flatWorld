@@ -17,6 +17,17 @@ public class DungeonLib{
 	final Material starmetal;
 	final Material unobtainium;
 	
+	/*final WearableType sword;
+	final WearableType mace;
+	final WearableType axe;
+	
+	final WearableType helmet;
+	final WearableType gloves;
+	final WearableType leggings;
+	final WearableType boots;
+	final WearableType chestplate;
+	final WearableType shield;*/
+	
 	public DungeonLib(){
 		
 		//define item quality levels
@@ -37,6 +48,31 @@ public class DungeonLib{
 		adamantite = new Material("adamantine", 30, 100, 30);
 		starmetal = new Material("starmetel", 40, 150, 25);
 		unobtainium = new Material("unobtainium", 60, 200, 30);
+	}
+}
+
+class WearableType{
+	private String name, slot;
+	private double modifier;
+	private int handsReq;
+	private char data;
+
+	public WearableType(String str, int val, char dat){
+		name = str;
+		modifier = val;
+		data = dat;
+	}
+
+	public String getName(){
+		return name;
+	}
+	
+	public double getModifiere(){
+		return modifier;
+	}
+	
+	public char getData(){
+		return data;
 	}
 }
 
