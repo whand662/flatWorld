@@ -10,7 +10,6 @@ import Core.GameEngineV2;
 
 /**
  * @author ayrix
- * ##+++==== HEY WILLIS TRY alt+shift+j while clicking on a function declaration
  */
 public class DungeonGame implements Game {
 	
