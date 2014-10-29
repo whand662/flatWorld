@@ -6,6 +6,7 @@ public class DungeonLib{
 	final Quality superior;
 	final Quality masterwork;
 	
+	final Material paper;
 	final Material leather;
 	final Material wood;
 	final Material iron;
@@ -26,15 +27,16 @@ public class DungeonLib{
 		masterwork = new Quality("Masterwork", 1.5);
 		
 		//define item materials
-		leather = new Material("leather", 20, 5, 10);
-		wood = new Material("wooden", 20, 5, 10);
-		iron = new Material("iron", 20, 5, 10);
-		bronze = new Material("bronze", 20, 5, 10);
-		steel = new Material("steel", 20, 5, 10);
-		mithril = new Material("mithril", 20, 5, 10);
-		adamantite = new Material("adamantine", 20, 5, 10);
-		starmetal = new Material("starmetel", 20, 5, 10);
-		unobtainium = new Material("unobtainium", 20, 5, 10);
+		paper = new Material("paper", 1, 1, 1);
+		leather = new Material("leather", 1, 20, 5);
+		wood = new Material("wooden", 5, 25, 5);
+		iron = new Material("iron", 15, 50, 10);
+		bronze = new Material("bronze", 15, 70, 10);
+		steel = new Material("steel", 20, 80, 15);
+		mithril = new Material("mithril", 30, 70, 10);
+		adamantite = new Material("adamantine", 30, 100, 30);
+		starmetal = new Material("starmetel", 40, 150, 25);
+		unobtainium = new Material("unobtainium", 60, 200, 30);
 	}
 }
 
@@ -42,7 +44,7 @@ class Material{
 	private String name;
 	private int hardness, weight, durability;
 
-	public Material(String str, int val, int lbs, int hp){
+	public Material(String str, int val, int hp, int lbs){
 		name = str;
 		hardness = val;
 		weight = lbs;

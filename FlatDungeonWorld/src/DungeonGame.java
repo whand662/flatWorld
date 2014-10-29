@@ -99,7 +99,11 @@ public class DungeonGame implements Game {
 		if(GODMODE){
 			if(engine.getKey(103) == 1){
 				engine.unflagKey(103);
-				player.give(new Weapon("Label doesn't matter for weapons!", 120, 20, true, library.superior, library.iron, "mace", ""));
+				player.give(new Weapon(library.superior, library.iron, "mace", "", true));
+			}
+			if(engine.getKey(104) == 1){
+				engine.unflagKey(104);
+				player.give(new Armor(library.inferior, library.starmetal, "helmet", "", false));
 			}
 		}
 

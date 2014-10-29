@@ -7,14 +7,16 @@ public class Weapon extends Wearable {
 	String element;
 	int damage;
 	
-	public Weapon(String label, int cost, int lbs, boolean known, Quality qual, Material mat, String typ, String elmt) {
-		super(label, cost, lbs, known);
+	public Weapon(Quality qual, Material mat, String typ, String elmt, boolean known) {
+		super(known);
 		quality = qual;
 		material = mat;
 		type = typ;
 		element = elmt;
+		weight = material.getWeight();
 		damage = (int)(material.getHardness() * quality.getValue());
 		MAXDUR = (int)(material.getDurability() * quality.getValue());
+		repair();
 	}
 	
 	public String getName(){

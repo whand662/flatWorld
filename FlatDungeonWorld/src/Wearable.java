@@ -3,8 +3,8 @@ public class Wearable extends Item{
 
 	int durability = 1, MAXDUR = 1;
 	
-	public Wearable(String label, int cost, int lbs, boolean known) {
-		super(label, cost, lbs, known);
+	public Wearable(boolean known) {
+		super("Wearable item" , 1, 1, known);
 	}
 
 	public void tickDUR(int dmg){
