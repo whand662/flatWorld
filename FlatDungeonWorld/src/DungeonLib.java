@@ -10,7 +10,14 @@ public class DungeonLib{
 		
 		//define item materials
 		final Material leather = new Material("leather", 20, 5, 10);
-		
+		final Material wood = new Material("wooden", 20, 5, 10);
+		final Material iron = new Material("iron", 20, 5, 10);
+		final Material bronze = new Material("bronze", 20, 5, 10);
+		final Material steel = new Material("steel", 20, 5, 10);
+		final Material mithril = new Material("mithril", 20, 5, 10);
+		final Material adamantite = new Material("adamantine", 20, 5, 10);
+		final Material starmetal = new Material("starmetel", 20, 5, 10);
+		final Material unobtainium = new Material("unobtainium", 20, 5, 10);
 	}
 }
 

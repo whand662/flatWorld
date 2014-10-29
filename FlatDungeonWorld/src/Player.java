@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 public class Player extends Creature {
 	
 	Item inventory[];
+	int gold;
 	boolean wieldingSword = false;
 	double swordTheta = 1.5;
 	int swordx = 0;
@@ -42,6 +43,7 @@ public class Player extends Creature {
 	}
 	protected void Sword(Graphics2D g){
 		
+		inventory = new Item[30]; 
 	}
 	
 	protected void updateSprite(){
@@ -65,10 +67,15 @@ public class Player extends Creature {
 		st.rotate(facing.theta*Math.PI);
 		st.translate(swordImg.getWidth()/4, -swordImg.getHeight()/4);
 	}
-
 	
 	public int give(Item tempItem){
-		return 0;
+		for(int count = 0; count < 20; count++){
+			if(inventory[count] == null){
+				inventory[count] = tempItem;
+				return 0;
+			}
+		}
+		return 1;
 	}
 	public void setSword(boolean state){
 		wieldingSword = state;
