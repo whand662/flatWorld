@@ -26,6 +26,7 @@ public class DungeonGame implements Game {
 	static Gamestate GS;
 	TitleScreen titleScreen;
 	MenuScreen menuScreen;
+	DungeonLib library;
 	Player player;
 	Map currentWorld;
 	int xOffset, yOffset;
@@ -47,6 +48,7 @@ public class DungeonGame implements Game {
 		GS = Gamestate.TITLE;
 		titleScreen = new TitleScreen(this, engine);
 		menuScreen = new MenuScreen(this, engine);
+		library = new DungeonLib();
 		player = new Player(160, 200);
 
 		engine.start();
@@ -96,7 +98,11 @@ public class DungeonGame implements Game {
 		if(GODMODE){
 			if(engine.getKey(103) == 1){
 				engine.unflagKey(103);
-				player.give(new Item("Sword of mighty smiting!", 120, 20, true));
+				player.give(new Weapon(library.superior, library.iron, "mace", "", true));
+			}
+			if(engine.getKey(104) == 1){
+				engine.unflagKey(104);
+				player.give(new Armor(library.inferior, library.starmetal, "helmet", "", false));
 			}
 		}
 

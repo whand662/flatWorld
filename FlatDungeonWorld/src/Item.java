@@ -12,7 +12,10 @@ public class Item {
 	}
 	
 	public String getName(){
-		return name;
+		if(identified){
+			return name;
+		}
+		return "Strange item";
 	}
 	
 	public int getValue(){

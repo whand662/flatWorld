@@ -1,7 +1,5 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,6 +11,7 @@ import javax.imageio.ImageIO;
 public class Player extends Creature {
 	
 	Item inventory[];
+	
 	int gold;
 	boolean wieldingSword = false;
 	double swordTheta = 1.5;
@@ -31,7 +30,7 @@ public class Player extends Creature {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		inventory = new Item[30];
+		inventory = new Item[20];
 		updateSprite();
 	}
 	

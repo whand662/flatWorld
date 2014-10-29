@@ -1,20 +1,20 @@
 
-public class Armor extends Wearable {
+public class Weapon extends Wearable {
 
 	Quality quality;
 	Material material;
 	String type;
 	String element;
-	int armorRating;
+	int damage;
 	
-	public Armor(Quality qual, Material mat, String typ, String elmt, boolean known) {
+	public Weapon(Quality qual, Material mat, String typ, String elmt, boolean known) {
 		super(known);
 		quality = qual;
 		material = mat;
 		type = typ;
 		element = elmt;
 		weight = material.getWeight();
-		armorRating = (int)(material.getHardness() * quality.getValue());
+		damage = (int)(material.getHardness() * quality.getValue());
 		MAXDUR = (int)(material.getDurability() * quality.getValue());
 		repair();
 	}
