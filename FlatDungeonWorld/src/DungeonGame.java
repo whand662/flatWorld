@@ -1,7 +1,10 @@
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.io.File;
+import java.net.URL;
 
 import Core.Game;
 import Core.GameEngineV2;
@@ -14,7 +17,7 @@ import javafx.stage.Stage;
  * @author ayrix
  * ##+++==== HEY WILLIS TRY alt+shift+j while clicking on a function declaration
  */
-public class DungeonGame extends Application implements Game {
+public class DungeonGame implements Game {
 	
 	/**
 	 * @author ayrix
@@ -35,9 +38,9 @@ public class DungeonGame extends Application implements Game {
 	private final int WIDTH = 1280;
 	private final int HEIGHT = 720;
 	int loadCount = 0;
+	AudioClip ac;
 	
 	public static void main(String args[]) {
-		launch(args);
 		new DungeonGame();
 	}
 
@@ -160,20 +163,15 @@ public class DungeonGame extends Application implements Game {
 	}
 
 	public void playSound(String fileName) {
-		File audioFile = new File("res/audio/" + fileName);
 		try {
-			Media clip = new Media(audioFile.toURI().toString());
-			MediaPlayer clipPlayer = new MediaPlayer(clip);
-			clipPlayer.play();
+			URL audioFile = new URL("file:res/audio/" + fileName);
+			ac = Applet.newAudioClip(audioFile);
+			ac.play();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	@Override
-	public void start(Stage arg0) throws Exception {
-		// Application initialization function
-	}
 
 }
