@@ -1,7 +1,7 @@
 
 public class Wearable extends Item{
 
-	private int durability = 1, MAXDUR = 1;
+	int durability = 1, MAXDUR = 1;
 	
 	public Wearable(String label, int cost, int lbs, boolean known) {
 		super(label, cost, lbs, known);

@@ -1,23 +1,40 @@
 public class DungeonLib{
+
+	final Quality shoddy;
+	final Quality inferior;
+	final Quality average;
+	final Quality superior;
+	final Quality masterwork;
+	
+	final Material leather;
+	final Material wood;
+	final Material iron;
+	final Material bronze;
+	final Material steel;
+	final Material mithril;
+	final Material adamantite;
+	final Material starmetal;
+	final Material unobtainium;
+	
 	public DungeonLib(){
 		
 		//define item quality levels
-		final Quality shoddy = new Quality("Shoddy", .5);
-		final Quality inferior = new Quality("Inferior", .8);
-		final Quality average = new Quality("", 1.0);
-		final Quality superior = new Quality("Superior", 1.2);
-		final Quality masterwork = new Quality("Masterwork", 1.5);
+		shoddy = new Quality("Shoddy", .5);
+		inferior = new Quality("Inferior", .8);
+		average = new Quality("", 1.0);
+		superior = new Quality("Superior", 1.2);
+		masterwork = new Quality("Masterwork", 1.5);
 		
 		//define item materials
-		final Material leather = new Material("leather", 20, 5, 10);
-		final Material wood = new Material("wooden", 20, 5, 10);
-		final Material iron = new Material("iron", 20, 5, 10);
-		final Material bronze = new Material("bronze", 20, 5, 10);
-		final Material steel = new Material("steel", 20, 5, 10);
-		final Material mithril = new Material("mithril", 20, 5, 10);
-		final Material adamantite = new Material("adamantine", 20, 5, 10);
-		final Material starmetal = new Material("starmetel", 20, 5, 10);
-		final Material unobtainium = new Material("unobtainium", 20, 5, 10);
+		leather = new Material("leather", 20, 5, 10);
+		wood = new Material("wooden", 20, 5, 10);
+		iron = new Material("iron", 20, 5, 10);
+		bronze = new Material("bronze", 20, 5, 10);
+		steel = new Material("steel", 20, 5, 10);
+		mithril = new Material("mithril", 20, 5, 10);
+		adamantite = new Material("adamantine", 20, 5, 10);
+		starmetal = new Material("starmetel", 20, 5, 10);
+		unobtainium = new Material("unobtainium", 20, 5, 10);
 	}
 }
 
