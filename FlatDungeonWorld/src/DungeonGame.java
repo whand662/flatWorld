@@ -3,15 +3,10 @@ import java.applet.AudioClip;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.io.File;
 import java.net.URL;
-
 import Core.Game;
 import Core.GameEngineV2;
-import javafx.application.Application;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.stage.Stage;
+
 
 /**
  * @author ayrix
@@ -39,6 +34,7 @@ public class DungeonGame implements Game {
 	private final int HEIGHT = 720;
 	int loadCount = 0;
 	AudioClip ac;
+	private boolean GODMODE = true;
 	
 	public static void main(String args[]) {
 		new DungeonGame();
@@ -95,6 +91,35 @@ public class DungeonGame implements Game {
 		}
 
 	}
+	
+	public void processGame(){
+		
+		if(GODMODE){
+			if(engine.getKey(103) == 1){
+				engine.unflagKey(103);
+				player.give(new Item("Sword of mighty smiting!", 120, 20, true));
+			}
+		}
+
+		if(engine.getKey(105) == 1){
+			engine.unflagKey(105);
+			GS = Gamestate.MENU;
+		}
+		player.update();
+		player.setFacing(engine.getFacing());
+		if(engine.getKey(UP) > 0){
+			player.moveUp(currentWorld);
+		}
+		if(engine.getKey(LEFT) > 0){
+			player.moveLeft(currentWorld);
+		}
+		if(engine.getKey(RIGHT) > 0){
+			player.moveRight(currentWorld);
+		}
+		if(engine.getKey(DOWN) > 0){
+			player.moveDown(currentWorld);
+		}
+	}
 
 	public void processFrame() {
 		switch (GS) {
@@ -119,28 +144,7 @@ public class DungeonGame implements Game {
 			break;
 			
 		case GAME: // walking maps
-			if(engine.getKey(103) == 1){
-				engine.unflagKey(103);
-				player.give(new Item("Sword of mighty smiting!", 120, 20, true));
-			}
-			if(engine.getKey(105) == 1){
-				engine.unflagKey(105);
-				GS = Gamestate.MENU;
-			}
-			player.update();
-			player.setFacing(engine.getFacing());
-			if(engine.getKey(UP) > 0){
-				player.moveUp(currentWorld);
-			}
-			if(engine.getKey(LEFT) > 0){
-				player.moveLeft(currentWorld);
-			}
-			if(engine.getKey(RIGHT) > 0){
-				player.moveRight(currentWorld);
-			}
-			if(engine.getKey(DOWN) > 0){
-				player.moveDown(currentWorld);
-			}
+			processGame();
 			break;
 			
 		case MENU: // menu interaction
