@@ -99,11 +99,11 @@ public class DungeonGame implements Game {
 		if(GODMODE){
 			if(engine.getKey(103) == 1){
 				engine.unflagKey(103);
-				player.give(new Weapon(library.superior, library.iron, "mace", "", true));
+				player.giveItem(new Weapon(library.superior, library.iron, "mace", "", true));
 			}
 			if(engine.getKey(104) == 1){
 				engine.unflagKey(104);
-				player.give(new Armor(library.inferior, library.starmetal, "helmet", "", false));
+				player.giveItem(new Armor(library.inferior, library.starmetal, "helmet", "", false));
 			}
 		}
 
@@ -125,6 +125,9 @@ public class DungeonGame implements Game {
 		if(engine.getKey(DOWN) > 0){
 			player.moveDown(currentWorld);
 		}
+		
+		player.tickPlayer();
+		
 	}
 
 	public void processFrame() {
