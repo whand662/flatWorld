@@ -25,7 +25,7 @@ public class Player extends Creature {
 	
 	public Player(int locx, int locy) {
 		super(locx, locy);
-		maxSpeed = 13;
+		maxSpeed = 9;
 		size = 10;
 		try {
 			sprite  = ImageIO.read(new File("res/chars/char1.gif"));

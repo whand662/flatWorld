@@ -67,6 +67,10 @@ public class Map {
 			return "water";
 		case 3:
 			return "lava";
+		case 4:
+			return "stairdown";
+		case 5:
+			return "stairup";
 		}
 		return "undefined";
 	}
@@ -81,6 +85,10 @@ public class Map {
 			return 2;
 		case "lava":
 			return 3;
+		case "stairdown":
+			return 4;
+		case "stairup":
+			return 5;
 		}
 		return 0;
 	}
@@ -91,7 +99,7 @@ public class Map {
 		StringTokenizer st;
 		String delimiters = ";";
 
-		tilePics = new BufferedImage[4];
+		tilePics = new BufferedImage[5];
 		for(int count = 0; count < tilePics.length; count++){
 			try {
 				tilePics[count] = ImageIO.read(new File("Tiles/" + intToTile(count) + ".png"));
@@ -136,8 +144,27 @@ public class Map {
 		case 'w':
 			temp = new MapTile("water", false);
 			break;
+		case '>':
+			temp = new MapTile("stairdown", true);
+			break;
+		case '<':
+			temp = new MapTile("stairup", true);
+			break;
 		}
+		
 		return temp;
+	}
+
+	public int tickMap(Player player) {
+		int x = player.x / 40;
+		int y = player.y / 40;
+		
+		if(World[x][y].getName() == "stairdown"){
+			return 1;
+		}else if(World[x][y].getName() == "stairup"){
+			return -1;
+		}
+		return 0;
 	}
 
 }

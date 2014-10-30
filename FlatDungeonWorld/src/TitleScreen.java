@@ -50,7 +50,7 @@ public class TitleScreen {
 	public void chooseOption() {
 		switch (cursorLoc) {
 		case 1:
-			game.goToLevel("Test");
+			game.goToLevel(0);
 			break;
 		case 2:
 

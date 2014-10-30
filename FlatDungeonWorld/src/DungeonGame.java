@@ -36,6 +36,9 @@ public class DungeonGame implements Game {
 	int loadCount = 0, moveCount = 0;
 	AudioClip ac;
 	private boolean GODMODE = true;
+	
+	private String levelName[] = new String[]{"test", "test2"};
+	private int currentLevel;
 
 	public static void main(String args[]) {
 		new DungeonGame();
@@ -56,9 +59,10 @@ public class DungeonGame implements Game {
 		playSound("odd1.wav");
 	}
 
-	public void goToLevel(String levelName) {
+	public void goToLevel(int levelDepth) {
 		GS = Gamestate.WARP;
-		currentWorld = new Map(levelName);
+		currentLevel = levelDepth;
+		currentWorld = new Map(levelName[levelDepth]);
 		loadCount = 50;
 	}
 
@@ -129,7 +133,7 @@ public class DungeonGame implements Game {
 
 		//moveCount system allows finer speed control by allowing movement in fewer frames
 		moveCount++;		
-		if(moveCount > 3){
+		if(moveCount > 2){
 			moveCount = 0;
 			
 			if(engine.getKey(UP) > 0){
@@ -149,6 +153,10 @@ public class DungeonGame implements Game {
 		}
 
 		player.tickPlayer();
+		int catchMapUpdate = currentWorld.tickMap(player);
+		if(catchMapUpdate != 0){
+			goToLevel(currentLevel + catchMapUpdate);
+		}
 
 	}
 
