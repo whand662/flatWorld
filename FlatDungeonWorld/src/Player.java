@@ -19,9 +19,13 @@ public class Player extends Creature {
 	BufferedImage swordImg;
 	AffineTransform st;
 	
+	//just for testing
+	int maxSpeed;
+	int maxCarryWeight = 100;
+	
 	public Player(int locx, int locy) {
 		super(locx, locy);
-		speed = 2;
+		maxSpeed = 3;
 		size = 10;
 		try {
 			sprite  = ImageIO.read(new File("res/chars/char1.gif"));
@@ -35,6 +39,18 @@ public class Player extends Creature {
 	
 	public void tickPlayer(){
 		inventory.tickInventory(this);
+		speed = updateSpeed();
+	}
+	
+	public int updateSpeed(){
+		
+		if(inventory.getInventoryWeight() > maxCarryWeight){
+			return 0;
+		}
+		if((int)Math.round(maxSpeed * (1 - ((double)inventory.getInventoryWeight()/(double)maxCarryWeight))) == 0){
+			return 1;
+		}
+		return (int)Math.round(maxSpeed * (1 - ((double)inventory.getInventoryWeight()/(double)maxCarryWeight)));
 	}
 	
 	public void draw(Graphics g, int xOffset, int yOffset){
