@@ -19,13 +19,13 @@ public class Player extends Creature {
 	BufferedImage swordImg;
 	AffineTransform st;
 	
-	//just for testing
+	//just for testing, will change location
 	int maxSpeed;
-	int maxCarryWeight = 100;
+	int maxCarryWeight = 150;
 	
 	public Player(int locx, int locy) {
 		super(locx, locy);
-		maxSpeed = 3;
+		maxSpeed = 13;
 		size = 10;
 		try {
 			sprite  = ImageIO.read(new File("res/chars/char1.gif"));
@@ -96,5 +96,9 @@ public class Player extends Creature {
 	
 	public void setSword(boolean state){
 		wieldingSword = state;
+	}
+	
+	public void clearInventory(){
+		inventory.fullReset();
 	}
 }

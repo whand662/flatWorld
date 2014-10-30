@@ -83,4 +83,15 @@ public class Inventory {
 		
 		return backpack[location];
 	}
+	
+	public void fullReset(){
+		int i;
+		gold = 0;
+		for(i = 0; i < backpack.length; i++){
+			backpack[i] = null;
+		}
+		for(i = 0; i < equipment.length; i++){
+			equipment[i] = null;
+		}
+	}
 }
