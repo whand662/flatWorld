@@ -1,17 +1,32 @@
-
+/* 
+ * Equipment array has 10 elements
+ * 0- right hand
+ * 1- left hand
+ * 2- helmet
+ * 3- chest-plate
+ * 4- leggings
+ * 5- gloves
+ * 6- boots
+ * 7- amulet
+ * 8- ring1
+ * 9- ring2
+ */
 public class Inventory {
 
 	private int gold = 0;
 	private Item backpack[];
+	private Wearable equipment[];
 	private int totalWeight = 0;
 
 	public Inventory(int size) {
 		backpack = new Item[size];
+		equipment = new Wearable[10];
 	}
 	
 	public void tickInventory(Player player){
+		int i;
 		totalWeight = 0;
-		for(int i = 0; i < getSize(); i++){
+		for(i = 0; i < getSize(); i++){
 			if(backpack[i] instanceof Trinket){
 				((Trinket) backpack[i]).tickTrinket();
 			}
@@ -19,9 +34,18 @@ public class Inventory {
 				totalWeight += backpack[i].getWeight();
 			}
 		}
-		//tick armor
-		//check for broken equipment
-		//add weight of equipment
+		for(i = 0; i < equipment.length; i++){
+			if(equipment[i] instanceof Armor){
+				((Armor) equipment[i]).tickArmor(player);
+			}
+			if(equipment[i] != null){
+				if(equipment[i].isBroke()){
+					equipment[i] = null;
+				}else{
+					totalWeight += equipment[i].getWeight();
+				}
+			}
+		}
 	}
 
 	public void storeGold(int qty){
@@ -45,6 +69,10 @@ public class Inventory {
 			}
 		}
 		return 1;
+	}
+	
+	public int getInventoryWeight(){
+		return totalWeight;
 	}
 	
 	public int getSize(){

@@ -1,5 +1,11 @@
+/*
+ * Item object library
+ */
+
 public class DungeonLib{
 
+	private ItemGenesis itemGen;
+	
 	final Quality shoddy;
 	final Quality inferior;
 	final Quality average;
@@ -17,18 +23,16 @@ public class DungeonLib{
 	final Material starmetal;
 	final Material unobtainium;
 	
-	/*final WearableType sword;
+	final WearableType longsword;
 	final WearableType mace;
-	final WearableType axe;
+	final WearableType battleaxe;
+	final WearableType greatsword;
 	
-	final WearableType helmet;
-	final WearableType gloves;
-	final WearableType leggings;
-	final WearableType boots;
-	final WearableType chestplate;
-	final WearableType shield;*/
+	final WearableType circlet;
 	
 	public DungeonLib(){
+		
+		itemGen = new ItemGenesis(this);
 		
 		//define item quality levels
 		shoddy = new Quality("Shoddy", .5);
@@ -38,41 +42,64 @@ public class DungeonLib{
 		masterwork = new Quality("Masterwork", 1.5);
 		
 		//define item materials
-		paper = new Material("paper", 1, 1, 1);
-		leather = new Material("leather", 1, 20, 5);
-		wood = new Material("wooden", 5, 25, 5);
-		iron = new Material("iron", 15, 50, 10);
-		bronze = new Material("bronze", 15, 70, 10);
-		steel = new Material("steel", 20, 80, 15);
-		mithril = new Material("mithril", 30, 70, 10);
-		adamantite = new Material("adamantine", 30, 100, 30);
-		starmetal = new Material("starmetel", 40, 150, 25);
-		unobtainium = new Material("unobtainium", 60, 200, 30);
+		paper = new Material("Paper", 1, 1, 1);
+		leather = new Material("Leather", 1, 20, 5);
+		wood = new Material("Wooden", 5, 25, 5);
+		iron = new Material("Iron", 15, 50, 10);
+		bronze = new Material("Bronze", 15, 70, 10);
+		steel = new Material("Steel", 20, 80, 15);
+		mithril = new Material("Mithril", 30, 70, 10);
+		adamantite = new Material("Adamantine", 30, 100, 30);
+		starmetal = new Material("Starmetel", 40, 150, 25);
+		unobtainium = new Material("Unobtainium", 60, 200, 30);
+		
+		//define item types
+		longsword = new WearableType("Longsword", "weapon", 1, 1, 's');
+		greatsword = new WearableType("Greatsword", "weapon", 1.5, 2, 'n');
+		mace = new WearableType("Mace", "weapon", .9, 1, 'b');
+		battleaxe = new WearableType("Battle-axe", "weapon", .9, 1, 's');
+		
+		circlet = new WearableType("Circlet", "helmet", .1, 0, 'n');
+	}
+	
+	public Item getItem(String type, int tier){
+		return itemGen.getItem(type, tier);
 	}
 }
 
 class WearableType{
+	
 	private String name, slot;
 	private double modifier;
 	private int handsReq;
 	private char data;
 
-	public WearableType(String str, int val, char dat){
+	public WearableType(String str, String slt, double val, int hands, char c){
 		name = str;
+		slot = slt;
 		modifier = val;
-		data = dat;
+		handsReq = hands;
+		data = c;
 	}
 
 	public String getName(){
 		return name;
 	}
 	
-	public double getModifiere(){
+	public String getSlot(){
+		return slot;
+	}
+	
+	public double getModifier(){
 		return modifier;
 	}
 	
 	public char getData(){
 		return data;
+	}
+	
+	public int getHands(){
+		return handsReq;
 	}
 }
 
