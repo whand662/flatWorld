@@ -12,7 +12,7 @@ import Core.GameEngineV2;
  * @author ayrix
  */
 public class DungeonGame implements Game {
-	
+
 	/**
 	 * @author ayrix
 	 * Overall gamestate enumerator
@@ -32,10 +32,13 @@ public class DungeonGame implements Game {
 	int xOffset, yOffset;
 	private final int WIDTH = 1280;
 	private final int HEIGHT = 720;
-	int loadCount = 0;
+	int loadCount = 0, moveCount = 0;
 	AudioClip ac;
 	private boolean GODMODE = true;
 	
+	private String levelName[] = new String[]{"test", "test2"};
+	private int currentLevel;
+
 	public static void main(String args[]) {
 		new DungeonGame();
 	}
@@ -55,9 +58,10 @@ public class DungeonGame implements Game {
 		playSound("odd1.wav");
 	}
 
-	public void goToLevel(String levelName) {
+	public void goToLevel(int levelDepth) {
 		GS = Gamestate.WARP;
-		currentWorld = new Map(levelName);
+		currentLevel = levelDepth;
+		currentWorld = new Map(levelName[levelDepth]);
 		loadCount = 50;
 	}
 
@@ -92,17 +96,30 @@ public class DungeonGame implements Game {
 		}
 
 	}
-	
+
 	public void processGame(){
-		
+
+		//GODMODE for testing only
 		if(GODMODE){
-			if(engine.getKey(103) == 1){
-				engine.unflagKey(103);
-				player.give(new Weapon(library.superior, library.iron, "mace", "", true));
+			//gives mace weapon to player
+			if(engine.getKey((int)'g') == 1){
+				engine.unflagKey((int)'g');
+				player.giveItem(new Weapon(library.superior, library.iron, library.mace, "", true));
 			}
-			if(engine.getKey(104) == 1){
-				engine.unflagKey(104);
-				player.give(new Armor(library.inferior, library.starmetal, "helmet", "", false));
+			//gives helmet to player
+			if(engine.getKey((int)'f') == 1){
+				engine.unflagKey((int)'f');
+				player.giveItem(new Armor(library.inferior, library.starmetal, library.circlet, "", false));
+			}
+			//gives player a random weapon
+			if(engine.getKey((int)'r') == 1){
+				engine.unflagKey((int)'r');
+				player.giveItem(library.getItem("weapon", 0));
+			}
+			//performs full reset of inventory (resets gold, items, and equipment)
+			if(engine.getKey((int)'d') == 1){
+				engine.unflagKey((int)'d');
+				player.clearInventory();
 			}
 		}
 
@@ -112,23 +129,39 @@ public class DungeonGame implements Game {
 		}
 		player.update();
 		player.setFacing(engine.getFacing());
-		if(engine.getKey(UP) > 0){
-			player.moveUp(currentWorld);
+
+		//moveCount system allows finer speed control by allowing movement in fewer frames
+		moveCount++;		
+		if(moveCount > 2){
+			moveCount = 0;
+			
+			if(engine.getKey(UP) > 0){
+				player.moveUp(currentWorld);
+			}
+			if(engine.getKey(LEFT) > 0){
+				player.moveLeft(currentWorld);
+			}
+			if(engine.getKey(RIGHT) > 0){
+				player.moveRight(currentWorld);
+			}
+			if(engine.getKey(DOWN) > 0){
+				player.moveDown(currentWorld);
+			}
+			
+			//move other creatures here
 		}
-		if(engine.getKey(LEFT) > 0){
-			player.moveLeft(currentWorld);
+
+		player.tickPlayer();
+		int catchMapUpdate = currentWorld.tickMap(player);
+		if(catchMapUpdate != 0){
+			goToLevel(currentLevel + catchMapUpdate);
 		}
-		if(engine.getKey(RIGHT) > 0){
-			player.moveRight(currentWorld);
-		}
-		if(engine.getKey(DOWN) > 0){
-			player.moveDown(currentWorld);
-		}
+
 	}
 
 	public void processFrame() {
 		switch (GS) {
-		
+
 		case TITLE: // startup screen
 			if (engine.getKey(UP) == 1) {
 				engine.unflagKey(UP);
@@ -147,11 +180,11 @@ public class DungeonGame implements Game {
 				}
 			}
 			break;
-			
+
 		case GAME: // walking maps
 			processGame();
 			break;
-			
+
 		case MENU: // menu interaction
 			if(engine.getKey(105) == 1){
 				engine.unflagKey(105);

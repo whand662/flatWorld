@@ -66,16 +66,16 @@ public class MenuScreen {
 		Font itemfont = new Font("SansSerif", Font.BOLD, height/20);
 		g.setColor(Color.BLACK);
 		g.setFont(itemfont);
-		for(int i = 0; i < 20; i++){
-			if(count < 10){
-				if(game.player.inventory[count] != null){
-					g.drawString(game.player.inventory[count].getName(), locx + 10, locy + (height/10) * count + height/15);
-					g.drawString(Integer.toString(game.player.inventory[count].getWeight()), locx + (width/2) - 25, locy + (height/10) * count + height/15);
+		for(int i = 0; i < game.player.inventory.getSize(); i++){
+			if(count < game.player.inventory.getSize()/2){
+				if(game.player.inventory.whatsHere(count) != null){
+					g.drawString(game.player.inventory.whatsHere(count).getName(), locx + 10, locy + (height/10) * count + height/15);
+					g.drawString(Integer.toString(game.player.inventory.whatsHere(count).getWeight()), locx + (width/2) - 25, locy + (height/10) * count + height/15);
 				}
 			}else{
-				if(game.player.inventory[count] != null){
-					g.drawString(game.player.inventory[count].getName(), locx + width/2 + 10, locy + (height/10) * (count - 10) + height/15);
-					g.drawString(Integer.toString(game.player.inventory[count].getWeight()), locx + width - 25, locy + (height/10) * (count - 10) + height/15);
+				if(game.player.inventory.whatsHere(count) != null){
+					g.drawString(game.player.inventory.whatsHere(count).getName(), locx + width/2 + 10, locy + (height/10) * (count - 10) + height/15);
+					g.drawString(Integer.toString(game.player.inventory.whatsHere(count).getWeight()), locx + width - 25, locy + (height/10) * (count - 10) + height/15);
 				}
 			}
 			count++;

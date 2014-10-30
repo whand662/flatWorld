@@ -3,11 +3,11 @@ public class Weapon extends Wearable {
 
 	Quality quality;
 	Material material;
-	String type;
+	WearableType type;
 	String element;
 	int damage;
 	
-	public Weapon(Quality qual, Material mat, String typ, String elmt, boolean known) {
+	public Weapon(Quality qual, Material mat, WearableType typ, String elmt, boolean known) {
 		super(known);
 		quality = qual;
 		material = mat;
@@ -21,9 +21,12 @@ public class Weapon extends Wearable {
 	
 	public String getName(){
 		if(!identified){
-			return "Mysterious " + type;
+			return "Mysterious " + type.getName();
+		}else if(quality.getName() == ""){
+			return material.getName()+ " " + type.getName();
+		}else{
+			return quality.getName()+ " " + material.getName()+ " " + type.getName();
 		}
-		return quality.getName()+ " " + material.getName()+ " " + type;
 	}
 
 }

@@ -10,9 +10,8 @@ import javax.imageio.ImageIO;
 
 public class Player extends Creature {
 	
-	Item inventory[];
+	Inventory inventory;
 	
-	int gold;
 	boolean wieldingSword = false;
 	double swordTheta = 1.5;
 	int swordx = 0;
@@ -20,9 +19,13 @@ public class Player extends Creature {
 	BufferedImage swordImg;
 	AffineTransform st;
 	
+	//just for testing, will change location
+	int maxSpeed;
+	int maxCarryWeight = 150;
+	
 	public Player(int locx, int locy) {
 		super(locx, locy);
-		speed = 2;
+		maxSpeed = 9;
 		size = 10;
 		try {
 			sprite  = ImageIO.read(new File("res/chars/char1.gif"));
@@ -30,8 +33,24 @@ public class Player extends Creature {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		inventory = new Item[20];
+		inventory = new Inventory(20);
 		updateSprite();
+	}
+	
+	public void tickPlayer(){
+		inventory.tickInventory(this);
+		speed = updateSpeed();
+	}
+	
+	public int updateSpeed(){
+		
+		if(inventory.getInventoryWeight() > maxCarryWeight){
+			return 0;
+		}
+		if((int)Math.round(maxSpeed * (1 - ((double)inventory.getInventoryWeight()/(double)maxCarryWeight))) == 0){
+			return 1;
+		}
+		return (int)Math.round(maxSpeed * (1 - ((double)inventory.getInventoryWeight()/(double)maxCarryWeight)));
 	}
 	
 	public void draw(Graphics g, int xOffset, int yOffset){
@@ -39,10 +58,6 @@ public class Player extends Creature {
 		g2d.translate(xOffset, yOffset);
 		g2d.drawImage(sprite, at, null);
 		g2d.drawImage(swordImg, st, null);
-	}
-	protected void Sword(Graphics2D g){
-		
-		inventory = new Item[30]; 
 	}
 	
 	protected void updateSprite(){
@@ -67,16 +82,23 @@ public class Player extends Creature {
 		st.translate(swordImg.getWidth()/4, -swordImg.getHeight()/4);
 	}
 	
-	public int give(Item tempItem){
-		for(int count = 0; count < 20; count++){
-			if(inventory[count] == null){
-				inventory[count] = tempItem;
-				return 0;
-			}
-		}
-		return 1;
+	public int getPayment(int qty){
+		return inventory.removeGold(qty);
 	}
+	
+	public void giveGold(int qty){
+		inventory.storeGold(qty);
+	}
+	
+	public int giveItem(Item tempItem){
+		return inventory.storeItem(tempItem);
+	}
+	
 	public void setSword(boolean state){
 		wieldingSword = state;
+	}
+	
+	public void clearInventory(){
+		inventory.fullReset();
 	}
 }
