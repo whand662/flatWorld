@@ -2,33 +2,35 @@
  * Item object library
  */
 
+
+
 public class DungeonLib{
 
 	private ItemGenesis itemGen;
 	
-	final Quality shoddy;
-	final Quality inferior;
-	final Quality average;
-	final Quality superior;
-	final Quality masterwork;
+	public final Quality shoddy;
+	public final Quality inferior;
+	public final Quality average;
+	public final Quality superior;
+	public final Quality masterwork;
 	
-	final Material paper;
-	final Material leather;
-	final Material wood;
-	final Material iron;
-	final Material bronze;
-	final Material steel;
-	final Material mithril;
-	final Material adamantite;
-	final Material starmetal;
-	final Material unobtainium;
+	public final Material paper;
+	public final Material leather;
+	public final Material wood;
+	public final Material iron;
+	public final Material bronze;
+	public final Material steel;
+	public final Material mithril;
+	public final Material adamantite;
+	public final Material starmetal;
+	public final Material unobtainium;
 	
-	final WearableType longsword;
-	final WearableType mace;
-	final WearableType battleaxe;
-	final WearableType greatsword;
+	public final WearableType longsword;
+	public final WearableType mace;
+	public final WearableType battleaxe;
+	public final WearableType greatsword;
 	
-	final WearableType circlet;
+	public final WearableType circlet;
 	
 	public DungeonLib(){
 		

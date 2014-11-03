@@ -12,6 +12,7 @@ public class Map {
 
 	MapTile[][] World;
 	String mapName;
+	String[] tileIndex = new String[]{"undefined", "dirt", "water", "lava", "stairdown", "stairup"};
 	BufferedImage[] tilePics;
 	int maxX, maxY;
 	private final int TILEWIDTH = 40;
@@ -43,8 +44,8 @@ public class Map {
 	public void draw(Graphics g, int xOffset, int yOffset){
 		int x, y, tileNum;
 
-		for(int counter1 = 0; counter1 < 20; counter1++){
-			for(int counter2 = 0; counter2 < 20; counter2++){
+		for(int counter1 = 0; counter1 < maxY/40; counter1++){
+			for(int counter2 = 0; counter2 < maxX/40; counter2++){
 				try{
 					x = (counter2 * TILEWIDTH) + xOffset;
 					y = (counter1 * TILEWIDTH) + yOffset;
@@ -58,38 +59,22 @@ public class Map {
 	}
 
 	private String intToTile(int num){
-		switch(num){
-		case 0:
-			return "undefined";
-		case 1:
-			return "dirt";
-		case 2:
-			return "water";
-		case 3:
-			return "lava";
-		case 4:
-			return "stairdown";
-		case 5:
-			return "stairup";
+		
+		if(num < tileIndex.length){
+			return tileIndex[num];
 		}
+		
 		return "undefined";
 	}
 
 	private int tileToInt(String tile){
-		switch(tile){
-		case "undefined":
-			return 0;
-		case "dirt":
-			return 1;
-		case "water":
-			return 2;
-		case "lava":
-			return 3;
-		case "stairdown":
-			return 4;
-		case "stairup":
-			return 5;
+		
+		for(int i = 0; i < tileIndex.length; i++){
+			if(tileIndex[i] == tile){
+				return i;
+			}
 		}
+		
 		return 0;
 	}
 
@@ -99,7 +84,7 @@ public class Map {
 		StringTokenizer st;
 		String delimiters = ";";
 
-		tilePics = new BufferedImage[5];
+		tilePics = new BufferedImage[6];
 		for(int count = 0; count < tilePics.length; count++){
 			try {
 				tilePics[count] = ImageIO.read(new File("Tiles/" + intToTile(count) + ".png"));

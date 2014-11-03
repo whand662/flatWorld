@@ -1,4 +1,5 @@
 
+
 public class Wearable extends Item{
 
 	int durability = 1, MAXDUR = 1;

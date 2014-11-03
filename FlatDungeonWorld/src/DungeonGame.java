@@ -35,8 +35,8 @@ public class DungeonGame implements Game {
 	int loadCount = 0, moveCount = 0;
 	AudioClip ac;
 	private boolean GODMODE = true;
-	
-	private String levelName[] = new String[]{"test", "test2"};
+
+	private String levelName[] = new String[]{"test", "test2", "test3"};
 	private int currentLevel;
 
 	public static void main(String args[]) {
@@ -134,7 +134,7 @@ public class DungeonGame implements Game {
 		moveCount++;		
 		if(moveCount > 2){
 			moveCount = 0;
-			
+
 			if(engine.getKey(UP) > 0){
 				player.moveUp(currentWorld);
 			}
@@ -147,14 +147,16 @@ public class DungeonGame implements Game {
 			if(engine.getKey(DOWN) > 0){
 				player.moveDown(currentWorld);
 			}
-			
+
 			//move other creatures here
 		}
 
 		player.tickPlayer();
 		int catchMapUpdate = currentWorld.tickMap(player);
 		if(catchMapUpdate != 0){
-			goToLevel(currentLevel + catchMapUpdate);
+			if(currentLevel + catchMapUpdate >= 0 && currentLevel + catchMapUpdate < levelName.length){
+				goToLevel(currentLevel + catchMapUpdate);
+			}
 		}
 
 	}
