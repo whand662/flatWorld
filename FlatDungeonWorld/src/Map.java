@@ -10,7 +10,8 @@ import javax.imageio.ImageIO;
 
 public class Map {
 
-	MapTile[][] World;
+	MapTile[][] floor;
+	MapTile[][] environment;
 	String mapName;
 	String[] tileIndex = new String[]{"undefined", "dirt", "water", "lava", "stairdown", "stairup"};
 	BufferedImage[] tilePics;
@@ -32,7 +33,12 @@ public class Map {
 		}
 		x = x / 40;
 		y = y / 40;
-		return (World[x][y].walkable());
+
+		if(environment[x][y] == null){
+			return floor[x][y].walkable();
+		}else{
+			return floor[x][y].walkable() && environment[x][y].walkable();
+		}
 	}
 
 	/**
@@ -49,8 +55,12 @@ public class Map {
 				try{
 					x = (counter2 * TILEWIDTH) + xOffset;
 					y = (counter1 * TILEWIDTH) + yOffset;
-					tileNum = tileToInt(World[counter2][counter1].getName());
-					World[counter2][counter1].draw(g, tilePics[tileNum], x, y);
+					tileNum = tileToInt(floor[counter2][counter1].getName());
+					floor[counter2][counter1].draw(g, tilePics[tileNum], x, y);
+					if(environment[counter2][counter1] != null){
+						tileNum = tileToInt(environment[counter2][counter1].getName());
+						environment[counter2][counter1].draw(g, tilePics[tileNum], x, y);
+					}
 				}catch(Exception e){
 					System.out.println(e);
 				}
@@ -59,28 +69,29 @@ public class Map {
 	}
 
 	private String intToTile(int num){
-		
+
 		if(num < tileIndex.length){
 			return tileIndex[num];
 		}
-		
+
 		return "undefined";
 	}
 
 	private int tileToInt(String tile){
-		
+
 		for(int i = 0; i < tileIndex.length; i++){
 			if(tileIndex[i] == tile){
 				return i;
 			}
 		}
-		
+
 		return 0;
 	}
 
 	private void initializeMap(String mapFile){
-		String line;
+		String line, temp;
 		int x = 0, y = 0;
+		int tempx, tempy;
 		StringTokenizer st;
 		String delimiters = ";";
 
@@ -97,24 +108,41 @@ public class Map {
 			BufferedReader in = new BufferedReader(new FileReader("Maps/" + mapFile + ".txt"));
 			line = in.readLine();
 			st = new StringTokenizer(line, delimiters, false);
+			
 			x = Integer.parseInt(st.nextToken());
 			y = Integer.parseInt(st.nextToken());
-			World = new MapTile[x][y];
+			floor = new MapTile[x][y];
+			environment = new MapTile[x][y];
+			
+			maxX = x * 40;
+			maxY = y * 40;
 
 			for(int counter1 = 0; counter1 < y; counter1++){
 				line = in.readLine();
 				for(int counter2 = 0; counter2 < x; counter2++){
-					World[counter2][counter1] = identifyTile(line.charAt(counter2));
+					floor[counter2][counter1] = identifyTile(line.charAt(counter2));
 				}
+			}
+
+			line = in.readLine();
+			while(line != null){
+				st = new StringTokenizer(line, delimiters, false);
+				x = Integer.parseInt(st.nextToken());
+				y = Integer.parseInt(st.nextToken());
+				environment[x][y] = identifyTile(st.nextToken().charAt(0));
+				if(environment[x][y].getName() == "stairup" || environment[x][y].getName() == "stairdown"){
+					temp = st.nextToken();
+					tempx = Integer.parseInt(st.nextToken());
+					tempy = Integer.parseInt(st.nextToken());	
+					environment[x][y].setWarpInfo(temp, tempx, tempy);
+				}
+				line = in.readLine(); 
 			}
 
 			in.close();
 		}catch (IOException e){
 			e.printStackTrace();
 		}
-
-		maxX = x * 40;
-		maxY = y * 40;
 	}
 
 	private MapTile identifyTile(char tileCode){
@@ -136,20 +164,18 @@ public class Map {
 			temp = new MapTile("stairup", true);
 			break;
 		}
-		
 		return temp;
 	}
 
-	public int tickMap(Player player) {
+	public WarpInstructions tickMap(Player player) {
 		int x = player.x / 40;
 		int y = player.y / 40;
-		
-		if(World[x][y].getName() == "stairdown"){
-			return 1;
-		}else if(World[x][y].getName() == "stairup"){
-			return -1;
+
+		if(environment[x][y] != null){
+			return environment[x][y].getWarpInfo();
 		}
-		return 0;
+
+		return null;
 	}
 
 }

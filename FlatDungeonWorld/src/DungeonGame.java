@@ -9,7 +9,7 @@ import Core.GameEngineV2;
 
 
 /**
- * @author ayrix
+ * @author ayrix, among others...
  */
 public class DungeonGame implements Game {
 
@@ -35,9 +35,7 @@ public class DungeonGame implements Game {
 	int loadCount = 0, moveCount = 0;
 	AudioClip ac;
 	private boolean GODMODE = true;
-
-	private String levelName[] = new String[]{"test", "test2", "test3"};
-	private int currentLevel;
+	private String currentWorldName;
 
 	public static void main(String args[]) {
 		new DungeonGame();
@@ -58,10 +56,12 @@ public class DungeonGame implements Game {
 		playSound("odd1.wav");
 	}
 
-	public void goToLevel(int levelDepth) {
+	public void goToLevel(WarpInstructions toLevel) {
 		GS = Gamestate.WARP;
-		currentLevel = levelDepth;
-		currentWorld = new Map(levelName[levelDepth]);
+		currentWorldName = toLevel.getTeleName();
+		player.x = toLevel.getTeleX() * 40;
+		player.y = toLevel.getTeleY() * 40;
+		currentWorld = new Map(currentWorldName);
 		loadCount = 50;
 	}
 
@@ -152,11 +152,9 @@ public class DungeonGame implements Game {
 		}
 
 		player.tickPlayer();
-		int catchMapUpdate = currentWorld.tickMap(player);
-		if(catchMapUpdate != 0){
-			if(currentLevel + catchMapUpdate >= 0 && currentLevel + catchMapUpdate < levelName.length){
-				goToLevel(currentLevel + catchMapUpdate);
-			}
+		WarpInstructions mapWarpEvent = currentWorld.tickMap(player);
+		if(mapWarpEvent != null){
+			goToLevel(mapWarpEvent);
 		}
 
 	}
