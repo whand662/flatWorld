@@ -1,4 +1,5 @@
 
+
 public class Armor extends Wearable {
 
 	Quality quality;

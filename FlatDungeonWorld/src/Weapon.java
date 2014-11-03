@@ -1,4 +1,5 @@
 
+
 public class Weapon extends Wearable {
 
 	Quality quality;

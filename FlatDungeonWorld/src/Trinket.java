@@ -1,4 +1,5 @@
 
+
 public class Trinket extends Item {
 
 	public Trinket(String label, int cost, int lbs, boolean known) {
