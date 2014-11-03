@@ -253,7 +253,8 @@ public class GameEngineV2 implements Runnable, ActionListener, KeyListener, Mous
 		if(keyRing[(int)e.getKeyChar()] == 0){
 			keyRing[(int)e.getKeyChar()] = 1;
 		}
-		System.out.println((int)e.getKeyChar());
+		//use to get keypress int ID for keyring
+		//System.out.println((int)e.getKeyChar());
 	}
 
 	public void keyReleased(KeyEvent e)

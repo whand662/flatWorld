@@ -11,18 +11,50 @@ public class Creature {
 	int x, y, size = 5;
 	int stats[];
 	int speed = 5;
+
+	//prototyping variables, will be moved
+	int naturalAR = 100;
+	int naturalMR = -50;
+	int health = 300;
+
 	protected ArrDirect facing = ArrDirect.N;
 
 	AffineTransform at;
 	BufferedImage sprite;
-	
+
 	public Creature(int locx, int locy) {
 		x = locx;
 		y = locy;
 	}
-	
+
+	public void takeAttack(AttackBox incoming){
+		switch (incoming.getType()) {
+
+		case 'p':
+			if(naturalAR > 0){
+				health -= (100.0 / (100 + naturalAR) * incoming.getForce());
+			}else{
+				health -= (2 - (100.0 / (100 - naturalAR))) * incoming.getForce();
+			}
+			break;
+
+		case 'm':
+			if(naturalMR > 0){
+				health -= (100.0 / (100 + naturalMR) * incoming.getForce());
+			}else{
+				health -= (2 - (100.0 / (100 - naturalMR))) * incoming.getForce();
+			}
+			break;
+
+		default:
+			health -= incoming.getForce();
+			break;
+		}
+
+	}
+
 	public void update(){
-		
+
 	}
 
 	/**
@@ -40,7 +72,7 @@ public class Creature {
 
 		// 3. translate it to the center of the component
 		at.translate(x, y);
-		
+
 		// 2. do the actual rotation
 		at.rotate(Math.PI*facing.theta);
 

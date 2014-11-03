@@ -121,6 +121,30 @@ public class DungeonGame implements Game {
 				engine.unflagKey((int)'d');
 				player.clearInventory();
 			}
+			//physical attack vs player
+			if(engine.getKey((int)'q') == 1){
+				engine.unflagKey((int)'q');
+				player.takeAttack(new AttackBox(30, 'p', 'n'));
+				System.out.println(player.health);
+			}
+			//magical attack vs player
+			if(engine.getKey((int)'w') == 1){
+				engine.unflagKey((int)'w');
+				player.takeAttack(new AttackBox(30, 'm', 'n'));
+				System.out.println(player.health);
+			}
+			//true dmg attack vs player
+			if(engine.getKey((int)'e') == 1){
+				engine.unflagKey((int)'e');
+				player.takeAttack(new AttackBox(30, 't', 'n'));
+				System.out.println(player.health);
+			}
+			//sets player health to 300
+			if(engine.getKey((int)'a') == 1){
+				engine.unflagKey((int)'a');
+				player.health = 300;
+				System.out.println(player.health);
+			}
 		}
 
 		if(engine.getKey(105) == 1){
