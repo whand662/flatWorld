@@ -26,6 +26,7 @@ public class DungeonGame implements Game {
 	static Gamestate GS;
 	TitleScreen titleScreen;
 	MenuScreen menuScreen;
+	InformationBar hud;
 	DungeonLib library;
 	Player player;
 	Map currentWorld;
@@ -51,6 +52,7 @@ public class DungeonGame implements Game {
 		menuScreen = new MenuScreen(this, engine);
 		library = new DungeonLib();
 		player = new Player(160, 200);
+		hud = new InformationBar(player);
 
 		engine.start();
 		playSound("odd1.wav");
@@ -83,6 +85,7 @@ public class DungeonGame implements Game {
 			yOffset = player.getY();
 			currentWorld.draw(g, engine.width/2-xOffset, engine.height/2-yOffset);
 			player.draw(g, engine.width/2, engine.height/2);
+			hud.draw(g);
 			break;
 		case MENU: // menu interaction
 			menuScreen.draw(g);

@@ -13,9 +13,10 @@ public class Creature {
 	int speed = 5;
 
 	//prototyping variables, will be moved
-	int naturalAR = 100;
-	int naturalMR = -50;
-	int health = 300;
+	int naturalAR = 0;
+	int naturalMR = 0;
+	int health = 100;
+	int healthMAX = 100;
 
 	protected ArrDirect facing = ArrDirect.N;
 
