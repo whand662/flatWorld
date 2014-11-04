@@ -45,15 +45,17 @@ public class Map {
 	}
 	
 	public boolean locWalkable(double x, double y){
-		if(x < 0 || y < 0 || x >= maxX || y >= maxY){
+		int intx = (int) x;
+		int inty = (int) y;
+		if(intx < 0 || inty < 0 || intx >= maxX || inty >= maxY){
 			return false;
 		}
-		x = x / 40;
-		y = y / 40;
-		if(environment[x][y] == null){
-			return floor[x][y].walkable();
+		intx = intx / 40;
+		inty = inty / 40;
+		if(environment[intx][inty] == null){
+			return floor[intx][inty].walkable();
 		}else{
-			return floor[x][y].walkable() && environment[x][y].walkable();
+			return floor[intx][inty].walkable() && environment[intx][inty].walkable();
 		}
 	}
 

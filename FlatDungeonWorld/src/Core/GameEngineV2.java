@@ -8,7 +8,6 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import com.sun.media.jfxmedia.events.PlayerEvent;
 
 public class GameEngineV2 implements Runnable, ActionListener, KeyListener, MouseListener, MouseMotionListener, FocusListener
 {
