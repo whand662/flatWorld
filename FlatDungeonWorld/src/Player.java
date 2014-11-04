@@ -1,6 +1,7 @@
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,9 +17,8 @@ public class Player extends Creature {
 	double swordTheta = 1.5;
 	int swordx = 0;
 	int swordy = 0;
-	BufferedImage swordImg;
-	AffineTransform st;
-	
+	BufferedImage swordRaw;
+	BufferedImage swordPrep;	
 	//just for testing, will change location
 	int maxSpeed;
 	int maxCarryWeight = 150;
@@ -28,8 +28,8 @@ public class Player extends Creature {
 		maxSpeed = 9;
 		size = 10;
 		try {
-			sprite  = ImageIO.read(new File("res/chars/char1.gif"));
-			swordImg = ImageIO.read(new File("res/chars/sword1.gif"));
+			rawSprite  = ImageIO.read(new File("res/chars/char1.gif"));
+			swordRaw = ImageIO.read(new File("res/chars/sword1.gif"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -54,32 +54,34 @@ public class Player extends Creature {
 	}
 	
 	public void draw(Graphics g, int xOffset, int yOffset){
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.translate(xOffset, yOffset);
-		g2d.drawImage(sprite, at, null);
-		g2d.drawImage(swordImg, st, null);
+		g.drawImage(preparedSprite, xOffset-preparedSprite.getWidth()/2, yOffset-preparedSprite.getHeight()/2, null);
+//		g.drawImage(swordPrep, xOffset, yOffset, null);
 	}
-	
+
+	/**
+	 * See			http://stackoverflow.com/questions/4918482/rotating-bufferedimage-instances
+	 * @return at	a prepared AffineTransform for drawing
+	 */
 	protected void updateSprite(){
 		// create the transform, note that the transformations happen
 		// in reversed order (so check them backwards)
-		at = new AffineTransform();
-
-		// 4. resize component
+		AffineTransform at = new AffineTransform();
+		
+		// 4.
 		at.scale(.2, .2);
 		
+		// 3. put the component back to 0,0
+		at.translate(rawSprite.getWidth()/2, rawSprite.getHeight()/2);
+		
 		// 2. do the actual rotation
-		at.rotate(Math.PI*facing.theta);
+		at.rotate(Math.PI*heading);
 
 		// 1. translate the object so that you rotate it around the 
 		//    center (easier :))
-		at.translate(-sprite.getWidth()/2, -sprite.getHeight()/2);
-		
-		 st = new AffineTransform();
-		
-		st.scale(.5, .5);		
-		st.rotate(facing.theta*Math.PI);
-		st.translate(swordImg.getWidth()/4, -swordImg.getHeight()/4);
+		at.translate(-rawSprite.getWidth()/2, -rawSprite.getHeight()/2);
+
+		AffineTransformOp atOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+		preparedSprite = atOp.filter(rawSprite, preparedSprite);
 	}
 	
 	public int getPayment(int qty){
@@ -101,4 +103,5 @@ public class Player extends Creature {
 	public void clearInventory(){
 		inventory.fullReset();
 	}
+
 }

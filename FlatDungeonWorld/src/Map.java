@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
@@ -13,6 +15,7 @@ public class Map {
 	MapTile[][] World;
 	String mapName;
 	String[] tileIndex = new String[]{"undefined", "dirt", "water", "lava", "stairdown", "stairup"};
+	List<Creature> creatures = new ArrayList<Creature>();
 	BufferedImage[] tilePics;
 	int maxX, maxY;
 	private final int TILEWIDTH = 40;
@@ -33,6 +36,15 @@ public class Map {
 		x = x / 40;
 		y = y / 40;
 		return (World[x][y].walkable());
+	}
+	
+	public boolean locWalkable(double x, double y){
+		if(x < 0 || y < 0 || x >= maxX || y >= maxY){
+			return false;
+		}
+		x = x / 40;
+		y = y / 40;
+		return (World[(int)x][(int)y].walkable());
 	}
 
 	/**
@@ -55,6 +67,9 @@ public class Map {
 					System.out.println(e);
 				}
 			}
+		}
+		for(Creature creature: creatures){
+			creature.draw(g, xOffset, yOffset);
 		}
 	}
 
@@ -150,6 +165,17 @@ public class Map {
 			return -1;
 		}
 		return 0;
+	}
+
+	public void tickCreatures() {
+		for(Creature creature: creatures){
+			creature.tick(this);
+		}
+	}
+
+	public void createKobold(int x, int y) {
+		Kobold poorSap = new Kobold(x, y);
+		creatures.add(poorSap);
 	}
 
 }

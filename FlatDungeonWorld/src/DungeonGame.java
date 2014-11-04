@@ -97,7 +97,7 @@ public class DungeonGame implements Game {
 
 	}
 
-	public void processGame(){
+	public void tickGame(){
 
 		//GODMODE for testing only
 		if(GODMODE){
@@ -120,6 +120,11 @@ public class DungeonGame implements Game {
 			if(engine.getKey((int)'d') == 1){
 				engine.unflagKey((int)'d');
 				player.clearInventory();
+			}
+			//places a kobold at the current player position
+			if(engine.getKey((int)'k') == 1){
+				engine.unflagKey((int)'k');
+				currentWorld.createKobold(player.x, player.y);
 			}
 		}
 
@@ -152,6 +157,7 @@ public class DungeonGame implements Game {
 		}
 
 		player.tickPlayer();
+		currentWorld.tickCreatures();
 		int catchMapUpdate = currentWorld.tickMap(player);
 		if(catchMapUpdate != 0){
 			if(currentLevel + catchMapUpdate >= 0 && currentLevel + catchMapUpdate < levelName.length){
@@ -184,7 +190,7 @@ public class DungeonGame implements Game {
 			break;
 
 		case GAME: // walking maps
-			processGame();
+			tickGame();
 			break;
 
 		case MENU: // menu interaction
