@@ -1,24 +1,4 @@
-<<<<<<< HEAD
 *.class
+/Core/
 
-/Core/
-=======
-/Armor.class
-/Core/
-/Creature.class
-/DungeonGame$Gamestate.class
-/DungeonGame.class
-/DungeonLib.class
-/Item.class
-/ItemGenesis.class
-/Map.class
-/MapTile.class
-/Material.class
-/MenuScreen.class
-/Player.class
-/Quality.class
-/TitleScreen.class
-/Wearable.class
 *.class
->>>>>>> branch 'master' of https://github.com/Ccookkollars/flatWorld
-/Items/

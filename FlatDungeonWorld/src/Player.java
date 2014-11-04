@@ -30,11 +30,11 @@ public class Player extends Creature {
 		try {
 			rawSprite  = ImageIO.read(new File("res/chars/char1.gif"));
 			swordRaw = ImageIO.read(new File("res/chars/sword1.gif"));
+			updateSprite();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		inventory = new Inventory(20);
-		updateSprite();
 	}
 	
 	public void tickPlayer(){
@@ -54,7 +54,8 @@ public class Player extends Creature {
 	}
 	
 	public void draw(Graphics g, int xOffset, int yOffset){
-		g.drawImage(preparedSprite, xOffset-preparedSprite.getWidth()/2, yOffset-preparedSprite.getHeight()/2, null);
+		if(preparedSprite != null)
+			g.drawImage(preparedSprite, xOffset-preparedSprite.getWidth()/2, yOffset-preparedSprite.getHeight()/2, null);
 //		g.drawImage(swordPrep, xOffset, yOffset, null);
 	}
 
@@ -63,6 +64,9 @@ public class Player extends Creature {
 	 * @return at	a prepared AffineTransform for drawing
 	 */
 	protected void updateSprite(){
+		if(rawSprite == null){
+			return;
+		}
 		// create the transform, note that the transformations happen
 		// in reversed order (so check them backwards)
 		AffineTransform at = new AffineTransform();
