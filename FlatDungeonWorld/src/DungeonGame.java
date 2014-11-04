@@ -9,7 +9,7 @@ import Core.GameEngineV2;
 
 
 /**
- * @author ayrix
+ * @author ayrix, among others...
  */
 public class DungeonGame implements Game {
 
@@ -26,6 +26,7 @@ public class DungeonGame implements Game {
 	static Gamestate GS;
 	TitleScreen titleScreen;
 	MenuScreen menuScreen;
+	InformationBar hud;
 	DungeonLib library;
 	Player player;
 	Map currentWorld;
@@ -35,9 +36,7 @@ public class DungeonGame implements Game {
 	int loadCount = 0, moveCount = 0;
 	AudioClip ac;
 	private boolean GODMODE = true;
-
-	private String levelName[] = new String[]{"test", "test2", "test3"};
-	private int currentLevel;
+	private String currentWorldName;
 
 	public static void main(String args[]) {
 		new DungeonGame();
@@ -53,15 +52,18 @@ public class DungeonGame implements Game {
 		menuScreen = new MenuScreen(this, engine);
 		library = new DungeonLib();
 		player = new Player(160, 200);
+		hud = new InformationBar(player);
 
 		engine.start();
 		playSound("odd1.wav");
 	}
 
-	public void goToLevel(int levelDepth) {
+	public void goToLevel(WarpInstructions toLevel) {
 		GS = Gamestate.WARP;
-		currentLevel = levelDepth;
-		currentWorld = new Map(levelName[levelDepth]);
+		currentWorldName = toLevel.getTeleName();
+		player.x = toLevel.getTeleX() * 40;
+		player.y = toLevel.getTeleY() * 40;
+		currentWorld = new Map(currentWorldName);
 		loadCount = 50;
 	}
 
@@ -83,6 +85,7 @@ public class DungeonGame implements Game {
 			yOffset = player.getY();
 			currentWorld.draw(g, engine.width/2-xOffset, engine.height/2-yOffset);
 			player.draw(g, engine.width/2, engine.height/2);
+			hud.draw(g);
 			break;
 		case MENU: // menu interaction
 			menuScreen.draw(g);
@@ -121,6 +124,30 @@ public class DungeonGame implements Game {
 				engine.unflagKey((int)'d');
 				player.clearInventory();
 			}
+			//physical attack vs player
+			if(engine.getKey((int)'q') == 1){
+				engine.unflagKey((int)'q');
+				player.takeAttack(new AttackBox(30, 'p', 'n'));
+				System.out.println(player.health);
+			}
+			//magical attack vs player
+			if(engine.getKey((int)'w') == 1){
+				engine.unflagKey((int)'w');
+				player.takeAttack(new AttackBox(30, 'm', 'n'));
+				System.out.println(player.health);
+			}
+			//true dmg attack vs player
+			if(engine.getKey((int)'e') == 1){
+				engine.unflagKey((int)'e');
+				player.takeAttack(new AttackBox(30, 't', 'n'));
+				System.out.println(player.health);
+			}
+			//sets player health to 300
+			if(engine.getKey((int)'a') == 1){
+				engine.unflagKey((int)'a');
+				player.health = 300;
+				System.out.println(player.health);
+			}
 			//places a kobold at the current player position
 			if(engine.getKey((int)'k') == 1){
 				engine.unflagKey((int)'k');
@@ -158,11 +185,9 @@ public class DungeonGame implements Game {
 
 		player.tickPlayer();
 		currentWorld.tickCreatures();
-		int catchMapUpdate = currentWorld.tickMap(player);
-		if(catchMapUpdate != 0){
-			if(currentLevel + catchMapUpdate >= 0 && currentLevel + catchMapUpdate < levelName.length){
-				goToLevel(currentLevel + catchMapUpdate);
-			}
+		WarpInstructions mapWarpEvent = currentWorld.tickMap(player);
+		if(mapWarpEvent != null){
+			goToLevel(mapWarpEvent);
 		}
 
 	}

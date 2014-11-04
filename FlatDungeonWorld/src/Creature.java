@@ -15,6 +15,13 @@ public class Creature {
 	int x, y, size = 20;
 	int stats[];
 	int speed = 5;
+
+	//prototyping variables, will be moved
+	int naturalAR = 0;
+	int naturalMR = 0;
+	int health = 100;
+	int healthMAX = 100;
+
 	protected ArrDirect facing = ArrDirect.N;
 
 	BufferedImage rawSprite = null;
@@ -35,7 +42,33 @@ public class Creature {
 		move(currentMap, vel, heading);
 		vel=vel%3;
 	}
-	
+
+	public void takeAttack(AttackBox incoming){
+		switch (incoming.getType()) {
+
+		case 'p':
+			if(naturalAR > 0){
+				health -= (100.0 / (100 + naturalAR) * incoming.getForce());
+			}else{
+				health -= (2 - (100.0 / (100 - naturalAR))) * incoming.getForce();
+			}
+			break;
+
+		case 'm':
+			if(naturalMR > 0){
+				health -= (100.0 / (100 + naturalMR) * incoming.getForce());
+			}else{
+				health -= (2 - (100.0 / (100 - naturalMR))) * incoming.getForce();
+			}
+			break;
+
+		default:
+			health -= incoming.getForce();
+			break;
+		}
+
+	}
+
 	public void update(){
 		
 	}
