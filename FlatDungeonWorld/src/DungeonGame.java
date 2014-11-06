@@ -161,6 +161,11 @@ public class DungeonGame implements Game {
 				engine.unflagKey((int)'k');
 				currentWorld.createKobold(player.x, player.y);
 			}
+			//places a kobold at the current player position
+			if(engine.getKey((int)'l') == 1){
+				engine.unflagKey((int)'l');
+				currentWorld.killEverything();
+			}
 		}
 
 		if(engine.getKey((int)'i') == 1){

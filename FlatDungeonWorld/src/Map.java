@@ -210,4 +210,9 @@ public class Map {
 		creatures.add(poorSap);
 	}
 
+	public void killEverything() {
+		creatures.clear();
+		
+	}
+
 }

@@ -10,6 +10,7 @@ import Core.GameEngineV2.ArrDirect;
 public class Creature {
 
 	double heading = 0;
+	double lastHeading;
 	double vel = 0;
 	int x, y, size = 20;
 	
@@ -23,6 +24,7 @@ public class Creature {
 	public Creature(int locx, int locy) {
 		x = locx;
 		y = locy;
+		updateSprite();
 	}
 
 	public void tick(Map currentMap){
@@ -73,6 +75,9 @@ public class Creature {
 	 * @return at	a prepared AffineTransform for drawing
 	 */
 	protected void updateSprite(){
+		if(rawSprite == null){
+			return;
+		}
 		// create the transform, note that the transformations happen
 		// in reversed order (so check them backwards)
 		AffineTransform at = new AffineTransform();
@@ -94,8 +99,12 @@ public class Creature {
 	}
 
 	public void draw(Graphics g, int xOffset, int yOffset){
-		updateSprite();
-		g.drawImage(preparedSprite,  x+xOffset-preparedSprite.getWidth()/2,  y+yOffset-preparedSprite.getHeight()/2,  null);
+		if (lastHeading != heading){
+			updateSprite();
+		}
+		if(preparedSprite != null){
+			g.drawImage(preparedSprite,  x+xOffset-preparedSprite.getWidth()/2,  y+yOffset-preparedSprite.getHeight()/2,  null);
+		}
 	}
 
 	public void move(Map currentMap, double vel, double heading){

@@ -26,13 +26,13 @@ public class Player extends Creature {
 		try {
 			rawSprite  = ImageIO.read(new File("res/chars/char1.gif"));
 			swordRaw = ImageIO.read(new File("res/chars/sword1.gif"));
+			updateSprite();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		inventory = new Inventory(20);
 		//Atttribute order is STR END AGL INT WIS LCK
 		stats = new Attributes(new int[]{5,5,5,5,5,5});
-		updateSprite();
 	}
 	
 	
@@ -46,7 +46,8 @@ public class Player extends Creature {
 	
 	
 	public void draw(Graphics g, int xOffset, int yOffset){
-		g.drawImage(preparedSprite, xOffset-preparedSprite.getWidth()/2, yOffset-preparedSprite.getHeight()/2, null);
+		if(preparedSprite != null)
+			g.drawImage(preparedSprite, xOffset-preparedSprite.getWidth()/2, yOffset-preparedSprite.getHeight()/2, null);
 //		g.drawImage(swordPrep, xOffset, yOffset, null);
 	}
 
