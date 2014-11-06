@@ -119,7 +119,7 @@ public class Map {
 		tilePics = new BufferedImage[6];
 		for(int count = 0; count < tilePics.length; count++){
 			try {
-				tilePics[count] = ImageIO.read(new File("Tiles/" + intToTile(count) + ".png"));
+				tilePics[count] = ImageIO.read(new File("res/tiles/" + intToTile(count) + ".png"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

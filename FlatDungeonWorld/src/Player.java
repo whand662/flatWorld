@@ -31,7 +31,7 @@ public class Player extends Creature {
 			e.printStackTrace();
 		}
 		inventory = new Inventory(20);
-		//Atttribute order is STR END AGL INT WIS LCK
+		//Attribute order is STR END AGL INT WIS LCK
 		stats = new Attributes(new int[]{5,5,5,5,5,5});
 	}
 	

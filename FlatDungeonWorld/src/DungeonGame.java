@@ -52,6 +52,8 @@ public class DungeonGame implements Game {
 		titleScreen = new TitleScreen(this, engine);
 		menuScreen = new MenuScreen(this, engine);
 		library = new DungeonLib();
+		
+		//will be moved once GS SETUP is more developed
 		player = new Player(160, 200);
 		hud = new InformationBar(player);
 
