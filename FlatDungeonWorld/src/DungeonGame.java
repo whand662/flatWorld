@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.net.URL;
+
 import Core.Game;
 import Core.GameEngineV2;
 
@@ -18,7 +19,7 @@ public class DungeonGame implements Game {
 	 * Overall gamestate enumerator
 	 */
 	public enum Gamestate {
-		TITLE, GAME, MENU, DEAD, WARP
+		TITLE, GAME, MENU, DEAD, WARP, SETUP
 	};
 
 
@@ -91,10 +92,17 @@ public class DungeonGame implements Game {
 			menuScreen.draw(g);
 			break;
 		case DEAD: // death screen
-
+			g.setColor(Color.white);
+			g.setFont(new Font("SansSerif", Font.BOLD, 100));
+			g.drawString("YOU ARE DEAD", 300, 300);
 			break;
 		case WARP: // changing maps
 			drawLevelScreen(g);
+			break;
+		case SETUP:
+			//add char naming and init stat setup screen
+			break;
+		default:
 			break;
 		}
 
@@ -110,8 +118,8 @@ public class DungeonGame implements Game {
 				player.giveItem(new Weapon(library.superior, library.iron, library.mace, "", true));
 			}
 			//gives helmet to player
-			if(engine.getKey((int)'f') == 1){
-				engine.unflagKey((int)'f');
+			if(engine.getKey((int)'h') == 1){
+				engine.unflagKey((int)'h');
 				player.giveItem(new Armor(library.inferior, library.starmetal, library.circlet, "", false));
 			}
 			//gives player a random weapon
@@ -120,33 +128,33 @@ public class DungeonGame implements Game {
 				player.giveItem(library.getItem("weapon", 0));
 			}
 			//performs full reset of inventory (resets gold, items, and equipment)
-			if(engine.getKey((int)'d') == 1){
-				engine.unflagKey((int)'d');
+			if(engine.getKey((int)'o') == 1){
+				engine.unflagKey((int)'o');
 				player.clearInventory();
 			}
 			//physical attack vs player
-			if(engine.getKey((int)'q') == 1){
-				engine.unflagKey((int)'q');
-				player.takeAttack(new AttackBox(30, 'p', 'n'));
-				System.out.println(player.health);
+			if(engine.getKey((int)'p') == 1){
+				engine.unflagKey((int)'p');
+				player.takeAttack(new AttackBox(10, 'p', 'n'));
+				System.out.println(player.stats.health);
 			}
 			//magical attack vs player
-			if(engine.getKey((int)'w') == 1){
-				engine.unflagKey((int)'w');
-				player.takeAttack(new AttackBox(30, 'm', 'n'));
-				System.out.println(player.health);
+			if(engine.getKey((int)'m') == 1){
+				engine.unflagKey((int)'m');
+				player.takeAttack(new AttackBox(10, 'm', 'n'));
+				System.out.println(player.stats.health);
 			}
 			//true dmg attack vs player
-			if(engine.getKey((int)'e') == 1){
-				engine.unflagKey((int)'e');
-				player.takeAttack(new AttackBox(30, 't', 'n'));
-				System.out.println(player.health);
+			if(engine.getKey((int)'t') == 1){
+				engine.unflagKey((int)'t');
+				player.takeAttack(new AttackBox(10, 't', 'n'));
+				System.out.println(player.stats.health);
 			}
-			//sets player health to 300
-			if(engine.getKey((int)'a') == 1){
-				engine.unflagKey((int)'a');
-				player.health = 300;
-				System.out.println(player.health);
+			//fully heals player
+			if(engine.getKey((int)'f') == 1){
+				engine.unflagKey((int)'f');
+				player.stats.fullHeal();
+				System.out.println(player.stats.health);
 			}
 			//places a kobold at the current player position
 			if(engine.getKey((int)'k') == 1){
@@ -155,16 +163,34 @@ public class DungeonGame implements Game {
 			}
 		}
 
-		if(engine.getKey(105) == 1){
-			engine.unflagKey(105);
+		if(engine.getKey((int)'i') == 1){
+			engine.unflagKey((int)'i');
 			GS = Gamestate.MENU;
 		}
+		
+		if(engine.getKey((int)'w') == 1){
+			player.inventory.action('w');
+		}
+		
+		if(engine.getKey((int)'s') == 1){
+			player.inventory.action('s');
+		}
+		
+		if(engine.getKey((int)'a') == 1){
+			player.inventory.action('a');
+		}
+		
+		if(engine.getKey((int)'d') == 1){
+			player.inventory.action('d');
+		}
+		
+		
 		player.update();
 		player.setFacing(engine.getFacing());
 
-		//moveCount system allows finer speed control by allowing movement in fewer frames
+		//moveCount system allows finer speed control by allowing movement in fewer frames, set if statement to disable
 		moveCount++;		
-		if(moveCount > 2){
+		if(moveCount >= 0){
 			moveCount = 0;
 
 			if(engine.getKey(UP) > 0){
@@ -183,8 +209,14 @@ public class DungeonGame implements Game {
 			//move other creatures here
 		}
 
-		player.tickPlayer();
+		player.tick(currentWorld);
 		currentWorld.tickCreatures();
+		
+		if(player.stats.dead == true){
+			GS = Gamestate.DEAD;
+			return;
+		}
+		
 		WarpInstructions mapWarpEvent = currentWorld.tickMap(player);
 		if(mapWarpEvent != null){
 			goToLevel(mapWarpEvent);
@@ -195,6 +227,9 @@ public class DungeonGame implements Game {
 	public void processFrame() {
 		switch (GS) {
 
+		case SETUP:
+			goToLevel(new WarpInstructions("test", 4, 5));
+			break;
 		case TITLE: // startup screen
 			if (engine.getKey(UP) == 1) {
 				engine.unflagKey(UP);
@@ -225,7 +260,7 @@ public class DungeonGame implements Game {
 			}
 			break;
 		case DEAD: // death screen
-
+			
 			break;
 		case WARP: //changing maps
 			loadCount--;
@@ -235,6 +270,10 @@ public class DungeonGame implements Game {
 			break;
 		}
 
+	}
+	
+	public void startSetup(){
+		GS = Gamestate.SETUP;
 	}
 
 	public void playSound(String fileName) {

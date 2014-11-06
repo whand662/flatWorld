@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -13,14 +12,8 @@ public class Creature {
 	double heading = 0;
 	double vel = 0;
 	int x, y, size = 20;
-	int stats[];
-	int speed = 5;
-
-	//prototyping variables, will be moved
-	int naturalAR = 0;
-	int naturalMR = 0;
-	int health = 100;
-	int healthMAX = 100;
+	
+	Attributes stats;
 
 	protected ArrDirect facing = ArrDirect.N;
 
@@ -41,29 +34,31 @@ public class Creature {
 		vel += (random.nextDouble()-.4)/100;
 		move(currentMap, vel, heading);
 		vel=vel%3;
+		
+		stats.tick(0);
 	}
 
 	public void takeAttack(AttackBox incoming){
 		switch (incoming.getType()) {
 
 		case 'p':
-			if(naturalAR > 0){
-				health -= (100.0 / (100 + naturalAR) * incoming.getForce());
+			if(stats.naturalAR > 0){
+				stats.damageHP((int) (100.0 / (100 + stats.naturalAR) * incoming.getForce()) );
 			}else{
-				health -= (2 - (100.0 / (100 - naturalAR))) * incoming.getForce();
+				stats.damageHP((int) (2 - (100.0 / (100 - stats.naturalAR))) * incoming.getForce() );
 			}
 			break;
 
 		case 'm':
-			if(naturalMR > 0){
-				health -= (100.0 / (100 + naturalMR) * incoming.getForce());
+			if(stats.naturalMR > 0){
+				stats.damageHP((int) (100.0 / (100 + stats.naturalMR) * incoming.getForce()) );
 			}else{
-				health -= (2 - (100.0 / (100 - naturalMR))) * incoming.getForce();
+				stats.damageHP((int) (2 - (100.0 / (100 - stats.naturalMR))) * incoming.getForce() );
 			}
 			break;
 
 		default:
-			health -= incoming.getForce();
+			stats.damageHP(incoming.getForce());
 			break;
 		}
 
@@ -113,7 +108,7 @@ public class Creature {
 	}
 	
 	public void moveUp(Map currentMap){
-		for(int count = speed; count > 0; count--){
+		for(int count = stats.speed; count > 0; count--){
 			if(currentMap.locWalkable(x, y - size - 1) 
 					&& currentMap.locWalkable(x - size, y - size - 1) 
 					&& currentMap.locWalkable(x + size, y - size - 1)){
@@ -123,7 +118,7 @@ public class Creature {
 	}
 
 	public void moveDown(Map currentMap){
-		for(int count = speed; count > 0; count--){
+		for(int count = stats.speed; count > 0; count--){
 			if(currentMap.locWalkable(x, y + size + 1) 
 					&& currentMap.locWalkable(x + size, y + size + 1) 
 					&& currentMap.locWalkable(x - size, y + size + 1)){
@@ -133,7 +128,7 @@ public class Creature {
 	}
 
 	public void moveLeft(Map currentMap){
-		for(int count = speed; count > 0; count--){
+		for(int count = stats.speed; count > 0; count--){
 			if(currentMap.locWalkable(x - size - 1, y)
 					&& currentMap.locWalkable(x - size - 1, y + size)
 					&& currentMap.locWalkable(x - size - 1, y - size)){
@@ -143,7 +138,7 @@ public class Creature {
 	}
 
 	public void moveRight(Map currentMap){
-		for(int count = speed; count > 0; count--){
+		for(int count = stats.speed; count > 0; count--){
 			if(currentMap.locWalkable(x + size + 1, y)
 					&& currentMap.locWalkable(x + size + 1, y + size)
 					&& currentMap.locWalkable(x + size + 1, y - size)){

@@ -1,6 +1,6 @@
 
 
-public class Weapon extends Wearable {
+public class Weapon extends Wearable implements Useable {
 
 	Quality quality;
 	Material material;
@@ -28,6 +28,10 @@ public class Weapon extends Wearable {
 		}else{
 			return quality.getName()+ " " + material.getName()+ " " + type.getName();
 		}
+	}
+
+	public void use() {
+		
 	}
 
 }

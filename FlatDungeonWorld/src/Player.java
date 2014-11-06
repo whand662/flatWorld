@@ -1,5 +1,4 @@
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -20,12 +19,9 @@ public class Player extends Creature {
 	BufferedImage swordRaw;
 	BufferedImage swordPrep;	
 	//just for testing, will change location
-	int maxSpeed;
-	int maxCarryWeight = 150;
 	
 	public Player(int locx, int locy) {
 		super(locx, locy);
-		maxSpeed = 9;
 		size = 10;
 		try {
 			rawSprite  = ImageIO.read(new File("res/chars/char1.gif"));
@@ -34,24 +30,20 @@ public class Player extends Creature {
 			e.printStackTrace();
 		}
 		inventory = new Inventory(20);
+		//Atttribute order is STR END AGL INT WIS LCK
+		stats = new Attributes(new int[]{5,5,5,5,5,5});
 		updateSprite();
 	}
 	
-	public void tickPlayer(){
-		inventory.tickInventory(this);
-		speed = updateSpeed();
+	
+	
+	public void tick(Map currentMap){
+		inventory.tick(this);
+		
+		stats.tick(inventory.getWeight());
 	}
 	
-	public int updateSpeed(){
-		
-		if(inventory.getInventoryWeight() > maxCarryWeight){
-			return 0;
-		}
-		if((int)Math.round(maxSpeed * (1 - ((double)inventory.getInventoryWeight()/(double)maxCarryWeight))) == 0){
-			return 1;
-		}
-		return (int)Math.round(maxSpeed * (1 - ((double)inventory.getInventoryWeight()/(double)maxCarryWeight)));
-	}
+	
 	
 	public void draw(Graphics g, int xOffset, int yOffset){
 		g.drawImage(preparedSprite, xOffset-preparedSprite.getWidth()/2, yOffset-preparedSprite.getHeight()/2, null);

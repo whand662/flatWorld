@@ -50,7 +50,7 @@ public class TitleScreen {
 	public void chooseOption() {
 		switch (cursorLoc) {
 		case 1:
-			game.goToLevel(new WarpInstructions("test", 4, 5));
+			game.startSetup();
 			break;
 		case 2:
 

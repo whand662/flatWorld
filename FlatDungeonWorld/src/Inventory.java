@@ -22,8 +22,8 @@ public class Inventory {
 		backpack = new Item[size];
 		equipment = new Wearable[10];
 	}
-	
-	public void tickInventory(Player player){
+
+	public void tick(Player player){
 		int i;
 		totalWeight = 0;
 		for(i = 0; i < getSize(); i++){
@@ -51,7 +51,7 @@ public class Inventory {
 	public void storeGold(int qty){
 		gold += qty;
 	}
-	
+
 	public int removeGold(int qty){
 		if(qty > gold){
 			return 1;
@@ -60,7 +60,7 @@ public class Inventory {
 		}
 		return 0;
 	}
-	
+
 	public int storeItem(Item tempItem){
 		for(int count = 0; count < 20; count++){
 			if(backpack[count] == null){
@@ -70,20 +70,20 @@ public class Inventory {
 		}
 		return 1;
 	}
-	
-	public int getInventoryWeight(){
+
+	public int getWeight(){
 		return totalWeight;
 	}
-	
+
 	public int getSize(){
 		return backpack.length;
 	}
 
 	public Item whatsHere(int location) {
-		
+
 		return backpack[location];
 	}
-	
+
 	public void fullReset(){
 		int i;
 		gold = 0;
@@ -93,5 +93,9 @@ public class Inventory {
 		for(i = 0; i < equipment.length; i++){
 			equipment[i] = null;
 		}
+	}
+
+	public void action(char c) {
+		
 	}
 }
