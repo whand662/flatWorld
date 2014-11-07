@@ -84,8 +84,8 @@ public class DungeonGame implements Game {
 			titleScreen.draw(g);
 			break;
 		case GAME: //walking maps
-			xOffset = player.getX();
-			yOffset = player.getY();
+			xOffset = (int)player.getX();
+			yOffset = (int)player.getY();
 			currentWorld.draw(g, engine.width/2-xOffset, engine.height/2-yOffset);
 			player.draw(g, engine.width/2-xOffset, engine.height/2-yOffset);
 			hud.draw(g);
@@ -161,7 +161,7 @@ public class DungeonGame implements Game {
 			//places a kobold at the current player position
 			if(engine.getKey((int)'k') == 1){
 				engine.unflagKey((int)'k');
-				currentWorld.createKobold(player.x, player.y);
+				currentWorld.createKobold((int)player.x, (int)player.y);
 			}
 			//places a kobold at the current player position
 			if(engine.getKey((int)'l') == 1){

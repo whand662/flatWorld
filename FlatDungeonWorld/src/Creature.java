@@ -17,7 +17,8 @@ public class Creature {
 	double heading = 0;
 	double lastHeading = 0;
 	double vel = 0;
-	int x, y, size = 40;
+	double x, y;
+	int size = 40;
 	
 	Attributes stats;
 
@@ -46,7 +47,7 @@ public class Creature {
 		}
 		vel += (random.nextDouble()-.4)/100;
 		move(currentMap, vel, heading);
-		vel=vel%3;
+		vel=vel%8;
 		stats.tick(0);
 	}
 
@@ -92,7 +93,6 @@ public class Creature {
 		double xm = Math.cos(heading*Math.PI)*vel;
 		double ym = Math.sin(heading*Math.PI)*vel;
 
-		System.out.println(xm + "\t" + ym);
 		if(currentMap.locWalkable(x+xm, y+ym)){
 			x += xm;
 			y += ym;
@@ -138,7 +138,7 @@ public class Creature {
 			}	
 		}
 	}
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 
@@ -146,7 +146,7 @@ public class Creature {
 		this.x = x;
 	}
 
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 

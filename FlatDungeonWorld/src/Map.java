@@ -189,8 +189,8 @@ public class Map {
 	}
 
 	public WarpInstructions tickMap(Player player) {
-		int x = player.x / 40;
-		int y = player.y / 40;
+		int x = (int)player.x / 40;
+		int y = (int)player.y / 40;
 
 		if(environment[x][y] != null){
 			return environment[x][y].getWarpInfo();
