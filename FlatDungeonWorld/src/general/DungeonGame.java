@@ -6,12 +6,12 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.net.URL;
 
+import core.Game;
+import core.GameEngineV2;
 import monster.InformationBar;
 import monster.Player;
 import flatWorld.Map;
 import flatWorld.WarpInstructions;
-import Core.Game;
-import Core.GameEngineV2;
 
 
 /**

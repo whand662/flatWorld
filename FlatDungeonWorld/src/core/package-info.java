@@ -5,4 +5,4 @@
  * @author ayrix
  *
  */
-package Core;
+package core;

@@ -10,7 +10,7 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import Core.GameEngineV2.ArrDirect;
+import core.GameEngineV2.ArrDirect;
 import flatWorld.Map;
 import general.AttackBox;
 

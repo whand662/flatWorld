@@ -10,7 +10,7 @@ import java.net.URISyntaxException;
 
 import javax.imageio.ImageIO;
 
-import Core.GameEngineV2;
+import core.GameEngineV2;
 
 public class TitleScreen {
 

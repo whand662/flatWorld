@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import Core.GameEngineV2;
+import core.GameEngineV2;
 
 public class MenuScreen {
 
