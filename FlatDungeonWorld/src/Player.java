@@ -56,6 +56,9 @@ public class Player extends Creature {
 	 * @return at	a prepared AffineTransform for drawing
 	 */
 	protected void updateSprite(){
+		if(rawSprite == null){
+			return;
+		}
 		// create the transform, note that the transformations happen
 		// in reversed order (so check them backwards)
 		AffineTransform at = new AffineTransform();
