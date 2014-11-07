@@ -26,13 +26,14 @@ public class Creature {
 
 	AffineTransform at = null;
 	BufferedImage sprite = null;
-	BufferedImage preparedSprite = null;
 	
 	public Creature(int locx, int locy, String spriteFile) {
+		if(getSprite() == null){
 		try {
-			sprite = ImageIO.read(new File(spriteFile));
+			setSprite(ImageIO.read(new File(spriteFile)));
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
 		}
 		x = locx;
 		y = locy;
@@ -79,13 +80,14 @@ public class Creature {
 
 	public void draw(Graphics g, int xOffset, int yOffset){
 		Graphics2D g2d = (Graphics2D) g;
-		if(sprite != null){
+		BufferedImage img = getSprite();
+		if(img != null){
 			at = new AffineTransform();
 			at.translate(xOffset+x, yOffset+y);
 				at.rotate(Math.PI*heading);
 			at.scale(.5,.5);
-			at.translate(-sprite.getWidth()/2, -sprite.getHeight()/2);
-			g2d.drawImage(sprite, at, null);
+			at.translate(-img.getWidth()/2, -img.getHeight()/2);
+			g2d.drawImage(img, at, null);
 		}
 	}
 
@@ -93,8 +95,10 @@ public class Creature {
 		double xm = Math.cos(heading*Math.PI)*vel;
 		double ym = Math.sin(heading*Math.PI)*vel;
 
-		if(currentMap.locWalkable(x+xm, y+ym)){
+		if(currentMap.locWalkable(x+xm, y)){
 			x += xm;
+		}
+		if(currentMap.locWalkable(x, y+ym)){
 			y += ym;
 		}
 	}
