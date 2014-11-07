@@ -1,3 +1,9 @@
+package monster;
+import general.Armor;
+import general.Item;
+import general.Trinket;
+import general.Wearable;
+
 /* 
  * Equipment array has 10 elements
  * 0- right hand

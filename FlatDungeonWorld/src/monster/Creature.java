@@ -1,3 +1,4 @@
+package monster;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -10,6 +11,8 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import Core.GameEngineV2.ArrDirect;
+import flatWorld.Map;
+import general.AttackBox;
 
 
 public class Creature {
@@ -17,10 +20,11 @@ public class Creature {
 	double heading = 0;
 	double lastHeading = 0;
 	double vel = 0;
-	double x, y;
+	public double x;
+	public double y;
 	int size = 40;
 	
-	Attributes stats;
+	public Attributes stats;
 
 	protected ArrDirect facing = ArrDirect.N;
 

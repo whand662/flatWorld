@@ -1,3 +1,4 @@
+package general;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.Color;
@@ -5,6 +6,10 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.net.URL;
 
+import monster.InformationBar;
+import monster.Player;
+import flatWorld.Map;
+import flatWorld.WarpInstructions;
 import Core.Game;
 import Core.GameEngineV2;
 
@@ -192,7 +197,6 @@ public class DungeonGame implements Game {
 		}
 		
 		
-		player.setFacing(engine.getFacing());
 
 		//moveCount system allows finer speed control by allowing movement in fewer frames, set if statement to disable
 		moveCount++;		
@@ -215,15 +219,15 @@ public class DungeonGame implements Game {
 			//move other creatures here
 		}
 
+		player.setFacing(engine.getFacing());
 		player.tick(currentWorld);
-		currentWorld.tickCreatures();
 		
 		if(player.stats.dead == true){
 			GS = Gamestate.DEAD;
 			return;
 		}
 		
-		WarpInstructions mapWarpEvent = currentWorld.tickMap(player);
+		WarpInstructions mapWarpEvent = currentWorld.tick(player);
 		if(mapWarpEvent != null){
 			goToLevel(mapWarpEvent);
 		}

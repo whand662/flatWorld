@@ -1,3 +1,4 @@
+package monster;
 import java.awt.image.BufferedImage;
 
 

@@ -1,3 +1,4 @@
+package general;
 
 
 public class Weapon extends Wearable implements Useable {

@@ -1,3 +1,4 @@
+package general;
 /*
  * Generates random items
  */

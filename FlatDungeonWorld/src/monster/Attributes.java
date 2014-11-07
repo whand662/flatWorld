@@ -1,3 +1,4 @@
+package monster;
 import java.util.ArrayList;
 
 
@@ -6,14 +7,15 @@ public class Attributes {
 	private Stat stats[];
 	private int statMod[][];
 
-	boolean dead;
+	public boolean dead;
 	boolean overburdened;
 
 	int level;
 
 	int naturalAR = 0;
 	int naturalMR = 0;
-	int health, healthMAX;
+	public int health;
+	int healthMAX;
 	int mana, manaMAX;
 	int carryWeight, carryMAX;
 	int speed, speedMAX;

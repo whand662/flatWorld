@@ -1,3 +1,6 @@
+package general;
+import monster.Player;
+
 
 
 public class Armor extends Wearable {
