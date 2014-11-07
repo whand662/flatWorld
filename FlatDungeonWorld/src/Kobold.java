@@ -9,12 +9,8 @@ import javax.imageio.ImageIO;
 
 
 public class Kobold extends Creature {
+	static String spriteFile = "res/chars/kobold.png";
 	public Kobold(int locx, int locy) {
-		super(locx, locy);
-		try {
-			rawSprite = ImageIO.read(new File("res/chars/kobold.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		super(locx, locy, spriteFile);
 	}
 }

@@ -87,7 +87,7 @@ public class DungeonGame implements Game {
 			xOffset = player.getX();
 			yOffset = player.getY();
 			currentWorld.draw(g, engine.width/2-xOffset, engine.height/2-yOffset);
-			player.draw(g, engine.width/2, engine.height/2);
+			player.draw(g, engine.width/2-xOffset, engine.height/2-yOffset);
 			hud.draw(g);
 			break;
 		case MENU: // menu interaction
@@ -192,7 +192,6 @@ public class DungeonGame implements Game {
 		}
 		
 		
-		player.update();
 		player.setFacing(engine.getFacing());
 
 		//moveCount system allows finer speed control by allowing movement in fewer frames, set if statement to disable

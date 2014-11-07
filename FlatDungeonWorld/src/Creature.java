@@ -1,8 +1,13 @@
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
+
+import javax.imageio.ImageIO;
 
 import Core.GameEngineV2.ArrDirect;
 
@@ -10,34 +15,38 @@ import Core.GameEngineV2.ArrDirect;
 public class Creature {
 
 	double heading = 0;
-	double lastHeading;
+	double lastHeading = 0;
 	double vel = 0;
-	int x, y, size = 20;
+	int x, y, size = 40;
 	
 	Attributes stats;
 
 	protected ArrDirect facing = ArrDirect.N;
 
-	BufferedImage rawSprite = null;
+	AffineTransform at = null;
+	BufferedImage sprite = null;
 	BufferedImage preparedSprite = null;
 	
-	public Creature(int locx, int locy) {
+	public Creature(int locx, int locy, String spriteFile) {
+		try {
+			sprite = ImageIO.read(new File(spriteFile));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		x = locx;
 		y = locy;
 		stats = new Attributes(new int[]{5,5,5,5,5,5});
-		updateSprite();
 	}
 
 	public void tick(Map currentMap){
 		Random random = new Random();
 		double headM = (random.nextDouble()-.5)/10;
-		if(headM > .04 || headM < -.04){
+		if(headM > .02 || headM < -.02){
 			heading += headM;
 		}
 		vel += (random.nextDouble()-.4)/100;
 		move(currentMap, vel, heading);
 		vel=vel%3;
-		
 		stats.tick(0);
 	}
 
@@ -67,50 +76,23 @@ public class Creature {
 
 	}
 
-	public void update(){
-		
-	}
-
-	/**
-	 * See			http://stackoverflow.com/questions/4918482/rotating-bufferedimage-instances
-	 * @return at	a prepared AffineTransform for drawing
-	 */
-	protected void updateSprite(){
-		if(rawSprite == null){
-			return;
-		}
-		// create the transform, note that the transformations happen
-		// in reversed order (so check them backwards)
-		AffineTransform at = new AffineTransform();
-		
-		at.scale(.5, .5);
-		
-		// 3. put the component back to 0,0
-		at.translate(rawSprite.getWidth()/2, rawSprite.getHeight()/2);
-		
-		// 2. do the actual rotation
-		at.rotate(Math.PI*heading);
-
-		// 1. translate the object so that you rotate it around the 
-		//    center (easier :))
-		at.translate(-rawSprite.getWidth()/2, -rawSprite.getHeight()/2);
-
-		AffineTransformOp atOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-		preparedSprite = atOp.filter(rawSprite, preparedSprite);
-	}
-
 	public void draw(Graphics g, int xOffset, int yOffset){
-		if (lastHeading != heading){
-			updateSprite();
-		}
-		if(preparedSprite != null){
-			g.drawImage(preparedSprite,  x+xOffset-preparedSprite.getWidth()/2,  y+yOffset-preparedSprite.getHeight()/2,  null);
+		Graphics2D g2d = (Graphics2D) g;
+		if(sprite != null){
+			at = new AffineTransform();
+			at.translate(xOffset+x, yOffset+y);
+				at.rotate(Math.PI*heading);
+			at.scale(.5,.5);
+			at.translate(-sprite.getWidth()/2, -sprite.getHeight()/2);
+			g2d.drawImage(sprite, at, null);
 		}
 	}
 
 	public void move(Map currentMap, double vel, double heading){
 		double xm = Math.cos(heading*Math.PI)*vel;
 		double ym = Math.sin(heading*Math.PI)*vel;
+
+		System.out.println(xm + "\t" + ym);
 		if(currentMap.locWalkable(x+xm, y+ym)){
 			x += xm;
 			y += ym;
@@ -186,18 +168,17 @@ public class Creature {
 
 	public void setFacing(ArrDirect facing) {
 		this.facing = facing;
-		heading = facing.theta;
-		if (facing != ArrDirect.STILL){
-			updateSprite();
+		if(facing != ArrDirect.STILL){
+			heading = facing.theta;
 		}
 	}
 
 	public BufferedImage getSprite() {
-		return rawSprite;
+		return sprite;
 	}
 
 	public void setSprite(BufferedImage sprite) {
-		this.rawSprite = sprite;
+		this.sprite = sprite;
 	}
 
 }

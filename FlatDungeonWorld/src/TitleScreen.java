@@ -15,7 +15,7 @@ public class TitleScreen {
 
 	int cursorLoc = 1;
 	long time;
-	BufferedImage splash, startScreen;
+	BufferedImage splash1, splash2, startScreen;
 	DungeonGame game;
 	GameEngineV2 engine;
 	String text[] = { "Created By: Willis Hand & Caleb Cook-Kollars",
@@ -25,7 +25,8 @@ public class TitleScreen {
 		this.game = game;
 		this.engine = engine;
 		try {
-			splash = ImageIO.read(new File("splash.png"));
+			splash1 = ImageIO.read(new File("splash.png"));
+			splash2 = ImageIO.read(new File("splash.jpg"));
 			startScreen = ImageIO.read(new File("startscreen.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -71,7 +72,8 @@ public class TitleScreen {
 	public void draw(Graphics g) {
 
 		if (System.currentTimeMillis() < time + 3500) {
-			g.drawImage(splash, 0, 0, null);
+			g.drawImage(splash1, 0, 0, null);
+			g.drawImage(splash2, 0, 0, null);
 			return;
 		}
 
