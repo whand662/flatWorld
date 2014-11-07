@@ -24,6 +24,7 @@ public class Creature {
 	public Creature(int locx, int locy) {
 		x = locx;
 		y = locy;
+		stats = new Attributes(new int[]{5,5,5,5,5,5});
 		updateSprite();
 	}
 
