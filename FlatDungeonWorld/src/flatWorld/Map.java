@@ -1,5 +1,6 @@
 package flatWorld;
 import java.awt.Graphics;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,15 +16,19 @@ import monster.Player;
 
 public class Map {
 
-	MapTile[][] floor;
-	MapTile[][] environment;
+
 	String mapName;
+	FloorTile[][] floor;
+	EnvTile[][] environment;
 	List<Creature> creatures = new ArrayList<Creature>();
 	BufferedImage mapImage;
 	int maxX, maxY;
-	int width, height;
 	public final int TILEWIDTH = 40;
+	int width,height;
 
+	public Map(){
+		
+	}
 	public Map(String mapFile) {
 		mapName = mapFile;
 		initializeMap(mapName);
@@ -66,10 +71,8 @@ public class Map {
 	/**
 	 * Draw the map image in the proper location
 	 * 
-	 * @param g
-	 *            the graphics object to draw with
-	 * @param game
-	 *            the game object to draw on
+	 * @param g		the graphics object to draw with
+	 * @param game	the game object to draw on
 	 */
 	public void draw(Graphics g, int xOffset, int yOffset) {
 
@@ -96,8 +99,8 @@ public class Map {
 
 			xLoc = Integer.parseInt(st.nextToken());
 			yLoc = Integer.parseInt(st.nextToken());
-			floor = new MapTile[xLoc][yLoc];
-			environment = new MapTile[xLoc][yLoc];
+			floor = new FloorTile[xLoc][yLoc];
+			environment = new EnvTile[xLoc][yLoc];
 
 			maxX = xLoc * TILEWIDTH;
 			maxY = yLoc * TILEWIDTH;
@@ -105,7 +108,7 @@ public class Map {
 			for (int c1 = 0; c1 < yLoc; c1++) {
 				line = in.readLine();
 				for (int c2 = 0; c2 < xLoc; c2++) {
-					floor[c2][c1] = MapTile.get(line.charAt(c2));
+					floor[c2][c1] = FloorTile.get(line.charAt(c2));
 				}
 			}
 
@@ -115,7 +118,7 @@ public class Map {
 				st = new StringTokenizer(line, delimiters, false);
 				xLoc = Integer.parseInt(st.nextToken());
 				yLoc = Integer.parseInt(st.nextToken());
-				environment[xLoc][yLoc] = MapTile.get(st.nextToken().charAt(0));
+				environment[xLoc][yLoc] = EnvTile.get(st.nextToken().charAt(0));
 				if (environment[xLoc][yLoc].name() == "stairup"
 						|| environment[xLoc][yLoc].name() == "stairdown") {
 					temp = st.nextToken();
@@ -130,8 +133,12 @@ public class Map {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		bufferMap();
+	}
+	public void bufferMap(){
 		// Prebuffer map image
+//		System.out.println("Buffering map");
+		int xLoc, yLoc;
 		mapImage = new BufferedImage(maxX, maxY, BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics g = mapImage.getGraphics();
 		for (int y = 0; y < maxY/TILEWIDTH; y++) {
@@ -139,9 +146,9 @@ public class Map {
 				try {
 					xLoc = (x * TILEWIDTH);
 					yLoc = (y * TILEWIDTH);
-					floor[x][y].draw(g, xLoc, yLoc);
+					floor[x][y].draw(g, xLoc, yLoc, TILEWIDTH, TILEWIDTH);
 					if (environment[x][y] != null) {
-						environment[x][y].draw(g, xLoc, yLoc);
+						environment[x][y].draw(g, xLoc, yLoc, TILEWIDTH, TILEWIDTH);
 					}
 				} catch (Exception e) {
 					System.out.println(e);
@@ -176,6 +183,57 @@ public class Map {
 	public void killEverything() {
 		creatures.clear();
 
+	}
+	public void generateFloor(FloorTile fill) {
+//		System.out.println("Generating floor");
+		floor = new FloorTile[width][height];
+		maxX = width*TILEWIDTH;
+		maxY = height*TILEWIDTH;
+		for(int x = 0; x < width; x++){
+			for(int y = 0; y < height; y++){
+				floor[x][y] = fill;
+			}
+		}
+		mapName = "untitled";
+		bufferMap();
+	}
+	public void addTrees(double freq){
+
+		for(int x = 0; x < width; x++){
+			for(int y = 0; y < height; y++){
+				if(Math.random() < freq){
+					environment[x][y] = EnvTile.tree;
+				}
+			}
+		}
+		bufferMap();
+	}
+	public void randomFloor(){
+//		System.out.println("Generating floor");
+		floor = new FloorTile[width][height];
+		maxX = width*TILEWIDTH;
+		maxY = height*TILEWIDTH;
+		for(int x = 0; x < width; x++){
+			for(int y = 0; y < height; y++){
+				FloorTile temp = null;
+				do{			
+					temp = FloorTile.values()[(int) ((FloorTile.values().length-1)*Math.random()+1)];
+				}while(!temp.walkable);
+				floor[x][y] = temp;
+				if(Math.random() > .8){
+					environment[x][y] = EnvTile.tree;
+				}
+			}
+		}
+		mapName = "untitled";
+		bufferMap();
+	}
+	public void emptyEnv(){
+		environment = new EnvTile[width][height];
+	}
+	public void setSize(int width, int height) {
+		this.width = width;
+		this.height = height;
 	}
 
 }

@@ -1,5 +1,8 @@
 package flatWorld;
+
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -7,30 +10,27 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
-public enum MapTile {
-	undefined 	(false,	'u'),
-	dirt 		(true,	'd'),
-	water 		(false,	'w'),
-	lava 		(false,	'l'),
-	lightGrass 	(true,	'g'),
-	dirtyGrass 	(true,	'i'),
+public enum EnvTile {
+	undefined	(false, 'u'),
 	stairup 	(true,	'<'),
 	stairdown 	(true,	'>'),
+	tree		(false, 't', "tree1.png")
 	;
 	
 	boolean walkable;
 	Character tileAbbr;
 	private WarpInstructions warpData;
-	static HashMap<Character, MapTile> dict = new HashMap<Character, MapTile>();
+	static HashMap<Character, EnvTile> dict = new HashMap<Character, EnvTile>();
 	BufferedImage img = null;
+	static AffineTransform at;
 	
 	static{
-		for(MapTile tile: MapTile.values()){
+		for(EnvTile tile: EnvTile.values()){
 			dict.put(tile.tileAbbr, tile);
 		}			
 	}
 
-	private MapTile(boolean walkOn, Character abbreviation, String imgName){
+	private EnvTile(boolean walkOn, Character abbreviation, String imgName){
 		walkable = walkOn;
 		tileAbbr = abbreviation;
 		try {
@@ -45,7 +45,7 @@ public enum MapTile {
 			}
 		}
 	}
-	private MapTile(boolean walkOn, Character abbreviation){
+	private EnvTile(boolean walkOn, Character abbreviation){
 		walkable = walkOn;
 		tileAbbr = abbreviation;
 		try {
@@ -61,10 +61,10 @@ public enum MapTile {
 		}
 	}
 	
-	public static MapTile get(Character ch){
-		MapTile temp = dict.get(ch);
+	public static EnvTile get(Character ch){
+		EnvTile temp = dict.get(ch);
 		if (temp == null){
-			return MapTile.undefined;
+			return EnvTile.undefined;
 		}
 		return temp;
 	}
@@ -76,9 +76,20 @@ public enum MapTile {
 	public WarpInstructions getWarpInfo(){
 		return warpData;
 	}
-	
-	public void draw(Graphics g, int x, int y){
-		g.drawImage(img, x, y, null);
+
+	public void draw(Graphics g, int x, int y, int width, int height){
+		if(img == null)
+			return;
+		at = new AffineTransform();
+		at.translate(x, y);
+		if (img.getWidth() != width) {
+			at.scale((double)width/(double)img.getWidth(), 1);
+		}
+		if (img.getHeight() != height) {
+			at.scale(1, height/(double)img.getHeight());
+		}
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.drawImage(img, at, null);
 	}
 	
 	public boolean walkable(){

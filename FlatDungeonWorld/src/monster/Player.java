@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import flatWorld.Area;
 import flatWorld.Map;
 import general.Item;
 
@@ -38,7 +39,7 @@ public class Player extends Creature {
 		stats = new Attributes(new int[]{5,5,5,5,5,5});
 	}
 	
-	public void tick(Map currentMap){
+	public void tick(Area currentWorld){
 		inventory.tick(this);
 		
 		stats.tick(inventory.getWeight());
