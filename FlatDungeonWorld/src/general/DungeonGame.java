@@ -10,6 +10,8 @@ import core.Game;
 import core.GameEngineV2;
 import monster.InformationBar;
 import monster.Player;
+import flatWorld.Area;
+import flatWorld.Biome;
 import flatWorld.Map;
 import flatWorld.WarpInstructions;
 
@@ -35,7 +37,7 @@ public class DungeonGame implements Game {
 	InformationBar hud;
 	DungeonLib library;
 	Player player;
-	Map currentWorld;
+	Area area;
 	int xOffset, yOffset;
 	private final int WIDTH = 1280;
 	private final int HEIGHT = 720;
@@ -69,17 +71,18 @@ public class DungeonGame implements Game {
 	public void goToLevel(WarpInstructions toLevel) {
 		GS = Gamestate.WARP;
 		currentWorldName = toLevel.getTeleName();
-		player.x = toLevel.getTeleX() * 40;
-		player.y = toLevel.getTeleY() * 40;
-		currentWorld = new Map(currentWorldName);
+//		area = new Area(currentWorldName);
+		area = new Area(Biome.forest);
+		player.x = toLevel.getTeleX() * area.activeMap.TILEWIDTH;
+		player.y = toLevel.getTeleY() * area.activeMap.TILEWIDTH;
 		loadCount = 50;
 	}
 
 	private void drawLevelScreen(Graphics g) {
 		g.setFont(new Font("SansSerif", Font.BOLD, 50));
 		g.setColor(Color.white);
-		g.drawString(currentWorld.getMapName(), (engine.width - g
-				.getFontMetrics().stringWidth(currentWorld.getMapName())) / 2,
+		g.drawString(area.getMapName(), (engine.width - g
+				.getFontMetrics().stringWidth(area.getMapName())) / 2,
 				engine.height / 2);
 	}
 
@@ -91,7 +94,7 @@ public class DungeonGame implements Game {
 		case GAME: //walking maps
 			xOffset = (int)player.getX();
 			yOffset = (int)player.getY();
-			currentWorld.draw(g, engine.width/2-xOffset, engine.height/2-yOffset);
+			area.draw(g, engine.width/2-xOffset, engine.height/2-yOffset);
 			player.draw(g, engine.width/2-xOffset, engine.height/2-yOffset);
 			hud.draw(g);
 			break;
@@ -166,12 +169,12 @@ public class DungeonGame implements Game {
 			//places a kobold at the current player position
 			if(engine.getKey((int)'k') == 1){
 				engine.unflagKey((int)'k');
-				currentWorld.createKobold((int)player.x, (int)player.y);
+				area.createKobold((int)player.x, (int)player.y);
 			}
 			//kills all creatures
 			if(engine.getKey((int)'l') == 1){
 				engine.unflagKey((int)'l');
-				currentWorld.killEverything();
+				area.killEverything();
 			}
 		}
 
@@ -204,30 +207,30 @@ public class DungeonGame implements Game {
 			moveCount = 0;
 
 			if(engine.getKey(UP) > 0){
-				player.moveUp(currentWorld);
+				player.moveUp(area);
 			}
 			if(engine.getKey(LEFT) > 0){
-				player.moveLeft(currentWorld);
+				player.moveLeft(area);
 			}
 			if(engine.getKey(RIGHT) > 0){
-				player.moveRight(currentWorld);
+				player.moveRight(area);
 			}
 			if(engine.getKey(DOWN) > 0){
-				player.moveDown(currentWorld);
+				player.moveDown(area);
 			}
 
 			//move other creatures here
 		}
 
 		player.setFacing(engine.getFacing());
-		player.tick(currentWorld);
+		player.tick(area);
 		
 		if(player.stats.dead == true){
 			GS = Gamestate.DEAD;
 			return;
 		}
 		
-		WarpInstructions mapWarpEvent = currentWorld.tick(player);
+		WarpInstructions mapWarpEvent = area.tick(player);
 		if(mapWarpEvent != null){
 			goToLevel(mapWarpEvent);
 		}

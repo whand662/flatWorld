@@ -11,12 +11,14 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import core.GameEngineV2.ArrDirect;
+import flatWorld.Area;
 import flatWorld.Map;
 import general.AttackBox;
 
 
 public class Creature {
 
+	static BufferedImage sprite = null;
 	double heading = 0;
 	double lastHeading = 0;
 	double vel = 0;
@@ -29,8 +31,6 @@ public class Creature {
 	protected ArrDirect facing = ArrDirect.N;
 
 	AffineTransform at = null;
-	BufferedImage sprite = null;
-	
 	public Creature(int locx, int locy, String spriteFile) {
 		if(getSprite() == null){
 		try {
@@ -51,7 +51,7 @@ public class Creature {
 			heading += headM;
 		}
 		vel += (random.nextDouble()-.4)/100;
-		move(currentMap, vel, heading);
+		move(currentMap);
 		vel=vel%8;
 		stats.tick(0);
 	}
@@ -88,17 +88,20 @@ public class Creature {
 		if(img != null){
 			at = new AffineTransform();
 			at.translate(xOffset+x, yOffset+y);
-				at.rotate(Math.PI*heading);
+			at.rotate(Math.PI*heading);
 			at.scale(.5,.5);
 			at.translate(-img.getWidth()/2, -img.getHeight()/2);
 			g2d.drawImage(img, at, null);
 		}
 	}
 
-	public void move(Map currentMap, double vel, double heading){
+	public void move(Map currentMap){
 		double xm = Math.cos(heading*Math.PI)*vel;
 		double ym = Math.sin(heading*Math.PI)*vel;
 
+		if(!currentMap.locWalkable(x+xm, y+ym)){
+			heading+=1;
+		}
 		if(currentMap.locWalkable(x+xm, y)){
 			x += xm;
 		}
@@ -107,41 +110,41 @@ public class Creature {
 		}
 	}
 	
-	public void moveUp(Map currentMap){
+	public void moveUp(Area currentWorld){
 		for(int count = stats.speed; count > 0; count--){
-			if(currentMap.locWalkable(x, y - size - 1) 
-					&& currentMap.locWalkable(x - size, y - size - 1) 
-					&& currentMap.locWalkable(x + size, y - size - 1)){
+			if(currentWorld.locWalkable(x, y - size - 1) 
+					&& currentWorld.locWalkable(x - size, y - size - 1) 
+					&& currentWorld.locWalkable(x + size, y - size - 1)){
 				y--;
-			}	
+			}
 		}
 	}
 
-	public void moveDown(Map currentMap){
+	public void moveDown(Area currentWorld){
 		for(int count = stats.speed; count > 0; count--){
-			if(currentMap.locWalkable(x, y + size + 1) 
-					&& currentMap.locWalkable(x + size, y + size + 1) 
-					&& currentMap.locWalkable(x - size, y + size + 1)){
+			if(currentWorld.locWalkable(x, y + size + 1) 
+					&& currentWorld.locWalkable(x + size, y + size + 1) 
+					&& currentWorld.locWalkable(x - size, y + size + 1)){
 				y++;
 			}	
 		}
 	}
 
-	public void moveLeft(Map currentMap){
+	public void moveLeft(Area currentWorld){
 		for(int count = stats.speed; count > 0; count--){
-			if(currentMap.locWalkable(x - size - 1, y)
-					&& currentMap.locWalkable(x - size - 1, y + size)
-					&& currentMap.locWalkable(x - size - 1, y - size)){
+			if(currentWorld.locWalkable(x - size - 1, y)
+					&& currentWorld.locWalkable(x - size - 1, y + size)
+					&& currentWorld.locWalkable(x - size - 1, y - size)){
 				x--;
 			}	
 		}
 	}
 
-	public void moveRight(Map currentMap){
+	public void moveRight(Area currentWorld){
 		for(int count = stats.speed; count > 0; count--){
-			if(currentMap.locWalkable(x + size + 1, y)
-					&& currentMap.locWalkable(x + size + 1, y + size)
-					&& currentMap.locWalkable(x + size + 1, y - size)){
+			if(currentWorld.locWalkable(x + size + 1, y)
+					&& currentWorld.locWalkable(x + size + 1, y + size)
+					&& currentWorld.locWalkable(x + size + 1, y - size)){
 				x++;
 			}	
 		}
@@ -186,7 +189,7 @@ public class Creature {
 	}
 
 	public void setSprite(BufferedImage sprite) {
-		this.sprite = sprite;
+		Creature.sprite = sprite;
 	}
 
 }
