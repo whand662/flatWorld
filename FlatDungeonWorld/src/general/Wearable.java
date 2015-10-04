@@ -3,12 +3,20 @@ package general;
 
 public class Wearable extends Item{
 
-	int durability = 1, MAXDUR = 1;
+	protected int durability = 1, MAXDUR = 1;
 	
 	public Wearable(boolean known) {
 		super("Wearable item" , 1, 1, known);
 	}
 
+	public int getMaxDurability(){
+		return MAXDUR;
+	}
+	
+	public int getCurrentDurability(){
+		return durability;
+	}
+	
 	public void tickDUR(int dmg){
 		durability -= dmg;
 	}

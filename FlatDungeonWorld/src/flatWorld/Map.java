@@ -92,7 +92,7 @@ public class Map {
 
 		// Attempt to read map file
 		try {
-			BufferedReader in = new BufferedReader(new FileReader("Maps/"
+			BufferedReader in = new BufferedReader(new FileReader("res/maps/"
 					+ mapFile + ".txt"));
 			line = in.readLine();
 			st = new StringTokenizer(line, delimiters, false);
@@ -136,8 +136,8 @@ public class Map {
 		bufferMap();
 	}
 	public void bufferMap(){
-		// Prebuffer map image
-//		System.out.println("Buffering map");
+		// Pre-buffer map image
+		// System.out.println("Buffering map");
 		int xLoc, yLoc;
 		mapImage = new BufferedImage(maxX, maxY, BufferedImage.TYPE_4BYTE_ABGR);
 		Graphics g = mapImage.getGraphics();

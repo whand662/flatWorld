@@ -53,7 +53,7 @@ public class DungeonLib{
 		steel = new Material("Steel", 20, 80, 15);
 		mithril = new Material("Mithril", 30, 70, 10);
 		adamantite = new Material("Adamantine", 30, 100, 30);
-		starmetal = new Material("Starmetel", 40, 150, 25);
+		starmetal = new Material("Starmetal", 40, 150, 25);
 		unobtainium = new Material("Unobtainium", 60, 200, 30);
 		
 		//define item types

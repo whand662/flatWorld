@@ -26,9 +26,9 @@ public class TitleScreen {
 		this.game = game;
 		this.engine = engine;
 		try {
-			splash1 = ImageIO.read(new File("splash.png"));
-			splash2 = ImageIO.read(new File("splash.jpg"));
-			startScreen = ImageIO.read(new File("startscreen.png"));
+			splash1 = ImageIO.read(new File("res/pic/splash.png"));
+			splash2 = ImageIO.read(new File("res/pic/splash.jpg"));
+			startScreen = ImageIO.read(new File("res/pic/startscreen.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

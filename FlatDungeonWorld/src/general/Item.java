@@ -3,9 +3,9 @@ package general;
 
 public class Item {
 
-	int weight = 0, value = 0;
-	String name = "Undefined Item Name";
-	boolean identified = false;
+	protected int weight = 0, value = 0;
+	protected String name = "Undefined Item Name";
+	protected boolean identified = false;
 	
 	public Item(String label, int cost, int lbs, boolean known) {
 		name = label;
@@ -27,6 +27,10 @@ public class Item {
 	
 	public int getWeight(){
 		return weight;
+	}
+	
+	public boolean isKnown(){
+		return identified;
 	}
 	
 	public void discover(){

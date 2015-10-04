@@ -14,28 +14,10 @@ import monster.Player;
  *
  */
 public class Area {
-	Biome biome = Biome.forest;
 	public Map activeMap;
 	List<Map> maps = new ArrayList<Map>();
 
-	public Area(Biome biome){
-		Map map = new Map();
-		int width = 80;
-		int height = 20;
-		this.biome = biome;
-		switch (biome){
-		case forest:
-			map.setSize(width, height);
-			map.emptyEnv();
-			map.generateFloor(FloorTile.dirtyGrass);
-			map.addTrees(.5);
-		case plains:
-		case desert:
-		case urban:
-			default:
-		}
-		activeMap = map;
-	}
+	
 	public Area(String name) {
 		maps.add(new Map(name));
 		activeMap = maps.get(0);

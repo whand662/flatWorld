@@ -12,8 +12,8 @@ import core.GameEngineV2;
 
 public class MenuScreen {
 
-	int cursorLoc = 1;
-	BufferedImage splash, menuScreen;
+	int cursorLoc = 0;
+	BufferedImage splash, menuBackground;
 	DungeonGame game;
 	GameEngineV2 engine;
 
@@ -26,26 +26,52 @@ public class MenuScreen {
 		locy = (engine.height - height) / 2;
 		locx = engine.width - width - locy;
 		try {
-			menuScreen = ImageIO.read(new File("menuscreen.png"));
+			menuBackground = ImageIO.read(new File("res/pic/menuscreen.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void cursorUp() {
-
+		cursorLoc--;
+		if(cursorLoc < 0){
+			cursorLoc = 29;
+		}
 	}
 
 	public void cursorDown() {
-
+		cursorLoc++;
+		if(cursorLoc > 29){
+			cursorLoc = 0;
+		}
 	}
 
 	public void cursorLeft(){
-
+		if(cursorLoc >= 0 && cursorLoc <= 9){
+			cursorLoc = 28;
+		}else if(cursorLoc >= 10 && cursorLoc <= 19){
+			cursorLoc -= 10;
+		}else if(cursorLoc >= 20 && cursorLoc <= 22){
+			cursorLoc = 19;
+		}else if(cursorLoc >= 23 && cursorLoc <= 26){
+			cursorLoc = 21;
+		}else if(cursorLoc >= 27 && cursorLoc <= 29){
+			cursorLoc = 24;
+		}
 	}
 
 	public void cursorRight(){
-
+		if(cursorLoc >= 0 && cursorLoc <= 9){
+			cursorLoc += 10;
+		}else if(cursorLoc >= 10 && cursorLoc <= 19){
+			cursorLoc = 21;
+		}else if(cursorLoc >= 20 && cursorLoc <= 22){
+			cursorLoc = 24;
+		}else if(cursorLoc >= 23 && cursorLoc <= 26){
+			cursorLoc = 28;
+		}else if(cursorLoc >= 27 && cursorLoc <= 29){
+			cursorLoc = 0;
+		}
 	}
 
 	public void chooseOption() {
@@ -56,10 +82,10 @@ public class MenuScreen {
 
 	public void draw(Graphics g) {
 
-		g.drawImage(menuScreen, 0, 0, null);
+		g.drawImage(menuBackground, 0, 0, null);
 		drawItemDisplay(g);
 		drawInventory(g);
-
+		
 	}
 
 	private void drawInventory(Graphics g){

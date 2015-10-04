@@ -11,7 +11,6 @@ import core.GameEngineV2;
 import monster.InformationBar;
 import monster.Player;
 import flatWorld.Area;
-import flatWorld.Biome;
 import flatWorld.Map;
 import flatWorld.WarpInstructions;
 
@@ -71,8 +70,7 @@ public class DungeonGame implements Game {
 	public void goToLevel(WarpInstructions toLevel) {
 		GS = Gamestate.WARP;
 		currentWorldName = toLevel.getTeleName();
-//		area = new Area(currentWorldName);
-		area = new Area(Biome.forest);
+		area = new Area(currentWorldName);
 		player.x = toLevel.getTeleX() * area.activeMap.TILEWIDTH;
 		player.y = toLevel.getTeleY() * area.activeMap.TILEWIDTH;
 		loadCount = 50;
@@ -270,6 +268,26 @@ public class DungeonGame implements Game {
 			if(engine.getKey(105) == 1){
 				engine.unflagKey(105);
 				GS = Gamestate.GAME;
+			}
+			if (engine.getKey(UP) == 1) {
+				engine.unflagKey(UP);
+				menuScreen.cursorUp();
+			}
+			if (engine.getKey(DOWN) == 1) {
+				engine.unflagKey(DOWN);
+				menuScreen.cursorDown();
+			}
+			if (engine.getKey(LEFT) == 1) {
+				engine.unflagKey(LEFT);
+				menuScreen.cursorLeft();
+			}
+			if (engine.getKey(RIGHT) == 1) {
+				engine.unflagKey(RIGHT);
+				menuScreen.cursorRight();
+			}
+			if (engine.getKey(ENTER) == 1) {
+				engine.unflagKey(ENTER);
+				menuScreen.chooseOption();
 			}
 			break;
 		case DEAD: // death screen
