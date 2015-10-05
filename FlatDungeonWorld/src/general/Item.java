@@ -1,5 +1,9 @@
 package general;
 
+/*
+	Basic item class, most likely will not be used on its own with the exception of useless "loot" items
+	Starts unidentified
+*/
 
 public class Item {
 
