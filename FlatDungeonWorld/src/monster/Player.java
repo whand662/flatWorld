@@ -24,19 +24,22 @@ public class Player extends Creature {
 	BufferedImage swordRaw;
 	BufferedImage swordPrep;	
 	static String spriteFile = "res/chars/char1.gif";
+	String race, profession;
 	//just for testing, will change location
 	
-	public Player(int locx, int locy) {
+	public Player(int locx, int locy, String r, String p) {
 		super(locx, locy, spriteFile);
+		race = r;
+		profession = p;
 		size = 10;
 		try {
 			swordRaw = ImageIO.read(new File("res/chars/sword1.gif"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		inventory = new Inventory(20);
-		//Attribute order is STR END AGL INT WIS LCK
-		stats = new Attributes(new int[]{5,5,5,5,5,5});
+		
+		initializePlayerInfo();
+		
 	}
 	
 	public void tick(Area currentWorld){
@@ -64,5 +67,23 @@ public class Player extends Creature {
 	public void clearInventory(){
 		inventory.fullReset();
 	}
-
+	
+	private void initializePlayerInfo(){
+		inventory = new Inventory(20);
+		//Attribute order is STR END AGL INT WIS LCK
+		
+		
+		switch(race){
+			case "Human":
+				//line below will be phased out once attribute system is updated
+				stats = new Attributes(new int[]{5,5,5,5,5,5});
+				break;
+		}
+		
+		switch(profession){
+			case "Warrior":
+				giveItem(ADD ITEM GEN FUNCTION HERE);
+				break;
+		}
+	}
 }
