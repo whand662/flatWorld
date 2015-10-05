@@ -76,7 +76,7 @@ public class MenuScreen {
 
 	public void chooseOption() {
 		switch (cursorLoc) {
-
+			
 		}
 	}
 

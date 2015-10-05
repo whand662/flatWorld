@@ -45,6 +45,7 @@ public class DungeonGame implements Game {
 	private boolean GODMODE = true;
 	private String currentWorldName;
 
+	// Main is just for starting Game object, do not put more code in here
 	public static void main(String args[]) {
 		new DungeonGame();
 	}
@@ -53,7 +54,8 @@ public class DungeonGame implements Game {
 		engine = new GameEngineV2(this);
 		engine.setWindow("Dungeon Game", WIDTH, HEIGHT, 10);
 
-		// define startup variables
+		// Setup of a few key game components, this happens
+		// before any other function is called
 		GS = Gamestate.TITLE;
 		titleScreen = new TitleScreen(this, engine);
 		menuScreen = new MenuScreen(this, engine);
@@ -315,6 +317,11 @@ public class DungeonGame implements Game {
 		}
 	}
 	
+	/*
+	 * This is where the information regarding a new character will have to be passed
+	 * currently hard-coded as a human warrior b/c I don't want to program the other stuff now
+	 * 
+	 */
 	void setupPlayer(){
 		player = new Player(160, 200, "Human", "Warrior");
 		hud = new InformationBar(player);
