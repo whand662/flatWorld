@@ -83,6 +83,7 @@ public class Map {
 		}
 	}
 	
+	//	This is super important
 	private void initializeMap(String mapFile) {
 		String line, temp;
 		int xLoc = 0, yLoc = 0;
@@ -104,7 +105,8 @@ public class Map {
 
 			maxX = xLoc * TILEWIDTH;
 			maxY = yLoc * TILEWIDTH;
-
+			
+			// Read in regular tiles
 			for (int c1 = 0; c1 < yLoc; c1++) {
 				line = in.readLine();
 				for (int c2 = 0; c2 < xLoc; c2++) {
@@ -184,53 +186,11 @@ public class Map {
 		creatures.clear();
 
 	}
-	public void generateFloor(FloorTile fill) {
-//		System.out.println("Generating floor");
-		floor = new FloorTile[width][height];
-		maxX = width*TILEWIDTH;
-		maxY = height*TILEWIDTH;
-		for(int x = 0; x < width; x++){
-			for(int y = 0; y < height; y++){
-				floor[x][y] = fill;
-			}
-		}
-		mapName = "untitled";
-		bufferMap();
-	}
-	public void addTrees(double freq){
 
-		for(int x = 0; x < width; x++){
-			for(int y = 0; y < height; y++){
-				if(Math.random() < freq){
-					environment[x][y] = EnvTile.tree;
-				}
-			}
-		}
-		bufferMap();
-	}
-	public void randomFloor(){
-//		System.out.println("Generating floor");
-		floor = new FloorTile[width][height];
-		maxX = width*TILEWIDTH;
-		maxY = height*TILEWIDTH;
-		for(int x = 0; x < width; x++){
-			for(int y = 0; y < height; y++){
-				FloorTile temp = null;
-				do{			
-					temp = FloorTile.values()[(int) ((FloorTile.values().length-1)*Math.random()+1)];
-				}while(!temp.walkable);
-				floor[x][y] = temp;
-				if(Math.random() > .8){
-					environment[x][y] = EnvTile.tree;
-				}
-			}
-		}
-		mapName = "untitled";
-		bufferMap();
-	}
 	public void emptyEnv(){
 		environment = new EnvTile[width][height];
 	}
+	
 	public void setSize(int width, int height) {
 		this.width = width;
 		this.height = height;
