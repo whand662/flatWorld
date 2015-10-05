@@ -20,7 +20,6 @@ public enum FloorTile {
 	
 	boolean walkable;
 	Character tileAbbr;
-	private WarpInstructions warpData;
 	static HashMap<Character, FloorTile> dict = new HashMap<Character, FloorTile>();
 	BufferedImage img = null;
 	AffineTransform at;
@@ -68,14 +67,6 @@ public enum FloorTile {
 			return FloorTile.undefined;
 		}
 		return temp;
-	}
-	
-	public void setWarpInfo(String map, int x, int y){
-		warpData = new WarpInstructions(map, x, y);
-	}
-	
-	public WarpInstructions getWarpInfo(){
-		return warpData;
 	}
 	
 	public void draw(Graphics g, int x, int y, int width, int height){
