@@ -1,6 +1,6 @@
 package general;
 
-public class SpellBook implements Useable{
+public class SpellBook extends Item implements Useable{
 
 	public SpellBook() {
 		
