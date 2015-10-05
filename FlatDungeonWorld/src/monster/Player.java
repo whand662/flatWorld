@@ -24,8 +24,7 @@ public class Player extends Creature {
 	BufferedImage swordRaw;
 	BufferedImage swordPrep;	
 	static String spriteFile = "res/chars/char1.gif";
-	String race, profession;
-	//just for testing, will change location
+	private String race, profession;
 	
 	public Player(int locx, int locy, String r, String p) {
 		super(locx, locy, spriteFile);
@@ -40,6 +39,14 @@ public class Player extends Creature {
 		
 		initializePlayerInfo();
 		
+	}
+	
+	public String getProfession(){
+		return profession;
+	}
+	
+	public String getRace(){
+		return race;
 	}
 	
 	public void tick(Area currentWorld){
