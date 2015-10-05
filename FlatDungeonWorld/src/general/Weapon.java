@@ -9,6 +9,12 @@ public class Weapon extends Wearable implements Useable {
 	String element;
 	int damage;
 	
+	/*
+		Weapon durability is found by multiplying the material's base durability by the quality factor
+		Weapon damage is similarly found by multiplying the materials hardness by the quality factor
+		weapons are always set to full durability by the constructor
+	*/
+	
 	public Weapon(Quality qual, Material mat, WearableType typ, String elmt, boolean known) {
 		super(known);
 		quality = qual;
@@ -32,7 +38,7 @@ public class Weapon extends Wearable implements Useable {
 	}
 
 	public void use() {
-		
+		System.out.println("Used " + getName());
 	}
 
 }
