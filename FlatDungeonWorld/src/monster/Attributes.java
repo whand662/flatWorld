@@ -1,6 +1,11 @@
 package monster;
 import java.util.ArrayList;
 
+/*
+	needs to be re-worked. Stat class should be more inclusive... IE include stat modifiers in class,
+	allow for retrieval of altered and unaltered stats. Also include means of constructor randomly generating
+	stats on initialization
+*/
 
 public class Attributes {
 
