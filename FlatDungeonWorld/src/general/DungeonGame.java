@@ -60,7 +60,7 @@ public class DungeonGame implements Game {
 		library = new DungeonLib();
 		
 		//will be moved once GS SETUP is more developed
-		player = new Player(160, 200);
+		player = new Player(160, 200, "Human", "Warrior");
 		hud = new InformationBar(player);
 
 		engine.start();
