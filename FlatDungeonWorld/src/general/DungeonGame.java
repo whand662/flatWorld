@@ -59,10 +59,6 @@ public class DungeonGame implements Game {
 		menuScreen = new MenuScreen(this, engine);
 		library = new DungeonLib();
 		
-		//will be moved once GS SETUP is more developed
-		player = new Player(160, 200, "Human", "Warrior");
-		hud = new InformationBar(player);
-
 		engine.start();
 		playSound("odd1.wav");
 	}
@@ -239,6 +235,7 @@ public class DungeonGame implements Game {
 		switch (GS) {
 
 		case SETUP:
+			setupPlayer();
 			goToLevel(new WarpInstructions("test", 4, 5));
 			break;
 		case TITLE: // startup screen
@@ -317,6 +314,16 @@ public class DungeonGame implements Game {
 			e.printStackTrace();
 		}
 	}
-
+	
+	void setupPlayer(){
+		player = new Player(160, 200, "Human", "Warrior");
+		hud = new InformationBar(player);
+		
+		switch(player.getProfession()){
+			case "Warrior":
+			player.giveItem(library.getItem("weapon", 0));
+			break;
+		}
+	}
 
 }
