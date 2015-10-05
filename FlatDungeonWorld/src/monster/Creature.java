@@ -31,6 +31,8 @@ public class Creature {
 	protected ArrDirect facing = ArrDirect.N;
 
 	AffineTransform at = null;
+	
+	//	Constructor
 	public Creature(int locx, int locy, String spriteFile) {
 		if(getSprite() == null){
 		try {
