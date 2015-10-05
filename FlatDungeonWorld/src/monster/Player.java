@@ -79,11 +79,5 @@ public class Player extends Creature {
 				stats = new Attributes(new int[]{5,5,5,5,5,5});
 				break;
 		}
-		
-		switch(profession){
-			case "Warrior":
-				giveItem(ADD ITEM GEN FUNCTION HERE);
-				break;
-		}
 	}
 }
