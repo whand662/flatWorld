@@ -1,0 +1,56 @@
+<project name="FlatWorld" default="dist" basedir="./FlatDungeonWorld">
+  <description>
+    simple example build file, repurposed for FlatWorld
+  </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="dist" location="dist"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="compileCore" depends="init"
+        description="compile the source">
+    <!-- Compile the Java code from ${src}/core into ${build} -->
+    <javac srcdir="${src}/core" destdir="${build}"/>
+  </target>
+
+  <target name="compileMonster" depends="compileCore"
+        description="compile the source">
+    <!-- Compile the Java code from ${src}/core into ${build} -->
+    <javac srcdir="${src}/monster" destdir="${build}"/>
+  </target>
+
+  <target name="compileGeneral" depends="compileMonster"
+        description="compile the source">
+    <!-- Compile the Java code from ${src}/core into ${build} -->
+    <javac srcdir="${src}/general" destdir="${build}"/>
+  </target>
+
+  <target name="compileFlatWorld" depends="compileGeneral"
+        description="compile the source">
+    <!-- Compile the Java code from ${src}/core into ${build} -->
+    <javac srcdir="${src}/flatWorld" destdir="${build}"/>
+  </target>
+
+  <target name="dist" depends="compileFlatWorld"
+        description="generate the distribution">
+    <!-- Create the distribution directory -->
+    <mkdir dir="${dist}/lib"/>
+
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+    <jar jarfile="${dist}/lib/MyProject-${DSTAMP}.jar" basedir="${build}"/>
+  </target>
+
+  <target name="clean"
+        description="clean up">
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>
