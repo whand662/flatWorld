@@ -16,12 +16,11 @@ import flatWorld.WarpInstructions;
 
 
 /**
- * @author ayrix, among others...
+ * Contains entry point
  */
 public class DungeonGame implements Game {
 
 	/**
-	 * @author ayrix
 	 * Overall gamestate enumerator
 	 */
 	public enum Gamestate {

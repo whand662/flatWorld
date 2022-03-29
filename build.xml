@@ -20,19 +20,7 @@
     <javac srcdir="${src}/core" destdir="${build}"/>
   </target>
 
-  <target name="compileGeneral" depends="compileCore"
-        description="compile the source">
-    <!-- Compile the Java code from ${src}/core into ${build} -->
-    <javac srcdir="${src}/general" destdir="${build}"/>
-  </target>
-
-  <target name="compileMonster" depends="compileGeneral"
-        description="compile the source">
-    <!-- Compile the Java code from ${src}/core into ${build} -->
-    <javac srcdir="${src}/monster" destdir="${build}"/>
-  </target>
-
-  <target name="compileFlatWorld" depends="compileMonster"
+  <target name="compileFlatWorld" depends="compileCore"
         description="compile the source">
     <!-- Compile the Java code from ${src}/core into ${build} -->
     <javac srcdir="${src}/flatWorld" destdir="${build}"/>
@@ -44,7 +32,11 @@
     <mkdir dir="${dist}/lib"/>
 
     <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-    <jar jarfile="${dist}/lib/MyProject-${DSTAMP}.jar" basedir="${build}"/>
+    <jar jarfile="${dist}/lib/MyProject-${DSTAMP}.jar" basedir="${build}">
+    	<manifest>
+    		<attribute name="Main-Class" value="flatWorld.DungeonGame"/>
+  	</manifest>
+    </jar>
   </target>
 
   <target name="clean"
