@@ -137,6 +137,7 @@ public class Map {
 		}
 		bufferMap();
 	}
+	
 	public void bufferMap(){
 		// Pre-buffer map image
 		// System.out.println("Buffering map");

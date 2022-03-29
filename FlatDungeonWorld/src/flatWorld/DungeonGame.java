@@ -237,7 +237,7 @@ public class DungeonGame implements Game {
 
 		case SETUP:
 			setupPlayer();
-			goToLevel(new WarpInstructions("test", 4, 5));
+			goToLevel(new WarpInstructions("Test", 4, 5));
 			break;
 		case TITLE: // startup screen
 			if (engine.getKey(UP) == 1) {
