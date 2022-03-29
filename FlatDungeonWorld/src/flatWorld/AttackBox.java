@@ -1,4 +1,4 @@
-package general;
+package flatWorld;
 
 public class AttackBox {
 

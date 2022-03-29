@@ -1,4 +1,4 @@
-package general;
+package flatWorld;
 
 public class SpellBook extends Item implements Useable{
 
@@ -7,7 +7,7 @@ public class SpellBook extends Item implements Useable{
 	}
 
 	public void use() {
-		
+
 	}
 
 }

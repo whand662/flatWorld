@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import monster.Creature;
-import monster.Kobold;
-import monster.Player;
+import flatWorld.Creature;
+import flatWorld.Kobold;
+import flatWorld.Player;
 
 
 public class Map {
@@ -27,7 +27,7 @@ public class Map {
 	int width,height;
 
 	public Map(){
-		
+
 	}
 	public Map(String mapFile) {
 		mapName = mapFile;
@@ -70,7 +70,7 @@ public class Map {
 
 	/**
 	 * Draw the map image in the proper location
-	 * 
+	 *
 	 * @param g		the graphics object to draw with
 	 * @param game	the game object to draw on
 	 */
@@ -82,7 +82,7 @@ public class Map {
 			creature.draw(g, xOffset, yOffset);
 		}
 	}
-	
+
 	//	This is super important
 	private void initializeMap(String mapFile) {
 		String line, temp;
@@ -105,7 +105,7 @@ public class Map {
 
 			maxX = xLoc * TILEWIDTH;
 			maxY = yLoc * TILEWIDTH;
-			
+
 			// Read in regular tiles
 			for (int c1 = 0; c1 < yLoc; c1++) {
 				line = in.readLine();
@@ -190,7 +190,7 @@ public class Map {
 	public void emptyEnv(){
 		environment = new EnvTile[width][height];
 	}
-	
+
 	public void setSize(int width, int height) {
 		this.width = width;
 		this.height = height;

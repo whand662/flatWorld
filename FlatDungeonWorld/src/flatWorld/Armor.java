@@ -1,5 +1,5 @@
-package general;
-import monster.Player;
+package flatWorld;
+import flatWorld.Player;
 
 
 
@@ -10,7 +10,7 @@ public class Armor extends Wearable {
 	WearableType type;
 	String element;
 	int armorRating;
-	
+
 	public Armor(Quality qual, Material mat, WearableType typ, String elmt, boolean known) {
 		super(known);
 		quality = qual;
@@ -22,7 +22,7 @@ public class Armor extends Wearable {
 		MAXDUR = (int)(material.getDurability() * quality.getValue());
 		repair();
 	}
-	
+
 	public String getName(){
 		if(!identified){
 			return "Mysterious " + type.getName();
@@ -31,6 +31,6 @@ public class Armor extends Wearable {
 	}
 
 	public void tickArmor(Player player){
-		
+
 	}
 }

@@ -1,4 +1,4 @@
-package monster;
+package flatWorld;
 import java.awt.image.BufferedImage;
 
 import flatWorld.Map;
@@ -21,6 +21,6 @@ public class Kobold extends Creature {
 	@Override
 	public void tick(Map currentMap){
 		super.tick(currentMap);
-		
+
 	}
 }

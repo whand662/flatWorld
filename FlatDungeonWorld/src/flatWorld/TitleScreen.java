@@ -1,4 +1,4 @@
-package general;
+package flatWorld;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -39,7 +39,7 @@ public class TitleScreen {
 		cursorLoc--;
 		if (cursorLoc < 1) {
 			cursorLoc = text.length - 1;
-		}	
+		}
 	}
 
 	public void cursorDown() {

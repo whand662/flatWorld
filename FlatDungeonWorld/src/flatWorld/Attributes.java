@@ -1,4 +1,4 @@
-package monster;
+package flatWorld;
 import java.util.ArrayList;
 
 /*
@@ -45,13 +45,13 @@ public class Attributes {
 			}
 		}
 	}
-	
+
 	public void updateStats(int weight){
 		healthMAX = checkStat("ENDURANCE") * 5;
 		manaMAX = checkStat("WISDOM") * 5;
 		speedMAX = checkStat("AGILITY");
 		carryMAX = ((checkStat("STRENGTH")/2) + checkStat("ENDURANCE")) * 7;
-		
+
 		//section below handles speed changes based on weight carried
 		if(weight > carryMAX){
 			overburdened = true;
@@ -62,7 +62,7 @@ public class Attributes {
 	}
 
 	public void updateSpeed(int weight){
-		
+
 		if(overburdened){
 			speed = 0;
 		}

@@ -1,4 +1,4 @@
-package general;
+package flatWorld;
 /*
  * Generates random items
  */
@@ -140,7 +140,7 @@ public class ItemGenesis {
 		}
 		return null;
 	}
-	
+
 	private WearableType randomType(String type){
 		/*if(type == "weapon"){
 			switch(randNum.nextInt(9)){

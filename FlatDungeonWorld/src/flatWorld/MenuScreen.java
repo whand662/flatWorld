@@ -1,4 +1,4 @@
-package general;
+package flatWorld;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -76,7 +76,7 @@ public class MenuScreen {
 
 	public void chooseOption() {
 		switch (cursorLoc) {
-			
+
 		}
 	}
 
@@ -85,7 +85,7 @@ public class MenuScreen {
 		g.drawImage(menuBackground, 0, 0, null);
 		drawItemDisplay(g);
 		drawInventory(g);
-		
+
 	}
 
 	private void drawInventory(Graphics g){
@@ -120,4 +120,3 @@ public class MenuScreen {
 		}
 	}
 }
-

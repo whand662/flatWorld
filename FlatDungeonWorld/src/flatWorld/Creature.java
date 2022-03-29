@@ -1,4 +1,4 @@
-package monster;
+package flatWorld;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
 import core.GameEngineV2.ArrDirect;
 import flatWorld.Area;
 import flatWorld.Map;
-import general.AttackBox;
+import flatWorld.AttackBox;
 
 
 public class Creature {
@@ -25,13 +25,13 @@ public class Creature {
 	public double x;
 	public double y;
 	int size = 40;
-	
+
 	public Attributes stats;
 
 	protected ArrDirect facing = ArrDirect.N;
 
 	AffineTransform at = null;
-	
+
 	//	Constructor
 	public Creature(int locx, int locy, String spriteFile) {
 		if(getSprite() == null){
@@ -111,11 +111,11 @@ public class Creature {
 			y += ym;
 		}
 	}
-	
+
 	public void moveUp(Area currentWorld){
 		for(int count = stats.speed; count > 0; count--){
-			if(currentWorld.locWalkable(x, y - size - 1) 
-					&& currentWorld.locWalkable(x - size, y - size - 1) 
+			if(currentWorld.locWalkable(x, y - size - 1)
+					&& currentWorld.locWalkable(x - size, y - size - 1)
 					&& currentWorld.locWalkable(x + size, y - size - 1)){
 				y--;
 			}
@@ -124,11 +124,11 @@ public class Creature {
 
 	public void moveDown(Area currentWorld){
 		for(int count = stats.speed; count > 0; count--){
-			if(currentWorld.locWalkable(x, y + size + 1) 
-					&& currentWorld.locWalkable(x + size, y + size + 1) 
+			if(currentWorld.locWalkable(x, y + size + 1)
+					&& currentWorld.locWalkable(x + size, y + size + 1)
 					&& currentWorld.locWalkable(x - size, y + size + 1)){
 				y++;
-			}	
+			}
 		}
 	}
 
@@ -138,7 +138,7 @@ public class Creature {
 					&& currentWorld.locWalkable(x - size - 1, y + size)
 					&& currentWorld.locWalkable(x - size - 1, y - size)){
 				x--;
-			}	
+			}
 		}
 	}
 
@@ -148,7 +148,7 @@ public class Creature {
 					&& currentWorld.locWalkable(x + size + 1, y + size)
 					&& currentWorld.locWalkable(x + size + 1, y - size)){
 				x++;
-			}	
+			}
 		}
 	}
 	public double getX() {

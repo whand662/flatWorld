@@ -1,4 +1,4 @@
-package general;
+package flatWorld;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.Color;
@@ -8,8 +8,8 @@ import java.net.URL;
 
 import core.Game;
 import core.GameEngineV2;
-import monster.InformationBar;
-import monster.Player;
+import flatWorld.InformationBar;
+import flatWorld.Player;
 import flatWorld.Area;
 import flatWorld.Map;
 import flatWorld.WarpInstructions;
@@ -60,7 +60,7 @@ public class DungeonGame implements Game {
 		titleScreen = new TitleScreen(this, engine);
 		menuScreen = new MenuScreen(this, engine);
 		library = new DungeonLib();
-		
+
 		engine.start();
 		playSound("odd1.wav");
 	}
@@ -178,27 +178,27 @@ public class DungeonGame implements Game {
 			engine.unflagKey((int)'i');
 			GS = Gamestate.MENU;
 		}
-		
+
 		if(engine.getKey((int)'w') == 1){
 			player.inventory.action('w');
 		}
-		
+
 		if(engine.getKey((int)'s') == 1){
 			player.inventory.action('s');
 		}
-		
+
 		if(engine.getKey((int)'a') == 1){
 			player.inventory.action('a');
 		}
-		
+
 		if(engine.getKey((int)'d') == 1){
 			player.inventory.action('d');
 		}
-		
-		
+
+
 
 		//moveCount system allows finer speed control by allowing movement in fewer frames, set if statement to disable
-		moveCount++;		
+		moveCount++;
 		if(moveCount >= 0){
 			moveCount = 0;
 
@@ -220,12 +220,12 @@ public class DungeonGame implements Game {
 
 		player.setFacing(engine.getFacing());
 		player.tick(area);
-		
+
 		if(player.stats.dead == true){
 			GS = Gamestate.DEAD;
 			return;
 		}
-		
+
 		WarpInstructions mapWarpEvent = area.tick(player);
 		if(mapWarpEvent != null){
 			goToLevel(mapWarpEvent);
@@ -290,7 +290,7 @@ public class DungeonGame implements Game {
 			}
 			break;
 		case DEAD: // death screen
-			
+
 			break;
 		case WARP: //changing maps
 			loadCount--;
@@ -301,7 +301,7 @@ public class DungeonGame implements Game {
 		}
 
 	}
-	
+
 	public void startSetup(){
 		GS = Gamestate.SETUP;
 	}
@@ -316,16 +316,16 @@ public class DungeonGame implements Game {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/*
 	 * This is where the information regarding a new character will have to be passed
 	 * currently hard-coded as a human warrior b/c I don't want to program the other stuff now
-	 * 
+	 *
 	 */
 	void setupPlayer(){
 		player = new Player(160, 200, "Human", "Warrior");
 		hud = new InformationBar(player);
-		
+
 		switch(player.getProfession()){
 			case "Warrior":
 			player.giveItem(library.getItem("weapon", 0));

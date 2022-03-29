@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * @author ayrix
- *
- */
-package monster;

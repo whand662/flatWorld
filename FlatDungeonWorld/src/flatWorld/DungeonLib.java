@@ -1,4 +1,4 @@
-package general;
+package flatWorld;
 /*
  * Item object library
  */
@@ -8,13 +8,13 @@ package general;
 public class DungeonLib{
 
 	private ItemGenesis itemGen;
-	
+
 	public final Quality shoddy;
 	public final Quality inferior;
 	public final Quality average;
 	public final Quality superior;
 	public final Quality masterwork;
-	
+
 	public final Material paper;
 	public final Material leather;
 	public final Material wood;
@@ -25,25 +25,25 @@ public class DungeonLib{
 	public final Material adamantite;
 	public final Material starmetal;
 	public final Material unobtainium;
-	
+
 	public final WearableType longsword;
 	public final WearableType mace;
 	public final WearableType battleaxe;
 	public final WearableType greatsword;
-	
+
 	public final WearableType circlet;
-	
+
 	public DungeonLib(){
-		
+
 		itemGen = new ItemGenesis(this);
-		
+
 		//define item quality levels
 		shoddy = new Quality("Shoddy", .5);
 		inferior = new Quality("Inferior", .8);
 		average = new Quality("", 1.0);
 		superior = new Quality("Superior", 1.2);
 		masterwork = new Quality("Masterwork", 1.5);
-		
+
 		//define item materials
 		paper = new Material("Paper", 1, 1, 1);
 		leather = new Material("Leather", 1, 20, 5);
@@ -55,23 +55,23 @@ public class DungeonLib{
 		adamantite = new Material("Adamantine", 30, 100, 30);
 		starmetal = new Material("Starmetal", 40, 150, 25);
 		unobtainium = new Material("Unobtainium", 60, 200, 30);
-		
+
 		//define item types
 		longsword = new WearableType("Longsword", "weapon", 1, 1, 's');
 		greatsword = new WearableType("Greatsword", "weapon", 1.5, 2, 'n');
 		mace = new WearableType("Mace", "weapon", .9, 1, 'b');
 		battleaxe = new WearableType("Battle-axe", "weapon", .9, 1, 's');
-		
+
 		circlet = new WearableType("Circlet", "helmet", .1, 0, 'n');
 	}
-	
+
 	public Item getItem(String type, int tier){
 		return itemGen.getItem(type, tier);
 	}
 }
 
 class WearableType{
-	
+
 	private String name, slot;
 	private double modifier;
 	private int handsReq;
@@ -88,19 +88,19 @@ class WearableType{
 	public String getName(){
 		return name;
 	}
-	
+
 	public String getSlot(){
 		return slot;
 	}
-	
+
 	public double getModifier(){
 		return modifier;
 	}
-	
+
 	public char getData(){
 		return data;
 	}
-	
+
 	public int getHands(){
 		return handsReq;
 	}
@@ -120,15 +120,15 @@ class Material{
 	public String getName(){
 		return name;
 	}
-	
+
 	public int getHardness(){
 		return hardness;
 	}
-	
+
 	public int getWeight(){
 		return weight;
 	}
-	
+
 	public int getDurability(){
 		return durability;
 	}
@@ -137,7 +137,7 @@ class Material{
 class Quality{
 	private String name;
 	private double value;
-	
+
 	public Quality(String str, double val){
 		name = str;
 		value = val;
@@ -146,7 +146,7 @@ class Quality{
 	public String getName(){
 		return name;
 	}
-	
+
 	public double getValue(){
 		return value;
 	}

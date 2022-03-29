@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package flatWorld;
 
@@ -7,7 +7,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import monster.Player;
+import flatWorld.Player;
 
 /**
  * @author ayrix
@@ -17,7 +17,7 @@ public class Area {
 	public Map activeMap;
 	List<Map> maps = new ArrayList<Map>();
 
-	
+
 	public Area(String name) {
 		maps.add(new Map(name));
 		activeMap = maps.get(0);
@@ -29,7 +29,7 @@ public class Area {
 
 	public void draw(Graphics g, int i, int j) {
 		activeMap.draw(g, i, j);
-		
+
 	}
 
 	public boolean locWalkable(double x, double y) {
@@ -46,7 +46,7 @@ public class Area {
 
 	public void killEverything() {
 		activeMap.killEverything();
-		
+
 	}
 
 }

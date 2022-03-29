@@ -1,4 +1,4 @@
-package general;
+package flatWorld;
 
 
 public class Weapon extends Wearable implements Useable {
@@ -8,13 +8,13 @@ public class Weapon extends Wearable implements Useable {
 	WearableType type;
 	String element;
 	int damage;
-	
+
 	/*
 		Weapon durability is found by multiplying the material's base durability by the quality factor
 		Weapon damage is similarly found by multiplying the materials hardness by the quality factor
 		weapons are always set to full durability by the constructor
 	*/
-	
+
 	public Weapon(Quality qual, Material mat, WearableType typ, String elmt, boolean known) {
 		super(known);
 		quality = qual;
@@ -26,7 +26,7 @@ public class Weapon extends Wearable implements Useable {
 		MAXDUR = (int)(material.getDurability() * quality.getValue());
 		repair();
 	}
-	
+
 	public String getName(){
 		if(!identified){
 			return "Mysterious " + type.getName();

@@ -1,10 +1,10 @@
-package monster;
-import general.Armor;
-import general.Item;
-import general.Trinket;
-import general.Wearable;
+package flatWorld;
+import flatWorld.Armor;
+import flatWorld.Item;
+import flatWorld.Trinket;
+import flatWorld.Wearable;
 
-/* 
+/*
  * Equipment array has 10 elements
  * 0- right hand
  * 1- left hand
@@ -102,6 +102,6 @@ public class Inventory {
 	}
 
 	public void action(char c) {
-		
+
 	}
 }

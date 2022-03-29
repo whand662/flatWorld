@@ -1,4 +1,5 @@
 package flatWorld;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
@@ -6,7 +7,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-
 import javax.imageio.ImageIO;
 
 public enum FloorTile {
@@ -17,17 +17,17 @@ public enum FloorTile {
 	lightGrass 	(true,	'g'),
 	dirtyGrass 	(true,	'i'),
 	;
-	
+
 	boolean walkable;
 	Character tileAbbr;
 	static HashMap<Character, FloorTile> dict = new HashMap<Character, FloorTile>();
 	BufferedImage img = null;
 	AffineTransform at;
-	
+
 	static{
 		for(FloorTile tile: FloorTile.values()){
 			dict.put(tile.tileAbbr, tile);
-		}			
+		}
 	}
 
 	private FloorTile(boolean walkOn, Character abbreviation, String imgName){
@@ -60,7 +60,7 @@ public enum FloorTile {
 			}
 		}
 	}
-	
+
 	public static FloorTile get(Character ch){
 		FloorTile temp = dict.get(ch);
 		if (temp == null){
@@ -68,7 +68,7 @@ public enum FloorTile {
 		}
 		return temp;
 	}
-	
+
 	public void draw(Graphics g, int x, int y, int width, int height){
 		if(img == null)
 			return;
@@ -83,7 +83,7 @@ public enum FloorTile {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(img, at, null);
 	}
-	
+
 	public boolean walkable(){
 		return walkable;
 	}

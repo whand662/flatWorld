@@ -7,7 +7,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-
 import javax.imageio.ImageIO;
 
 public enum EnvTile {
@@ -16,18 +15,18 @@ public enum EnvTile {
 	stairdown 	(true,	'>'),
 	tree		(false, 't', "tree1.png")
 	;
-	
+
 	boolean walkable;
 	Character tileAbbr;
 	private WarpInstructions warpData;
 	static HashMap<Character, EnvTile> dict = new HashMap<Character, EnvTile>();
 	BufferedImage img = null;
 	static AffineTransform at;
-	
+
 	static{
 		for(EnvTile tile: EnvTile.values()){
 			dict.put(tile.tileAbbr, tile);
-		}			
+		}
 	}
 
 	private EnvTile(boolean walkOn, Character abbreviation, String imgName){
@@ -60,7 +59,7 @@ public enum EnvTile {
 			}
 		}
 	}
-	
+
 	public static EnvTile get(Character ch){
 		EnvTile temp = dict.get(ch);
 		if (temp == null){
@@ -68,11 +67,11 @@ public enum EnvTile {
 		}
 		return temp;
 	}
-	
+
 	public void setWarpInfo(String map, int x, int y){
 		warpData = new WarpInstructions(map, x, y);
 	}
-	
+
 	public WarpInstructions getWarpInfo(){
 		return warpData;
 	}
@@ -91,7 +90,7 @@ public enum EnvTile {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.drawImage(img, at, null);
 	}
-	
+
 	public boolean walkable(){
 		return walkable;
 	}
